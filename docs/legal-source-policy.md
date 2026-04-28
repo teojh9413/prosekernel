@@ -1,0 +1,39 @@
+# Legal Source Policy
+
+Humanprint is a private research and writing-quality repo, but it should still be clean and careful.
+
+## Prefer
+
+- Public-domain works
+- Open-license writing
+- Official public pages with URLs
+- User-provided examples
+- Short excerpts with commentary
+- Metadata + original analysis
+
+## Avoid
+
+- Full copyrighted books
+- Full paid newsletters
+- Full articles scraped from modern publications
+- Paywalled material copied into the repo
+- Private communications without permission
+
+## For modern copyrighted work
+
+Store:
+
+- title
+- author/company
+- source URL
+- date if known
+- short excerpt only if needed
+- our own craft analysis
+- reusable pattern
+- imitation prompt
+
+Do not store full text.
+
+## Principle
+
+Humanprint teaches structure, taste, and craft. It does not need to hoard copyrighted text.

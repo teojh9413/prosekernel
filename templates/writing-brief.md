@@ -13,6 +13,16 @@ What should they believe, feel, or do after reading?
 - [ ] Product-aware
 - [ ] Most-aware
 
+## Format
+Tweet, thread, essay, landing page, email, memo, script, doc, etc.
+
+## Relevant Humanprint examples
+List 3-5 examples from `LIBRARY.md`:
+
+1.
+2.
+3.
+
 ## Core claim
 What is the sharpest claim?
 
@@ -27,9 +37,6 @@ How should it sound? What should it avoid sounding like?
 
 ## Forbidden phrases
 Words/clichés/claims we must not use:
-
-## Format
-Tweet, thread, essay, landing page, email, memo, script, etc.
 
 ## Success test
 How will we know this worked?

@@ -9,6 +9,7 @@ SLOP_PHRASES = [
     "ever-evolving landscape",
     "delve into",
     "unlock",
+    "unleash",
     "leverage",
     "game-changer",
     "seamless",
@@ -25,6 +26,43 @@ SLOP_PHRASES = [
     "in conclusion",
     "this article explores",
     "whether you're a beginner or an expert",
+]
+
+LEGACY_INFLATION = [
+    "stands as",
+    "serves as",
+    "a testament to",
+    "pivotal moment",
+    "crucial role",
+    "significant role",
+    "key role",
+    "underscores its importance",
+    "reflects broader",
+    "enduring legacy",
+    "lasting legacy",
+    "marking a shift",
+    "shaping the future",
+    "indelible mark",
+]
+
+SUPERFICIAL_ANALYSIS = [
+    "highlighting",
+    "underscoring",
+    "emphasizing",
+    "reflecting",
+    "symbolizing",
+    "contributing to",
+    "fostering",
+    "cultivating",
+    "encompassing",
+    "resonates with",
+]
+
+VAGUE_ATTRIBUTION_PATTERNS = [
+    r"\bmany (experts|people|observers|critics) (believe|argue|say|suggest)\b",
+    r"\bsome (experts|people|observers|critics) (believe|argue|say|suggest)\b",
+    r"\bit is widely (believed|regarded|recognized)\b",
+    r"\bresearch shows\b",
 ]
 
 HEDGES = [
@@ -77,6 +115,33 @@ def lint_text(text: str) -> LintReport:
                 severity="error",
                 message=f"Banned AI-slop phrase: '{phrase}'. Replace with concrete language.",
                 line=_line_number(text, phrase),
+            ))
+
+    for phrase in LEGACY_INFLATION:
+        if phrase in lowered:
+            findings.append(Finding(
+                rule="legacy_inflation",
+                severity="error",
+                message=f"Unsupported significance/legacy phrase: '{phrase}'. Prove it or cut it.",
+                line=_line_number(text, phrase),
+            ))
+
+    superficial_hits = [p for p in SUPERFICIAL_ANALYSIS if p in lowered]
+    if len(superficial_hits) >= 3:
+        findings.append(Finding(
+            rule="superficial_analysis",
+            severity="warning",
+            message="Multiple vague analysis markers: " + ", ".join(superficial_hits[:8]) + ". Replace with mechanism or evidence.",
+        ))
+
+    for pat in VAGUE_ATTRIBUTION_PATTERNS:
+        m = re.search(pat, lowered)
+        if m:
+            findings.append(Finding(
+                rule="vague_attribution",
+                severity="warning",
+                message=f"Vague attribution: '{m.group(0)}'. Name who says it or remove the claim.",
+                line=text[:m.start()].count("\n") + 1,
             ))
 
     paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]

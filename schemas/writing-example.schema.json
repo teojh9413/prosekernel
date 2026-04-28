@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Humanprint Writing Example",
+  "type": "object",
+  "required": [
+    "title",
+    "author",
+    "source_url",
+    "added",
+    "category",
+    "format",
+    "rights",
+    "tags",
+    "quality_score",
+    "use_when"
+  ],
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string"
+    },
+    "date_published": {
+      "type": "string"
+    },
+    "added": {
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "viral-social",
+        "persuasive-copywriting",
+        "strategic-intelligent",
+        "essays-literary",
+        "technical-explanatory",
+        "brand-positioning"
+      ]
+    },
+    "format": {
+      "type": "string"
+    },
+    "rights": {
+      "enum": [
+        "public-domain",
+        "open-license",
+        "short-excerpt",
+        "metadata-only",
+        "user-provided"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quality_score": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "use_when": {
+      "type": "string"
+    }
+  }
+}
