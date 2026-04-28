@@ -1,9 +1,15 @@
 # Persuasive / Copywriting
 
-This section collects annotated examples and resources for persuasive / copywriting.
+Annotated examples in this category.
 
-See `examples/` for individual entries.
+## Examples
 
-## Standard
+- [`ogilvy-rolls-royce-specific-proof.md`](examples/ogilvy-rolls-royce-specific-proof.md) — Specific proof beats empty superlatives.
+- [`schwartz-awareness-stages.md`](examples/schwartz-awareness-stages.md) — Match message to reader awareness stage.
+- [`halbert-starving-crowd.md`](examples/halbert-starving-crowd.md) — Market hunger before copy tricks.
+- [`basecamp-shape-up-pitch.md`](examples/basecamp-shape-up-pitch.md) — Pitch with problem, appetite, risk, and no-gos.
+- [`ipod-1000-songs-in-your-pocket.md`](examples/ipod-1000-songs-in-your-pocket.md) — Translate technical specs into human benefit.
 
-Each entry must teach a reusable craft move and include source metadata, rights note, structure map, imitation prompt, and anti-pattern warnings.
+## Use protocol
+
+Study 2-4 examples, extract craft moves, then transfer structure without copying phrases.

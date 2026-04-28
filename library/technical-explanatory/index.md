@@ -1,9 +1,14 @@
-# Technical / Explanatory Writing
+# Technical / Explanatory
 
-This section collects annotated examples and resources for technical / explanatory writing.
+Annotated examples in this category.
 
-See `examples/` for individual entries.
+## Examples
 
-## Standard
+- [`wikipedia-signs-ai-writing.md`](examples/wikipedia-signs-ai-writing.md) — AI-writing tells and deeper quality failures.
+- [`stripe-docs-progressive-disclosure.md`](examples/stripe-docs-progressive-disclosure.md) — Layer technical explanation with examples.
+- [`govuk-writing-for-govuk.md`](examples/govuk-writing-for-govuk.md) — Plain-language content design.
+- [`diataxis-documentation-framework.md`](examples/diataxis-documentation-framework.md) — Documentation organized by user need.
 
-Each entry must teach a reusable craft move and include source metadata, rights note, structure map, imitation prompt, and anti-pattern warnings.
+## Use protocol
+
+Study 2-4 examples, extract craft moves, then transfer structure without copying phrases.

@@ -1,9 +1,14 @@
-# Brand / Positioning Writing
+# Brand / Positioning
 
-This section collects annotated examples and resources for brand / positioning writing.
+Annotated examples in this category.
 
-See `examples/` for individual entries.
+## Examples
 
-## Standard
+- [`sqlite-small-fast-reliable.md`](examples/sqlite-small-fast-reliable.md) — Compressed positioning through category tradeoff reversal.
+- [`apple-think-different.md`](examples/apple-think-different.md) — Brand as worldview.
+- [`airbnb-belong-anywhere.md`](examples/airbnb-belong-anywhere.md) — Reframe category around belonging.
+- [`nike-just-do-it.md`](examples/nike-just-do-it.md) — Brand command as identity and action.
 
-Each entry must teach a reusable craft move and include source metadata, rights note, structure map, imitation prompt, and anti-pattern warnings.
+## Use protocol
+
+Study 2-4 examples, extract craft moves, then transfer structure without copying phrases.

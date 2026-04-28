@@ -41,3 +41,22 @@ Then immediately unpack it.
 - “This post explores...”
 - “Here are some insights...”
 - “It is important to note...”
+
+
+## 6. Portable distinction
+
+Template:
+> The conflict is not [surface issue]. It is [mode A] vs [mode B].
+
+Source pattern: Paul Graham's maker/manager distinction.
+
+Use when readers feel a pain but lack the language to explain it.
+
+## 7. Human-benefit translation
+
+Template:
+> [Number] [desired outcomes] in [human context].
+
+Source pattern: iPod “1,000 songs in your pocket.”
+
+Use when a product has a technical spec that can be translated into lived value.

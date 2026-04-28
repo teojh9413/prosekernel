@@ -71,3 +71,8 @@ Good Humanprint writing must be:
 - **alive** — it sounds like a person with judgment wrote it
 - **persuasive** — structure fits reader awareness and desired action
 - **honest** — no fake certainty, fake citations, or inflated importance
+
+
+## Source ingestion
+
+Use `docs/source-ingestion.md` and `humanprint new-example` to add new examples safely and consistently. Run `humanprint validate-library` before committing.

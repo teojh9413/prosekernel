@@ -34,3 +34,24 @@ From weakest to strongest:
 ## Humanprint rule
 
 If a sentence asks for trust, it must pay with proof.
+
+
+## Specification-to-benefit proof
+
+A technical spec becomes persuasive only when the reader can feel it.
+
+Weak:
+> 5GB storage.
+
+Strong:
+> 1,000 songs in your pocket.
+
+Pattern:
+> [technical capacity] → [human quantity] → [personal context]
+
+## Constraint proof
+
+Strategic writing becomes more believable when it names no-gos and tradeoffs.
+
+Pattern:
+> We will spend [appetite] because [problem]. We will not do [no-go], because [constraint].
