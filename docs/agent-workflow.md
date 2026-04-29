@@ -2,51 +2,115 @@
 
 Use this whenever an AI agent writes with ProseKernel.
 
-## Step 1: Identify the job
+The Phase 9 loop is:
 
-- Format: tweet, thread, essay, landing page, memo, email, doc, speech.
-- Reader: one specific person or persona.
+**classify → retrieve → patterns → brief → draft → lint/score → revise → explain**
+
+For copy-paste prompt contracts, see:
+
+- `prompts/agent-workflow.md`
+- `prompts/writing-brief.md`
+- `prompts/critique.md`
+- `prompts/rewrite.md`
+
+For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`.
+
+## Step 1: Classify the job
+
+Identify:
+
+- Format: tweet, thread, essay, landing page, memo, email, doc, speech, product microcopy, incident note.
+- Reader: one specific person, role, or persona.
 - Goal: what should change after reading?
 - Awareness stage: unaware, problem-aware, solution-aware, product-aware, most-aware.
+- Constraints: length, channel, required facts, forbidden claims, tone, legal/compliance boundaries.
 
 ## Step 2: Retrieve examples
 
-Pick 3-5 examples from `LIBRARY.md` matching the job.
+Use the CLI instead of manually browsing when possible:
+
+```bash
+prosekernel search-examples "<task>" --mode hybrid --explain
+```
+
+Pick 3-5 examples matching the job.
 
 At minimum:
 
-- one same-format example
-- one same-goal example
-- one anti-slop or clarity reference
+- one same-format example,
+- one same-goal example,
+- one proof or clarity reference,
+- one anti-slop or voice reference if the draft risks generic AI cadence.
 
-## Step 3: Extract moves
+## Step 3: Retrieve patterns
 
-For each example, write:
+Use pattern IDs from retrieval output and the brief.
 
-- opening move
-- proof move
-- structure move
-- voice move
-- closing move
+For each selected example, extract:
 
-## Step 4: Draft
+- opening move,
+- proof move,
+- structure move,
+- voice move,
+- closing move,
+- anti-pattern to avoid.
+
+## Step 4: Build the brief
+
+Run:
+
+```bash
+prosekernel brief "<task>" --mode hybrid --output /tmp/prosekernel-brief.md
+```
+
+The brief is provider-agnostic and does not call a model. It packages retrieved examples, pattern instructions, craft moves, and quality gates for any agent.
+
+## Step 5: Draft
 
 Write original text. Transfer structure, not phrases.
 
-## Step 5: Evaluate
+Rules:
 
-Use:
+- Lead with the reader's concrete situation, tension, proof, or a scene.
+- Use proof before praise.
+- Prefer concrete nouns and active verbs.
+- Delete any sentence that could describe another product, company, or topic.
+- Do not copy source phrases.
+
+## Step 6: Evaluate
+
+Run:
+
+```bash
+prosekernel lint draft.md
+prosekernel scorecard draft.md --task "<task>"
+```
+
+Also use:
 
 - `docs/anti-slop.md`
 - `evals/writing-scorecard.md`
-- `patterns/proof.md`
+- relevant `patterns/*.md`
 
-## Step 6: Rewrite
+## Step 7: Revise
 
 Perform:
 
-1. cut pass
-2. specificity pass
-3. proof pass
-4. voice pass
-5. read-aloud pass
+1. cut pass,
+2. specificity pass,
+3. proof pass,
+4. structure pass,
+5. voice/rhythm pass,
+6. read-aloud pass.
+
+## Step 8: Explain what changed
+
+Return the final draft plus:
+
+- retrieval/examples used,
+- patterns applied,
+- structure changes,
+- proof/specificity changes,
+- cuts made,
+- lint/scorecard result,
+- remaining risks or manual follow-ups.

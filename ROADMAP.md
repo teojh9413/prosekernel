@@ -18,6 +18,7 @@ Completed:
 - Phase 6A — Provider-agnostic dry-run brief mode: `prosekernel brief` builds an agent-ready writing packet without model/API calls.
 - Phase 6B — Explicit provider write mode: adapter interface, `prosekernel write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
 - Phase 8 — Offline semantic/hybrid retrieval: optional `--mode semantic|hybrid`, score explanations, cached concept expansion, and no new runtime dependencies.
+- Phase 9 — Agent workflow integration: repo-local `SKILL.md`, prompt contracts, and command-grounded workflow docs for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 
 Current corpus: 100 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
@@ -191,15 +192,19 @@ See `docs/phase-8-hybrid-retrieval.md`.
 
 ## Phase 9 — Agent workflow integration
 
-Make ProseKernel agent-ready for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+Status: implemented.
 
-Add/strengthen:
+ProseKernel is now agent-ready for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+
+Implemented assets:
 
 - `SKILL.md`
 - `prompts/agent-workflow.md`
 - `prompts/writing-brief.md`
 - `prompts/critique.md`
 - `prompts/rewrite.md`
+- `docs/agent-workflow.md`
+- `docs/phase-9-agent-workflow.md`
 
 Generic agent workflow:
 
@@ -208,9 +213,11 @@ Generic agent workflow:
 3. Retrieve patterns.
 4. Build a brief.
 5. Draft.
-6. Lint.
-7. Rewrite.
+6. Lint/score.
+7. Revise.
 8. Explain what changed.
+
+Short form: classify → retrieve → patterns → brief → draft → lint/score → revise → explain
 
 ## Phase 10 — Productization / usability
 

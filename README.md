@@ -40,7 +40,9 @@ Before writing anything important:
 
 ## Current status
 
-Phase 8 retrieval is now implemented: `search-examples`, `brief`, `write`, and `write-demo` default to the existing deterministic lexical/category scorer, and can opt into `--mode semantic` or `--mode hybrid`. Hybrid retrieval remains offline and dependency-free, using curated concept aliases, category concepts, simple stemming, and cached semantic token expansion. `search-examples --explain` prints lexical/semantic/hybrid score components.
+Phase 9 agent workflow integration is now implemented: repo-local `SKILL.md`, reusable prompt contracts, and command-grounded agent docs now package the workflow for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+
+Phase 8 retrieval is implemented: `search-examples`, `brief`, `write`, and `write-demo` default to the existing deterministic lexical/category scorer, and can opt into `--mode semantic` or `--mode hybrid`. Hybrid retrieval remains offline and dependency-free, using curated concept aliases, category concepts, simple stemming, and cached semantic token expansion. `search-examples --explain` prints lexical/semantic/hybrid score components.
 
 Seed corpus includes examples/resources across:
 
@@ -110,4 +112,4 @@ Use `docs/source-ingestion.md` and `prosekernel new-example` to add new examples
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
+Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
