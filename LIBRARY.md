@@ -131,6 +131,10 @@ Phase 5 turns the corpus into executable writing intelligence. Strict pattern fi
 - [`patterns/PATTERN_STRATEGY_001-decision-grade-principles.md`](patterns/PATTERN_STRATEGY_001-decision-grade-principles.md) — turn strategic beliefs into tradeoffs, refusals, and operating consequences.
 - [`patterns/PATTERN_BRAND_001-worldview-positioning.md`](patterns/PATTERN_BRAND_001-worldview-positioning.md) — make product features prove a worldview and audience identity.
 - [`patterns/PATTERN_EXPLAIN_001-progressive-disclosure.md`](patterns/PATTERN_EXPLAIN_001-progressive-disclosure.md) — teach complex topics one useful rung at a time.
+- [`patterns/PATTERN_SPEECH_001-shared-principle-renewed-duty.md`](patterns/PATTERN_SPEECH_001-shared-principle-renewed-duty.md) — connect a present moment to shared principle, sacrifice, and renewed duty.
+- [`patterns/PATTERN_REPORTAGE_001-scene-to-system-accountability.md`](patterns/PATTERN_REPORTAGE_001-scene-to-system-accountability.md) — turn observed scenes and procedures into accountable system claims.
+- [`patterns/PATTERN_INTERNAL_001-explicit-ownership-operating-doc.md`](patterns/PATTERN_INTERNAL_001-explicit-ownership-operating-doc.md) — reduce coordination cost by making scope, ownership, decision rights, and escalation explicit.
+- [`patterns/PATTERN_PERSUASION_001-awareness-matched-argument.md`](patterns/PATTERN_PERSUASION_001-awareness-matched-argument.md) — match message, proof, and CTA intensity to the reader's awareness stage.
 
 ## Tooling
 

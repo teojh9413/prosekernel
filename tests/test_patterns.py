@@ -26,6 +26,10 @@ def test_phase5_strict_pattern_files_exist():
     assert "PATTERN_STRATEGY_001-decision-grade-principles.md" in pattern_names
     assert "PATTERN_BRAND_001-worldview-positioning.md" in pattern_names
     assert "PATTERN_EXPLAIN_001-progressive-disclosure.md" in pattern_names
+    assert "PATTERN_SPEECH_001-shared-principle-renewed-duty.md" in pattern_names
+    assert "PATTERN_REPORTAGE_001-scene-to-system-accountability.md" in pattern_names
+    assert "PATTERN_INTERNAL_001-explicit-ownership-operating-doc.md" in pattern_names
+    assert "PATTERN_PERSUASION_001-awareness-matched-argument.md" in pattern_names
 
 
 def test_strict_patterns_follow_schema():
