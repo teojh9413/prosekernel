@@ -120,10 +120,22 @@ prosekernel validate-learning
 
 The learning note must store metadata, hash, metrics, and original lessons only. It must not store source prose.
 
+### 10. Optional reviewed proposal
+
+Only after explicit approval and safe rights, generate review-required proposals instead of importing automatically:
+
+```bash
+prosekernel propose-example learning/lessons/<note>.md --root /root/prosekernel
+prosekernel propose-pattern learning/lessons/<note>.md --root /root/prosekernel --pattern-id PATTERN_DOMAIN_001
+```
+
+Leave proposal files under `proposals/` until a human reviews rights, wording, destination, and overlap with existing examples/patterns.
+
 ## Hard rules
 
 - Do not copy source phrases.
 - Do not auto-save private user writing.
 - Do not store source prose in learning notes; use `prosekernel learn` only when explicitly requested and validate with `prosekernel validate-learning`.
+- Do not import learning notes directly into `library/` or `patterns/`; use `propose-example` / `propose-pattern` and keep proposals review-required.
 - Do not invent citations, numbers, names, or customer facts.
 - Do not call a paid provider unless the user or command explicitly supplied provider/model credentials.

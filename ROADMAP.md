@@ -21,6 +21,7 @@ Completed:
 - Phase 9 — Agent workflow integration: repo-local `SKILL.md`, prompt contracts, and command-grounded workflow docs for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 - Phase 10 — Productized CLI/usability: `critique`, `rewrite`, productized Markdown reports, standalone rewrite outputs, exit-code docs, and friendlier aliases (`examples`, `demo`, `score`).
 - Phase 11 — Public-safe learning loop: `learn` metadata-only learning notes, `validate-learning`, source-text exclusion checks, and rights/approval gates for promotion.
+- Phase 12 — Human-review/import bridge: `propose-example` and `propose-pattern` generate review-required proposals from approved safe-rights learning notes without automatic import.
 
 Current corpus: 100 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
@@ -277,10 +278,41 @@ Implemented behavior:
 4. The generated note sets `source_text_stored: false` and omits source prose.
 5. `validate-learning` rejects notes that claim source text is stored or include a `## Source text` section.
 6. Promotion is refused unless `--approved` is supplied and rights are `public-domain`, `open-license`, or `user-provided`.
+7. Approved safe-rights notes can generate review-required proposals with `propose-example` and `propose-pattern`; import still requires human review.
 
 See `docs/phase-11-public-safe-learning-loop.md`.
 
-## Phase 12 — Writing OS endgame
+## Phase 12 — Human-review / import bridge
+
+Status: implemented.
+
+Phase 12 creates a controlled bridge from learning notes into curation work.
+
+Implemented commands:
+
+```bash
+prosekernel propose-example learning/lessons/refund-workflow-draft.md \
+  --root /root/prosekernel
+
+prosekernel propose-pattern learning/lessons/refund-workflow-draft.md \
+  --root /root/prosekernel \
+  --pattern-id PATTERN_UX_002
+```
+
+Implemented behavior:
+
+1. Loads and validates an existing learning note.
+2. Refuses notes that are not `promotion_status: "ready-for-human-review"`.
+3. Refuses notes without `approved: true`.
+4. Refuses unsafe rights (`metadata-only` and `short-excerpt`).
+5. Writes proposals under `proposals/examples/` or `proposals/patterns/` by default.
+6. Preserves source provenance, source hash, and learning-note path.
+7. Marks proposals `proposal_status: review-required` and `source_text_stored: false`.
+8. Does not move anything into `library/` or `patterns/` automatically.
+
+See `docs/phase-12-human-review-import-bridge.md`.
+
+## Phase 13 — Writing OS endgame
 
 ProseKernel is a writing operating system for agents: retrieve taste, apply structure, detect slop, improve drafts, and preserve reusable lessons.
 

@@ -30,7 +30,7 @@ Use one of:
 - `metadata-only`
 - `user-provided`
 
-For modern copyrighted work, default to `metadata-only` and write original analysis. If you are learning from a draft but are not ready to add a library example, use `prosekernel learn` instead of `new-example`; it stores metadata, hash, metrics, and lessons without storing source prose.
+For modern copyrighted work, default to `metadata-only` and write original analysis. If you are learning from a draft but are not ready to add a library example, use `prosekernel learn` instead of `new-example`; it stores metadata, hash, metrics, and lessons without storing source prose. If a learning note is later approved with safe rights, use `prosekernel propose-example` or `prosekernel propose-pattern` to create a review-required proposal under `proposals/`; do not import it directly.
 
 ## 3. Create the file
 
@@ -91,7 +91,18 @@ prosekernel validate-learning
 
 Do not promote learning notes into examples or patterns unless rights are safe and human approval is explicit.
 
-## 7. Verify
+## 7. Optional reviewed proposal
+
+If a learning note is approved and rights are safe (`public-domain`, `open-license`, or `user-provided`), generate a proposal instead of importing directly:
+
+```bash
+prosekernel propose-example learning/lessons/<note>.md --root /root/prosekernel
+prosekernel propose-pattern learning/lessons/<note>.md --root /root/prosekernel --pattern-id PATTERN_DOMAIN_001
+```
+
+Keep the generated file under `proposals/` until a human replaces review-required placeholders with original analysis and confirms there is no duplicate or unsafe import.
+
+## 8. Verify
 
 Run:
 

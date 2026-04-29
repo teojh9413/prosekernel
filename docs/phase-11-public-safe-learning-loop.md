@@ -65,7 +65,7 @@ prosekernel learn draft.md ... --rights user-provided --promote
 prosekernel learn draft.md ... --rights metadata-only --promote --approved
 ```
 
-For `metadata-only` and `short-excerpt` sources, the output remains a safe learning note and cannot be marked as promotion-ready by the CLI.
+For `metadata-only` and `short-excerpt` sources, the output remains a safe learning note and cannot be marked as promotion-ready by the CLI. For approved safe-rights notes, Phase 12 adds `prosekernel propose-example` and `prosekernel propose-pattern` to generate review-required proposals; those commands still do not import anything automatically.
 
 ## Validation
 

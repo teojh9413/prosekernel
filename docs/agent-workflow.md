@@ -13,7 +13,7 @@ For copy-paste prompt contracts, see:
 - `prompts/critique.md`
 - `prompts/rewrite.md`
 
-For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`. For explicit metadata-only learning notes, see `docs/phase-11-public-safe-learning-loop.md`.
+For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`. For explicit metadata-only learning notes, see `docs/phase-11-public-safe-learning-loop.md`. For review-required proposals from approved learning notes, see `docs/phase-12-human-review-import-bridge.md`.
 
 ## Step 1: Classify the job
 
@@ -138,4 +138,15 @@ prosekernel learn draft.md \
 prosekernel validate-learning
 ```
 
-The learning note must not store source prose. Promotion into examples or patterns requires safe rights and explicit human approval.
+The learning note must not store source prose.
+
+## Step 10: Propose import only after approval
+
+If a learning note is explicitly approved and rights are safe (`public-domain`, `open-license`, or `user-provided`), generate a review-required proposal instead of importing automatically:
+
+```bash
+prosekernel propose-example learning/lessons/<note>.md --root /root/prosekernel
+prosekernel propose-pattern learning/lessons/<note>.md --root /root/prosekernel --pattern-id PATTERN_DOMAIN_001
+```
+
+Proposal files remain under `proposals/` and must be edited/reviewed by a human before moving anything into `library/` or `patterns/`.

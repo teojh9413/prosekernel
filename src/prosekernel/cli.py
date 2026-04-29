@@ -20,8 +20,13 @@ from .engine import (
 from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
 from .learning import (
     build_learning_lesson,
+    default_example_proposal_path,
     default_learning_path,
+    default_pattern_proposal_path,
+    load_learning_note,
+    render_example_proposal,
     render_learning_lesson,
+    render_pattern_proposal,
     validate_learning_directory,
 )
 from .patterns import infer_pattern_ids
@@ -121,6 +126,20 @@ def main(argv: list[str] | None = None) -> int:
 
     learn_val_p = sub.add_parser("validate-learning", help="Validate public-safe learning notes")
     learn_val_p.add_argument("--root", type=Path, default=Path.cwd())
+
+    propose_example_p = sub.add_parser("propose-example", help="Create a review-required library example proposal from an approved learning note")
+    propose_example_p.add_argument("path", type=Path)
+    propose_example_p.add_argument("--root", type=Path, default=Path.cwd())
+    propose_example_p.add_argument("--format", default="learned-example")
+    propose_example_p.add_argument("--output", type=Path, help="Optional proposal path; defaults to proposals/examples/<category>/<source-title>.md")
+    propose_example_p.add_argument("--force", action="store_true", help="Overwrite an existing proposal")
+
+    propose_pattern_p = sub.add_parser("propose-pattern", help="Create a review-required strict-pattern proposal from an approved learning note")
+    propose_pattern_p.add_argument("path", type=Path)
+    propose_pattern_p.add_argument("--root", type=Path, default=Path.cwd())
+    propose_pattern_p.add_argument("--pattern-id", required=True, help="New proposed pattern ID, e.g. PATTERN_UX_002")
+    propose_pattern_p.add_argument("--output", type=Path, help="Optional proposal path; defaults to proposals/patterns/<pattern-id>-<source-title>.md")
+    propose_pattern_p.add_argument("--force", action="store_true", help="Overwrite an existing proposal")
 
     demo_p = sub.add_parser("write-demo", aliases=["demo"], help="Run deterministic retrieval + draft + lint + rewrite demo")
     demo_p.add_argument("task")
@@ -347,6 +366,38 @@ def main(argv: list[str] | None = None) -> int:
             for error in errors:
                 print(f"  - {error}")
         return 1
+
+    if args.command == "propose-example":
+        try:
+            note = load_learning_note(args.path)
+            report = render_example_proposal(note, format_name=args.format)
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        output_path = args.output or default_example_proposal_path(args.root, note)
+        if output_path.exists() and not args.force:
+            print(f"Refusing to overwrite existing proposal: {output_path}", file=sys.stderr)
+            return 1
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(report, encoding="utf-8")
+        print(output_path)
+        return 0
+
+    if args.command == "propose-pattern":
+        try:
+            note = load_learning_note(args.path)
+            report = render_pattern_proposal(note, pattern_id=args.pattern_id)
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        output_path = args.output or default_pattern_proposal_path(args.root, note, args.pattern_id)
+        if output_path.exists() and not args.force:
+            print(f"Refusing to overwrite existing proposal: {output_path}", file=sys.stderr)
+            return 1
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(report, encoding="utf-8")
+        print(output_path)
+        return 0
 
     if args.command in {"write-demo", "demo"}:
         result = run_writing_demo(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode)

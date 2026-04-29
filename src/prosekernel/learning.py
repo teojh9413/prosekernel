@@ -39,6 +39,26 @@ class LearningLesson:
     approved: bool = False
 
 
+@dataclass(frozen=True)
+class LearningNote:
+    path: Path
+    task: str
+    source_title: str
+    source_author: str
+    source_url: str
+    rights: str
+    category: str
+    tags: list[str]
+    pattern_ids: list[str]
+    source_text_sha256: str
+    source_word_count: int
+    lint_score: int
+    scorecard_total: int
+    promotion_status: str
+    approved: bool
+    reusable_lessons: list[str]
+
+
 def _quote(value: str) -> str:
     return value.replace("\\", "\\\\").replace('"', '\\"')
 
@@ -57,10 +77,23 @@ def _frontmatter_fields(text: str) -> dict[str, str]:
             continue
         key, raw = line.split(":", 1)
         value = raw.strip()
-        if value.startswith('"') and value.endswith('"'):
-            value = value[1:-1].replace('\\"', '"').replace('\\\\', '\\')
-        fields[key.strip()] = value
+        fields[key.strip()] = _yaml_scalar(value)
     return fields
+
+
+def _yaml_scalar(value: str) -> str:
+    value = value.strip()
+    if value.startswith('"') and value.endswith('"'):
+        return value[1:-1].replace('\\"', '"').replace('\\\\', '\\')
+    return value
+
+
+def _yaml_array(value: str) -> list[str]:
+    value = value.strip()
+    if not value.startswith("[") or not value.endswith("]"):
+        return [value] if value else []
+    raw_items = value[1:-1].split(",")
+    return [_yaml_scalar(item.strip()) for item in raw_items if item.strip()]
 
 
 def _validate_single_line(name: str, value: str, errors: list[str], max_len: int = 500) -> None:
@@ -292,3 +325,185 @@ def validate_learning_directory(root: Path) -> dict[str, list[str]]:
         if errors:
             issues[str(path.relative_to(root))] = errors
     return issues
+
+
+def _section_bullets(text: str, heading: str) -> list[str]:
+    pattern = re.compile(rf"^## {re.escape(heading)}\n(.*?)(?=\n## |\Z)", re.S | re.M)
+    match = pattern.search(text)
+    if not match:
+        return []
+    bullets: list[str] = []
+    for line in match.group(1).splitlines():
+        stripped = line.strip()
+        if stripped.startswith("- "):
+            bullets.append(stripped[2:].strip())
+    return bullets
+
+
+def load_learning_note(path: Path) -> LearningNote:
+    text = path.read_text(encoding="utf-8")
+    errors = validate_learning_note_text(text)
+    if errors:
+        raise ValueError("invalid learning note: " + "; ".join(errors))
+    frontmatter = _frontmatter_fields(text)
+    return LearningNote(
+        path=path,
+        task=frontmatter.get("task", ""),
+        source_title=frontmatter.get("source_title", ""),
+        source_author=frontmatter.get("source_author", ""),
+        source_url=frontmatter.get("source_url", ""),
+        rights=frontmatter.get("rights", ""),
+        category=frontmatter.get("category", ""),
+        tags=_yaml_array(frontmatter.get("tags", "")),
+        pattern_ids=_yaml_array(frontmatter.get("pattern_ids", "")),
+        source_text_sha256=frontmatter.get("source_text_sha256", ""),
+        source_word_count=int(frontmatter.get("source_word_count", "0") or 0),
+        lint_score=int(frontmatter.get("lint_score", "0") or 0),
+        scorecard_total=int(frontmatter.get("scorecard_total", "0") or 0),
+        promotion_status=frontmatter.get("promotion_status", ""),
+        approved=frontmatter.get("approved", "false").lower() == "true",
+        reusable_lessons=_section_bullets(text, "Reusable lesson"),
+    )
+
+
+def validate_learning_note_for_proposal(note: LearningNote) -> list[str]:
+    errors: list[str] = []
+    if note.promotion_status != "ready-for-human-review":
+        errors.append("learning note is not ready-for-human-review")
+    if not note.approved:
+        errors.append("learning note requires approved: true")
+    if note.rights not in PROMOTION_SAFE_RIGHTS:
+        errors.append("learning note rights are not safe for proposal promotion")
+    if not note.pattern_ids:
+        errors.append("learning note requires at least one pattern_id")
+    if note.category not in CATEGORIES:
+        errors.append(f"unknown category: {note.category}")
+    return errors
+
+
+def default_example_proposal_path(root: Path, note: LearningNote) -> Path:
+    return root / "proposals" / "examples" / note.category / f"{slugify(note.source_title)}.md"
+
+
+def default_pattern_proposal_path(root: Path, note: LearningNote, pattern_id: str) -> Path:
+    return root / "proposals" / "patterns" / f"{pattern_id.lower()}-{slugify(note.source_title)}.md"
+
+
+def render_example_proposal(note: LearningNote, *, output_path: Path | None = None, format_name: str = "learned-example") -> str:
+    errors = validate_learning_note_for_proposal(note)
+    if errors:
+        raise ValueError("; ".join(errors))
+    quality_score = max(1, min(10, round(note.scorecard_total / 10)))
+    tags = _yaml_list(note.tags)
+    patterns = "[" + ", ".join(note.pattern_ids) + "]"
+    proposed_path = f"library/{note.category}/examples/{slugify(note.source_title)}.md"
+    lesson_lines = note.reusable_lessons or ["Review the learning note and write original craft analysis before import."]
+    lines = [
+        "---",
+        f'title: "{_quote(note.source_title)}"',
+        f'author: "{_quote(note.source_author)}"',
+        f'source_url: "{_quote(note.source_url)}"',
+        'date_published: "unknown"',
+        'added: "review-required"',
+        f'category: "{_quote(note.category)}"',
+        f'format: "{_quote(format_name)}"',
+        f'rights: "{_quote(note.rights)}"',
+        f"tags: {tags}",
+        f"quality_score: {quality_score}",
+        f'use_when: "Use when applying lessons from approved learning note {note.source_text_sha256[:12]}."',
+        f"pattern_ids: {patterns}",
+        "proposal_status: review-required",
+        f'learning_note: "{_quote(str(note.path))}"',
+        f'proposed_library_path: "{proposed_path}"',
+        "source_text_stored: false",
+        "---",
+        "",
+        f"# {note.source_title}",
+        "",
+        "## Proposal gate",
+        "- Human review required before moving this proposal into `library/`.",
+        f"- Proposed library path: `{proposed_path}`.",
+        f"- Source hash: `{note.source_text_sha256}`.",
+        "- Source text was not stored in the learning note or this proposal.",
+        "",
+        "## Source",
+        f"- Author: {note.source_author}",
+        f"- URL: {note.source_url}",
+        f"- Rights note: {note.rights}; approved learning note only. Verify rights before import.",
+        "",
+        "## Why this is good",
+        "This proposal is generated from an approved public-safe learning note. Replace this paragraph with human-reviewed original analysis before importing into the library.",
+        "",
+        "## Craft moves",
+    ]
+    lines.extend(f"- {lesson}" for lesson in lesson_lines[:5])
+    lines.extend([
+        "",
+        "## Structure map",
+        "1. Identify the reader situation and failed/desired action.",
+        "2. Transfer the reusable structure from the learning note without copying source prose.",
+        "3. Verify specificity, proof, and reader-fit before import.",
+        "",
+        "## Excerpt or summary",
+        "Source text was not stored. Add only a rights-safe short excerpt or an original summary after human review.",
+        "",
+        "## Reusable pattern",
+        lesson_lines[0] if lesson_lines else "TODO: Generalize the reusable move.",
+        "",
+        "## Imitation prompt",
+        f"Write a {note.category} draft that applies the reusable lessons from `{note.source_title}` without copying source wording.",
+        "",
+        "## Anti-patterns to avoid",
+        "- Copying source sentences or private user details.",
+        "- Promoting metadata-only or unapproved notes.",
+        "- Importing this proposal without replacing review-required placeholders.",
+    ])
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_pattern_proposal(note: LearningNote, *, pattern_id: str) -> str:
+    errors = validate_learning_note_for_proposal(note)
+    if errors:
+        raise ValueError("; ".join(errors))
+    if not re.fullmatch(r"PATTERN_[A-Z]+_[0-9]{3}", pattern_id):
+        raise ValueError("pattern_id must look like PATTERN_DOMAIN_001")
+    lessons = note.reusable_lessons or ["Review the learning note and write an original abstraction before import."]
+    lines = [
+        f"# {pattern_id} — {note.source_title}",
+        "",
+        "> Proposal status: review-required. Derived from approved learning note; do not move into `patterns/` until a human reviews wording, rights, and overlap with existing patterns.",
+        "",
+        "## Provenance",
+        f"- Derived from approved learning note: `{note.path}`",
+        f"- Source URL: {note.source_url}",
+        f"- Rights: {note.rights}",
+        f"- Source hash: `{note.source_text_sha256}`",
+        "- Source text was not stored in the learning note or this proposal.",
+        "",
+        "## Use when",
+        f"Use this pattern when a {note.category} draft needs the reusable move captured by `{note.source_title}`.",
+        "",
+        "## Reader situation",
+        "The reader needs a concrete path from situation to action, with private/source details removed and structure preserved.",
+        "",
+        "## Structure",
+    ]
+    for index, lesson in enumerate(lessons[:5], start=1):
+        lines.append(f"{index}. {lesson}")
+    lines.extend([
+        "",
+        "## Why it works",
+        "The proposal abstracts a reviewed learning note into an agent-executable move while preserving provenance and avoiding phrase transfer.",
+        "",
+        "## Examples",
+        f"- Approved learning note `{note.path.name}` — metadata-only source; add a library example link only after import.",
+        "",
+        "## Anti-patterns",
+        "- Copying source prose instead of abstracting structure.",
+        "- Treating approval as permission to skip rights review.",
+        "- Creating duplicate patterns instead of extending an existing strict pattern.",
+        "",
+        "## Agent instruction",
+        f"For {note.category} work, apply the structure above as a reusable move. Do not copy source wording; use only the source metadata, original analysis, and human-reviewed pattern abstraction.",
+    ])
+    return "\n".join(lines).rstrip() + "\n"
