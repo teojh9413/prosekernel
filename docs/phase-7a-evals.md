@@ -1,10 +1,10 @@
-# Humanprint Phase 7A Evals
+# ProseKernel Phase 7A Evals
 
-Phase 7A exists before the LLM adapter so Humanprint can prove improvement instead of merely generating fluent text.
+Phase 7A exists before the LLM adapter so ProseKernel can prove improvement instead of merely generating fluent text.
 
 ## What gets measured
 
-The deterministic scorecard in `src/humanprint/evals.py` maps a draft to the same six human-readable dimensions in `evals/writing-scorecard.md`:
+The deterministic scorecard in `src/prosekernel/evals.py` maps a draft to the same six human-readable dimensions in `evals/writing-scorecard.md`:
 
 - Specificity
 - Proof
@@ -42,7 +42,7 @@ Current coverage mirrors the benchmark task set:
 Run:
 
 ```bash
-humanprint eval
+prosekernel eval
 ```
 
 Expected result:
@@ -54,14 +54,14 @@ Passed: 12/12
 ## Score one draft
 
 ```bash
-humanprint scorecard draft.md --task "write a launch email for Humanprint" --output /tmp/humanprint-scorecard.md
+prosekernel scorecard draft.md --task "write a launch email for ProseKernel" --output /tmp/prosekernel-scorecard.md
 ```
 
 The command exits non-zero when the draft needs revision, so agents can use it as a quality gate.
 
 ## Demo report integration
 
-`humanprint write-demo` now includes:
+`prosekernel write-demo` now includes:
 
 - initial lint score
 - final lint score

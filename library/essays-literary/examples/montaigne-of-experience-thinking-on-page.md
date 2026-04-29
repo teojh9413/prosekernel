@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_HOOK_001, PATTERN_REPORTAGE_001]
 ## Source
 - Author: Michel de Montaigne
 - URL: https://www.gutenberg.org/ebooks/3600
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 Montaigne teaches the essay as exploration. The authority is not tidy conclusion; it is the visible movement of attention across observation, self-knowledge, contradiction, and judgment.

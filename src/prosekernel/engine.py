@@ -98,7 +98,7 @@ def pattern_agent_instructions(root: Path, pattern_ids: list[str]) -> list[str]:
 
 def build_agent_prompt(task: str, examples: list[ExampleRecord], pattern_ids: list[str], pattern_instructions: list[str], craft_moves: list[str]) -> str:
     lines: list[str] = []
-    lines.append("You are drafting with Humanprint, an open-source writing taste layer for AI agents.")
+    lines.append("You are drafting with ProseKernel, an open-source writing taste layer for AI agents.")
     lines.append("")
     lines.append(f"Task: {task}")
     lines.append("")
@@ -130,7 +130,7 @@ def build_agent_prompt(task: str, examples: list[ExampleRecord], pattern_ids: li
     lines.append("2. Choose one primary pattern and make the structure visible.")
     lines.append("3. Draft with concrete proof before claims of importance.")
     lines.append("4. Cut any sentence that could describe any other product, company, or topic.")
-    lines.append("5. Score the draft before publishing with `humanprint scorecard draft.md --task \"...\"`.")
+    lines.append("5. Score the draft before publishing with `prosekernel scorecard draft.md --task \"...\"`.")
     return "\n".join(lines).rstrip()
 
 
@@ -154,7 +154,7 @@ def build_writing_brief(root: Path, task: str, limit: int = 5, category: str | N
 
 def render_brief_report(brief: WritingBrief) -> str:
     lines: list[str] = []
-    lines.append("# Humanprint Writing Brief")
+    lines.append("# ProseKernel Writing Brief")
     lines.append("")
     lines.append(f"Task: {brief.task}")
     lines.append(f"Retrieval mode: {brief.retrieval_mode}")
@@ -190,8 +190,8 @@ def render_brief_report(brief: WritingBrief) -> str:
     lines.append("```")
     lines.append("")
     lines.append("## Quality gate")
-    lines.append("- Run `humanprint lint draft.md`.")
-    lines.append(f"- Run `humanprint scorecard draft.md --task \"{brief.task}\"`.")
+    lines.append("- Run `prosekernel lint draft.md`.")
+    lines.append(f"- Run `prosekernel scorecard draft.md --task \"{brief.task}\"`.")
     lines.append("- Revise until the draft has concrete proof, reader fit, and non-genericness.")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -222,7 +222,7 @@ def run_provider_write(
 
 def render_provider_write_report(result: ProviderWriteResult) -> str:
     lines: list[str] = []
-    lines.append("# Humanprint Write Report")
+    lines.append("# ProseKernel Write Report")
     lines.append("")
     lines.append(f"Task: {result.task}")
     lines.append(f"Retrieval mode: {result.brief.retrieval_mode}")
@@ -252,7 +252,7 @@ def render_provider_write_report(result: ProviderWriteResult) -> str:
     lines.append("")
     lines.append("## Lint result")
     status = "PASS" if result.lint_report.passed else "FAIL"
-    lines.append(f"Humanprint lint score: {result.lint_report.score}/100 — {status}")
+    lines.append(f"ProseKernel lint score: {result.lint_report.score}/100 — {status}")
     if result.lint_report.findings:
         for finding in result.lint_report.findings:
             loc = f":{finding.line}" if finding.line else ""
@@ -278,7 +278,7 @@ def draft_from_task(task: str, examples: list[ExampleRecord], craft_moves: list[
     second_move = craft_moves[1] if len(craft_moves) > 1 else "Make the structure visible before details."
     third_move = craft_moves[2] if len(craft_moves) > 2 else "Use one specific proof point before asking for action."
     source_line = "; ".join(f"{e.title} ({e.category})" for e in examples[:3])
-    return f"""# Humanprint demo draft
+    return f"""# ProseKernel demo draft
 
 Task: {subject}
 
@@ -351,7 +351,7 @@ def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None
 
 def render_demo_report(result: WritingDemoResult) -> str:
     lines: list[str] = []
-    lines.append("# Humanprint Retrieval + Writing Demo")
+    lines.append("# ProseKernel Retrieval + Writing Demo")
     lines.append("")
     lines.append(f"Task: {result.task}")
     lines.append(f"Retrieval mode: {result.retrieval_mode}")

@@ -1,6 +1,6 @@
 ---
 title: Essay insight to social compression
-author: Humanprint synthesis from Paul Graham-style essays
+author: ProseKernel synthesis from Paul Graham-style essays
 source_url: https://paulgraham.com/articles.html
 date_published: various
 added: 2026-04-28
@@ -17,7 +17,7 @@ pattern_ids: [PATTERN_HOOK_001]
 # Paul Graham Essay Insight to Social Compression
 
 ## Source
-- Author: Humanprint synthesis from Paul Graham-style essays
+- Author: ProseKernel synthesis from Paul Graham-style essays
 - URL: https://paulgraham.com/articles.html
 - Rights note: Analysis only.
 

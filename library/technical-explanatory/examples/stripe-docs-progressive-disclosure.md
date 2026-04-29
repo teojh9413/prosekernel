@@ -38,7 +38,7 @@ Stripe’s documentation is strong because it gives readers control. It combines
 5. Edge cases and deeper options.
 
 ## Excerpt or summary
-Humanprint takeaway: technical writing should reduce cognitive load, not display expertise.
+ProseKernel takeaway: technical writing should reduce cognitive load, not display expertise.
 
 ## Reusable pattern
 For explainers: task → concept → minimal path → example → edge cases.

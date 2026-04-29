@@ -31,7 +31,7 @@ From weakest to strongest:
 6. mechanism
 7. repeated pattern across independent examples
 
-## Humanprint rule
+## ProseKernel rule
 
 If a sentence asks for trust, it must pay with proof.
 

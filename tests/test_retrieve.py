@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from humanprint.cli import main
-from humanprint.retrieve import (
+from prosekernel.cli import main
+from prosekernel.retrieve import (
     _semantic_token_tuple,
     load_examples,
     parse_frontmatter,
@@ -10,7 +10,7 @@ from humanprint.retrieve import (
     select_examples,
     semantic_tokens,
 )
-from humanprint.patterns import KNOWN_PATTERN_IDS
+from prosekernel.patterns import KNOWN_PATTERN_IDS
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,7 +33,7 @@ def test_all_examples_link_to_strict_patterns():
             assert list((ROOT / "patterns").glob(f"{pattern_id}-*.md"))
 
 def test_select_examples_uses_seeded_new_category_first():
-    examples = select_examples(ROOT, "write a launch email for Humanprint", limit=5)
+    examples = select_examples(ROOT, "write a launch email for ProseKernel", limit=5)
     assert examples
     assert examples[0].category == "email-newsletters"
 

@@ -1,6 +1,6 @@
 # Library Retriever Prompt
 
-You are using Humanprint.
+You are using ProseKernel.
 
 Before writing, retrieve 3-5 relevant examples from `LIBRARY.md`.
 

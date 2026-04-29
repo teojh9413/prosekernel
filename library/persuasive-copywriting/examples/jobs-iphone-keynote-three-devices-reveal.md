@@ -37,7 +37,7 @@ The iPhone launch works as persuasion because it does not begin with specificati
 4. Only then explain capabilities and implications.
 
 ## Excerpt or summary
-A launch structure built around the famous “three products” setup and reveal; Humanprint stores analysis only, not transcript text.
+A launch structure built around the famous “three products” setup and reveal; ProseKernel stores analysis only, not transcript text.
 
 ## Reusable pattern
 Before listing features, create a simple category puzzle that the product resolves.

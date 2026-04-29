@@ -1,4 +1,4 @@
-# Humanprint Library Catalog
+# ProseKernel Library Catalog
 
 This is the master catalog of writing examples and source notes.
 
@@ -190,11 +190,11 @@ Phase 5 turns the corpus into executable writing intelligence. Strict pattern fi
 
 ## Tooling
 
-- `humanprint lint <file>` — score drafts for AI-slop markers.
-- `humanprint new-example ...` — generate a compliant annotation skeleton.
-- `humanprint validate-library` — validate example files for required sections.
-- `humanprint search-examples "task"` — retrieve examples for a writing task.
-- `humanprint write-demo "task"` — generate a deterministic retrieval + draft + lint report.
+- `prosekernel lint <file>` — score drafts for AI-slop markers.
+- `prosekernel new-example ...` — generate a compliant annotation skeleton.
+- `prosekernel validate-library` — validate example files for required sections.
+- `prosekernel search-examples "task"` — retrieve examples for a writing task.
+- `prosekernel write-demo "task"` — generate a deterministic retrieval + draft + lint report.
 
 ## Phase 4 collection targets
 

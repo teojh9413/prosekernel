@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_EXPLAIN_001]
 ## Source
 - Author: MDN Web Docs Contributors
 - URL: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 MDN’s Fetch guide works because it is task-first. Rather than worshiping the API surface, it organizes around common developer intentions: make a request, send data, process a response, handle details. Examples carry the explanation.

@@ -4,14 +4,14 @@ Phase 8 adds an optional hybrid retrieval scorer while preserving the default de
 
 ## Goals
 
-- Keep Humanprint local, offline, and dependency-free by default.
+- Keep ProseKernel local, offline, and dependency-free by default.
 - Preserve existing CLI output unless a user explicitly asks for a new retrieval mode or score explanation.
 - Improve retrieval for tasks where the user describes intent with adjacent language instead of exact category keywords.
 - Keep category, tag, pattern, keyword, semantic intent, and quality signals visible rather than hiding ranking behind opaque vector search.
 
 ## Retrieval modes
 
-`humanprint search-examples`, `humanprint brief`, `humanprint write`, and `humanprint write-demo` accept:
+`prosekernel search-examples`, `prosekernel brief`, `prosekernel write`, and `prosekernel write-demo` accept:
 
 - `--mode lexical` — default. Existing deterministic scoring: category preference, keyword/tag/pattern overlap, and quality score.
 - `--mode semantic` — offline concept matching using curated aliases and category concepts.
@@ -20,9 +20,9 @@ Phase 8 adds an optional hybrid retrieval scorer while preserving the default de
 Examples:
 
 ```bash
-PYTHONPATH=src python3 -m humanprint.cli search-examples "write a security incident update for customers" --mode hybrid --explain
-PYTHONPATH=src python3 -m humanprint.cli brief "write a customer trust update after a compromised credential scare" --mode hybrid --output /tmp/humanprint-brief.md
-PYTHONPATH=src python3 -m humanprint.cli write-demo "write an outage apology" --mode hybrid --output /tmp/humanprint-demo.md
+PYTHONPATH=src python3 -m prosekernel.cli search-examples "write a security incident update for customers" --mode hybrid --explain
+PYTHONPATH=src python3 -m prosekernel.cli brief "write a customer trust update after a compromised credential scare" --mode hybrid --output /tmp/prosekernel-brief.md
+PYTHONPATH=src python3 -m prosekernel.cli write-demo "write an outage apology" --mode hybrid --output /tmp/prosekernel-demo.md
 ```
 
 ## Explain output
@@ -52,16 +52,16 @@ No embedding API, paid provider, network call, model download, database, or heav
 Default commands still behave as before:
 
 ```bash
-PYTHONPATH=src python3 -m humanprint.cli search-examples "write a launch email for Humanprint"
-PYTHONPATH=src python3 -m humanprint.cli brief "write a launch email for Humanprint"
-PYTHONPATH=src python3 -m humanprint.cli write-demo "write a launch email for Humanprint"
+PYTHONPATH=src python3 -m prosekernel.cli search-examples "write a launch email for ProseKernel"
+PYTHONPATH=src python3 -m prosekernel.cli brief "write a launch email for ProseKernel"
+PYTHONPATH=src python3 -m prosekernel.cli write-demo "write a launch email for ProseKernel"
 ```
 
 Reports now include `Retrieval mode: ...` for traceability. The default is `lexical`, so existing category-first deterministic behavior remains stable.
 
 ## Future upgrades
 
-If Humanprint later adds true embeddings, keep the hybrid architecture:
+If ProseKernel later adds true embeddings, keep the hybrid architecture:
 
 1. lexical/category score,
 2. tag/pattern score,

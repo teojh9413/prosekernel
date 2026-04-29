@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_EXPLAIN_001]
 ## Source
 - Author: Django Software Foundation
 - URL: https://docs.djangoproject.com/en/stable/intro/tutorial01/
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 The Django polls tutorial works because it avoids abstract tours of the framework. It gives the reader a small application with visible progress, then introduces concepts as needed. The project is small enough to finish and real enough to create mental hooks.

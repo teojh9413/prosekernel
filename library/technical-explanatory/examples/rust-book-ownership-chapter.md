@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_EXPLAIN_001, PATTERN_INTERNAL_001]
 ## Source
 - Author: The Rust Project Developers
 - URL: https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 The Rust ownership chapter is strong because it introduces a new mental model before drowning the reader in compiler behavior. It defines the rules, demonstrates them with small examples, and gradually reveals why the rules exist. The explanation respects confusion without lowering the standard.
@@ -38,7 +38,7 @@ The Rust ownership chapter is strong because it introduces a new mental model be
 5. Refinement and exception.
 
 ## Excerpt or summary
-Documentation teaching ownership as a conceptual model through rules and examples; use source under its license, but Humanprint stores analysis.
+Documentation teaching ownership as a conceptual model through rules and examples; use source under its license, but ProseKernel stores analysis.
 
 ## Reusable pattern
 For difficult concepts: define the mental model, show the smallest example, then add consequences one layer at a time.

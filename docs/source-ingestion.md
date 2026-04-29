@@ -1,6 +1,6 @@
 # Source Ingestion Protocol
 
-Use this whenever adding a new Humanprint example.
+Use this whenever adding a new ProseKernel example.
 
 ## 1. Screen the candidate
 
@@ -37,7 +37,7 @@ For modern copyrighted work, default to `metadata-only` and write original analy
 Use the CLI skeleton generator:
 
 ```bash
-humanprint new-example \
+prosekernel new-example \
   --title "Example Title" \
   --author "Author" \
   --source-url "https://example.com" \
@@ -77,6 +77,6 @@ Update:
 Run:
 
 ```bash
-humanprint validate-library
+prosekernel validate-library
 python3 -m pytest -q
 ```

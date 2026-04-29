@@ -1,7 +1,7 @@
 # Eval Task — Strategic Memo
 
 ## Task
-Write a short strategic memo arguing whether Humanprint should add semantic retrieval now or delay until the corpus reaches 80-150 examples.
+Write a short strategic memo arguing whether ProseKernel should add semantic retrieval now or delay until the corpus reaches 80-150 examples.
 
 ## Reader
 Maintainers deciding the build sequence.

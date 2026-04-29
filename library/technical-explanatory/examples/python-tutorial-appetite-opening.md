@@ -18,7 +18,7 @@ pattern_ids: [PATTERN_EXPLAIN_001]
 ## Source
 - Author: Python Software Foundation
 - URL: https://docs.python.org/3/tutorial/appetite.html
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 The Python tutorial does not begin as a reference dump. Its appetite-setting opening gives the learner a reason to continue, places the language in practical context, and lowers the intimidation barrier before syntax begins.

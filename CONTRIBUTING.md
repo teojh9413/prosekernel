@@ -1,6 +1,6 @@
-# Contributing to Humanprint
+# Contributing to ProseKernel
 
-Humanprint is an open-source writing taste layer for AI agents. Contributions should make agents better at studying strong writing, transferring structure, and avoiding generic AI slop.
+ProseKernel is an open-source taste engine for AI writing agents. Contributions should make agents better at studying strong writing, transferring structure, and avoiding generic AI slop.
 
 ## What belongs here
 
@@ -39,7 +39,7 @@ Reject examples that are merely popular, clever, or famous if they do not teach 
 
 ## Rights policy for examples
 
-Humanprint teaches structure and craft. It does not need to store full copyrighted works.
+ProseKernel teaches structure and craft. It does not need to store full copyrighted works.
 
 Allowed:
 
@@ -67,7 +67,7 @@ Never add:
 
 ## Quality bar
 
-A Humanprint example should teach at least one of:
+A ProseKernel example should teach at least one of:
 
 - a sharper opening
 - a proof structure
@@ -105,5 +105,5 @@ Before opening a pull request, run:
 
 ```bash
 python3 -m pytest -q
-PYTHONPATH=src python3 -m humanprint.cli validate-library
+PYTHONPATH=src python3 -m prosekernel.cli validate-library
 ```

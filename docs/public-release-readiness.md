@@ -1,10 +1,10 @@
 # Public Release Readiness
 
-Humanprint should be public as an agent writing-taste layer, not as a personal voice system.
+ProseKernel should be public as an agent writing-taste layer, not as a personal voice system.
 
 ## Positioning
 
-Humanprint is an open-source writing system for AI agents. It helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
+ProseKernel is an open-source writing system for AI agents. It helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
 
 Short positioning options:
 
@@ -15,7 +15,7 @@ Short positioning options:
 
 - [x] Replace private framing in README.
 - [x] Add MIT license.
-- [x] Change package author to Humanprint contributors.
+- [x] Change package author to ProseKernel contributors.
 - [x] Make rights/source policy visible before heavy corpus expansion.
 - [x] Add CONTRIBUTING.md with example acceptance rules.
 - [x] Add example quality rubric.

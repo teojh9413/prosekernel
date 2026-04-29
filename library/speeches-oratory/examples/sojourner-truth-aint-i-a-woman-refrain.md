@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_SPEECH_001, PATTERN_HOOK_001]
 ## Source
 - Author: Sojourner Truth
 - URL: https://sourcebooks.fordham.edu/mod/sojtruth-woman.asp
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 The speech’s craft power is the refrain as cross-examination. A repeated question turns the audience’s assumptions back on themselves while lived evidence prevents the argument from becoming abstract.

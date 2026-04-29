@@ -16,7 +16,7 @@ What should they believe, feel, or do after reading?
 ## Format
 Tweet, thread, essay, landing page, email, memo, script, doc, etc.
 
-## Relevant Humanprint examples
+## Relevant ProseKernel examples
 List 3-5 examples from `LIBRARY.md`:
 
 1.

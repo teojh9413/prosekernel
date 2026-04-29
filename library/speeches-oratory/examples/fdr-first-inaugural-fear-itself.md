@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_SPEECH_001, PATTERN_CRISIS_001]
 ## Source
 - Author: Franklin D. Roosevelt
 - URL: https://avalon.law.yale.edu/20th_century/froos1.asp
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 The address names fear without feeding it. Its famous move is to identify the psychological obstacle before turning to diagnosis and action. Crisis oratory needs confidence, but confidence must lead into work, not denial.

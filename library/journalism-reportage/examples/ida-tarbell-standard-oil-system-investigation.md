@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_REPORTAGE_001, PATTERN_PROOF_001]
 ## Source
 - Author: Ida M. Tarbell
 - URL: https://www.gutenberg.org/ebooks/60637
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 Tarbell’s achievement is system explanation through evidence. The writing does not merely accuse Standard Oil; it reconstructs mechanisms of power so readers understand how conduct, incentives, and institutions fit together.

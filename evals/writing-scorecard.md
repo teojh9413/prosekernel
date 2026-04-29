@@ -1,4 +1,4 @@
-# Humanprint Writing Scorecard
+# ProseKernel Writing Scorecard
 
 Score every important draft from 0-100. This scorecard is the human-readable half of Phase 7A: it catches "smart-sounding but empty" writing, not just obvious AI-slop phrases.
 

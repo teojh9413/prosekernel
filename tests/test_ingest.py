@@ -1,5 +1,5 @@
 from pathlib import Path
-from humanprint.ingest import ExampleMetadata, example_path, render_example, slugify, validate_example_text, validate_library
+from prosekernel.ingest import ExampleMetadata, example_path, render_example, slugify, validate_example_text, validate_library
 
 
 def test_slugify():

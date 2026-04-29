@@ -18,7 +18,7 @@ pattern_ids: [PATTERN_UX_001]
 ## Source
 - Author: GOV.UK Design System
 - URL: https://design-system.service.gov.uk/patterns/confirmation-pages/
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 GOV.UK confirmation guidance is strong because it handles the moment after action. It does not stop at “success”; it tells the user what has happened, what evidence they have, and what to expect next.

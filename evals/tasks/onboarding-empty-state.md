@@ -1,7 +1,7 @@
 # Eval Task — Onboarding Empty State
 
 ## Task
-Write empty-state microcopy for a Humanprint user who has installed the CLI but has not added or searched any examples yet.
+Write empty-state microcopy for a ProseKernel user who has installed the CLI but has not added or searched any examples yet.
 
 ## Reader
 A first-time user who needs one obvious next action.

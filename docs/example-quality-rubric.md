@@ -1,6 +1,6 @@
 # Example Quality Rubric
 
-Use this rubric before adding a Humanprint example.
+Use this rubric before adding a ProseKernel example.
 
 ## Accept if
 
@@ -34,4 +34,4 @@ Score each dimension 1-5:
 
 ## Public repo standard
 
-Humanprint should be high-signal. A smaller rights-safe corpus with sharp annotations is better than a large messy swipe file.
+ProseKernel should be high-signal. A smaller rights-safe corpus with sharp annotations is better than a large messy swipe file.

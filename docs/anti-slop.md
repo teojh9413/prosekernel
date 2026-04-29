@@ -1,6 +1,6 @@
 # Anti-Slop Doctrine
 
-This file is the immune system of Humanprint.
+This file is the immune system of ProseKernel.
 
 ## Core enemy
 

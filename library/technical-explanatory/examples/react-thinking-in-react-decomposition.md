@@ -18,7 +18,7 @@ pattern_ids: [PATTERN_EXPLAIN_001]
 ## Source
 - Author: React Docs Contributors
 - URL: https://react.dev/learn/thinking-in-react
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 Thinking in React works because it teaches a way to see, not just an API. The guide turns an abstract UI architecture into a repeatable decomposition routine: break the interface down, identify state, decide ownership, then assemble behavior.

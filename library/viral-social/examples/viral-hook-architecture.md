@@ -1,6 +1,6 @@
 ---
 title: Viral hook architecture
-author: Humanprint synthesis
+author: ProseKernel synthesis
 source_url: internal:wikipedia-signs-of-ai-writing; internal:viral-writing-playbook
 date_published: 2026-04-28
 added: 2026-04-28
@@ -17,7 +17,7 @@ pattern_ids: [PATTERN_HOOK_001]
 # Viral Hook Architecture
 
 ## Source
-- Author: Humanprint synthesis
+- Author: ProseKernel synthesis
 - URL: internal synthesis from existing writing wiki
 - Rights note: Original synthesis.
 

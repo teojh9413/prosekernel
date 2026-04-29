@@ -38,7 +38,7 @@ Orwell connects language quality to thought quality. Bad prose is not just ugly;
 5. Larger implication: clear language protects clear thought.
 
 ## Excerpt or summary
-Humanprint takeaway: never use a phrase you did not choose consciously.
+ProseKernel takeaway: never use a phrase you did not choose consciously.
 
 ## Reusable pattern
 When a sentence sounds familiar, interrogate it. If it came preassembled, rebuild it from meaning.

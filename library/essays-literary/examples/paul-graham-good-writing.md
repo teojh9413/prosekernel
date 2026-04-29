@@ -38,7 +38,7 @@ Paul Graham’s essays show writing as thinking. The draft is not merely a conta
 5. End with a sharper thought than the opening.
 
 ## Excerpt or summary
-Humanprint takeaway: the writer is the first reader. If it sounds wrong, the thought is probably still wrong.
+ProseKernel takeaway: the writer is the first reader. If it sounds wrong, the thought is probably still wrong.
 
 ## Reusable pattern
 Draft to discover, then edit to clarify.

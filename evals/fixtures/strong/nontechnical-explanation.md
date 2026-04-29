@@ -1,6 +1,6 @@
 # Strong nontechnical explanation fixture
 
-Think of Humanprint like a prep sheet for an AI writer.
+Think of ProseKernel like a prep sheet for an AI writer.
 
 Before the agent writes, it looks up a few examples of the kind of piece you need: a launch email, an apology, a memo, or an empty state. It does not copy the wording. It copies the shape: where the proof appears, how the reader is named, and what the ending asks them to do.
 

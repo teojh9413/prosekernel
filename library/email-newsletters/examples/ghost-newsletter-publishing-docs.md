@@ -19,10 +19,10 @@ pattern_ids: [PATTERN_EMAIL_001]
 ## Source
 - Author: Ghost
 - URL: https://ghost.org/docs/newsletters/
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
-Ghost’s newsletter docs are useful for Humanprint because they show email as a product workflow: audience, members, settings, publishing, and delivery. The writing lesson is to connect editorial promise with operational clarity.
+Ghost’s newsletter docs are useful for ProseKernel because they show email as a product workflow: audience, members, settings, publishing, and delivery. The writing lesson is to connect editorial promise with operational clarity.
 
 ## Craft moves
 - Frames newsletter work as a repeatable system.

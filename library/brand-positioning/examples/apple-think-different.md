@@ -37,7 +37,7 @@ The campaign positions the brand by celebrating the identity of its users. It se
 4. Transfer that identity to the brand.
 
 ## Excerpt or summary
-Humanprint takeaway: brand writing becomes powerful when it gives the reader a self-image they want to inhabit.
+ProseKernel takeaway: brand writing becomes powerful when it gives the reader a self-image they want to inhabit.
 
 ## Reusable pattern
 For brand manifestos: “We are for people who ____. The world calls them ____. We call them ____.”

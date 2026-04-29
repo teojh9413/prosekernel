@@ -1,6 +1,6 @@
 # Retrieval + Writing Demo
 
-The retrieval demo turns Humanprint from a static library into a writing workflow.
+The retrieval demo turns ProseKernel from a static library into a writing workflow.
 
 ## Flow
 
@@ -21,29 +21,29 @@ This workflow is local-first. Default retrieval is deterministic lexical/categor
 Search for examples:
 
 ```bash
-PYTHONPATH=src python3 -m humanprint.cli search-examples "write a launch email for a new AI writing library" --limit 5
+PYTHONPATH=src python3 -m prosekernel.cli search-examples "write a launch email for a new AI writing library" --limit 5
 ```
 
 Search with optional hybrid retrieval and score explanation:
 
 ```bash
-PYTHONPATH=src python3 -m humanprint.cli search-examples "write a security incident update for customers" --mode hybrid --explain --limit 5
+PYTHONPATH=src python3 -m prosekernel.cli search-examples "write a security incident update for customers" --mode hybrid --explain --limit 5
 ```
 
 Run the full demo:
 
 ```bash
-PYTHONPATH=src python3 -m humanprint.cli write-demo "write a launch email for Humanprint" --output /tmp/humanprint-demo.md
+PYTHONPATH=src python3 -m prosekernel.cli write-demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
 ```
 
 Constrain retrieval to a category:
 
 ```bash
-PYTHONPATH=src python3 -m humanprint.cli write-demo "write an outage apology" --category crisis-communications
+PYTHONPATH=src python3 -m prosekernel.cli write-demo "write an outage apology" --category crisis-communications
 ```
 
 If a selected category has no examples yet, omit `--category` and let retrieval fall back to populated neighboring categories.
 
 ## Current limitation
 
-The generated `write-demo` draft is a scaffold, not final prose. Provider-backed `humanprint write` exists for explicit, user-selected LLM calls, but Humanprint still refuses to choose a paid provider by default. Later retrieval upgrades may add true embeddings, but should preserve the current hybrid score breakdown and default lexical contract.
+The generated `write-demo` draft is a scaffold, not final prose. Provider-backed `prosekernel write` exists for explicit, user-selected LLM calls, but ProseKernel still refuses to choose a paid provider by default. Later retrieval upgrades may add true embeddings, but should preserve the current hybrid score breakdown and default lexical contract.

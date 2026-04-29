@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_REPORTAGE_001, PATTERN_PROOF_001]
 ## Source
 - Author: Jacob A. Riis
 - URL: https://www.gutenberg.org/ebooks/45502
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 Riis’s work shows journalism as exposure of conditions. It brings readers into spaces they do not see, using scene, description, and accumulated evidence to make neglect politically and morally legible.

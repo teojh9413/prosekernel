@@ -21,7 +21,7 @@ pattern_ids: [PATTERN_EMAIL_001, PATTERN_HOOK_001]
 - Rights note: Metadata and original craft analysis only; do not mirror full source text.
 
 ## Why this is good
-The Hustle is useful for Humanprint because it combines business utility with a recognizable voice. The craft lesson is that newsletters become habits when readers know both the kind of information and the personality of the delivery.
+The Hustle is useful for ProseKernel because it combines business utility with a recognizable voice. The craft lesson is that newsletters become habits when readers know both the kind of information and the personality of the delivery.
 
 ## Craft moves
 - Uses voice to make recurring utility less sterile.

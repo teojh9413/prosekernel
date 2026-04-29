@@ -21,7 +21,7 @@ from .taxonomy import recommend_categories
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="humanprint", description="Humanprint writing library tools.")
+    parser = argparse.ArgumentParser(prog="prosekernel", description="ProseKernel writing library tools.")
     sub = parser.add_subparsers(dest="command", required=True)
 
     lint_p = sub.add_parser("lint", help="Score a draft for AI-slop markers")
@@ -46,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
     val_p = sub.add_parser("validate-library", help="Validate library example structure")
     val_p.add_argument("--root", type=Path, default=Path.cwd())
 
-    search_p = sub.add_parser("search-examples", help="Select Humanprint examples for a writing task")
+    search_p = sub.add_parser("search-examples", help="Select ProseKernel examples for a writing task")
     search_p.add_argument("task")
     search_p.add_argument("--root", type=Path, default=Path.cwd())
     search_p.add_argument("--limit", type=int, default=5)
@@ -62,7 +62,7 @@ def main(argv: list[str] | None = None) -> int:
     brief_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
     brief_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
-    write_p = sub.add_parser("write", help="Draft with an explicit LLM provider and Humanprint quality report")
+    write_p = sub.add_parser("write", help="Draft with an explicit LLM provider and ProseKernel quality report")
     write_p.add_argument("task")
     write_p.add_argument("--root", type=Path, default=Path.cwd())
     write_p.add_argument("--limit", type=int, default=5)
@@ -82,7 +82,7 @@ def main(argv: list[str] | None = None) -> int:
     demo_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
     demo_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
-    score_p = sub.add_parser("scorecard", help="Score a draft with the Phase 7A Humanprint scorecard")
+    score_p = sub.add_parser("scorecard", help="Score a draft with the Phase 7A ProseKernel scorecard")
     score_p.add_argument("path", type=Path)
     score_p.add_argument("--task", default="", help="Optional writing task for reader-fit/non-genericness scoring")
     score_p.add_argument("--output", type=Path, help="Optional markdown report path")
@@ -96,7 +96,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "lint":
         report = lint_file(args.path)
         status = "PASS" if report.passed else "FAIL"
-        print(f"Humanprint score: {report.score}/100 — {status}")
+        print(f"ProseKernel score: {report.score}/100 — {status}")
         if not report.findings:
             print("No slop markers found. Now read it aloud and cut 15%.")
             return 0
@@ -180,8 +180,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "write":
         if not args.provider or not args.model:
             print(
-                "No default provider is configured. Humanprint will not choose a paid provider for you. "
-                "Use `humanprint brief` for a no-credential dry run, or pass --provider and --model explicitly.",
+                "No default provider is configured. ProseKernel will not choose a paid provider for you. "
+                "Use `prosekernel brief` for a no-credential dry run, or pass --provider and --model explicitly.",
                 file=sys.stderr,
             )
             return 2
@@ -230,7 +230,7 @@ def main(argv: list[str] | None = None) -> int:
         scorecard = score_text(args.path.read_text(encoding="utf-8"), task=args.task)
         report = render_scorecard_report(
             scorecard,
-            title=f"Humanprint Scorecard — {args.path.name}",
+            title=f"ProseKernel Scorecard — {args.path.name}",
         )
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)

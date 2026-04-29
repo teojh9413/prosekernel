@@ -1,6 +1,6 @@
 # Agent Workflow
 
-Use this whenever an AI agent writes with Humanprint.
+Use this whenever an AI agent writes with ProseKernel.
 
 ## Step 1: Identify the job
 

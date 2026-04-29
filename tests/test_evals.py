@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from humanprint.cli import main
-from humanprint.evals import evaluate_fixtures, score_text
+from prosekernel.cli import main
+from prosekernel.evals import evaluate_fixtures, score_text
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_SCORECARD_DIMENSIONS = [
@@ -69,7 +69,7 @@ def test_score_text_returns_feedback_dimensions():
 def test_cli_scorecard_and_eval_commands(tmp_path):
     strong_path = ROOT / "evals" / "fixtures" / "strong" / "launch-email.md"
     score_out = tmp_path / "scorecard.md"
-    assert main(["scorecard", str(strong_path), "--task", "launch email for Humanprint", "--output", str(score_out)]) == 0
+    assert main(["scorecard", str(strong_path), "--task", "launch email for ProseKernel", "--output", str(score_out)]) == 0
     assert "Total score:" in score_out.read_text(encoding="utf-8")
 
     eval_out = tmp_path / "eval.md"

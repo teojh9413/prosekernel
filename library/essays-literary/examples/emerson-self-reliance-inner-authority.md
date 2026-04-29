@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_HOOK_001, PATTERN_BRAND_001]
 ## Source
 - Author: Ralph Waldo Emerson
 - URL: https://www.gutenberg.org/ebooks/16643
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 Emerson’s power is declarative voltage. The essay advances through memorable assertions that invite the reader to recognize a latent belief in themselves. It is not cautious persuasion; it is permission-giving rhetoric.

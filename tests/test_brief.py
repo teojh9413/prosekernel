@@ -1,15 +1,15 @@
 from pathlib import Path
 
-from humanprint.cli import main
-from humanprint.engine import build_writing_brief, render_brief_report
+from prosekernel.cli import main
+from prosekernel.engine import build_writing_brief, render_brief_report
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_build_writing_brief_collects_examples_patterns_and_instructions():
-    brief = build_writing_brief(ROOT, "write a launch email for Humanprint", limit=4)
+    brief = build_writing_brief(ROOT, "write a launch email for ProseKernel", limit=4)
 
-    assert brief.task == "write a launch email for Humanprint"
+    assert brief.task == "write a launch email for ProseKernel"
     assert brief.retrieval_mode == "lexical"
     assert brief.recommended_categories[0] == "email-newsletters"
     assert len(brief.examples) == 4
@@ -23,11 +23,11 @@ def test_build_writing_brief_collects_examples_patterns_and_instructions():
 
 
 def test_render_brief_report_is_agent_ready_and_api_free():
-    brief = build_writing_brief(ROOT, "write a launch email for Humanprint", limit=3)
+    brief = build_writing_brief(ROOT, "write a launch email for ProseKernel", limit=3)
     report = render_brief_report(brief)
 
     for heading in [
-        "# Humanprint Writing Brief",
+        "# ProseKernel Writing Brief",
         "## Retrieved examples",
         "## Patterns to apply",
         "## Craft moves",
@@ -38,7 +38,7 @@ def test_render_brief_report_is_agent_ready_and_api_free():
     assert "No model call was made" in report
     assert "Retrieval mode: lexical" in report
     assert "PATTERN_EMAIL_001" in report
-    assert "humanprint scorecard" in report
+    assert "prosekernel scorecard" in report
 
 
 def test_brief_can_use_hybrid_retrieval_mode():
@@ -60,7 +60,7 @@ def test_cli_brief_writes_markdown_report(tmp_path):
 
     assert main([
         "brief",
-        "write a launch email for Humanprint",
+        "write a launch email for ProseKernel",
         "--root",
         str(ROOT),
         "--limit",
@@ -72,7 +72,7 @@ def test_cli_brief_writes_markdown_report(tmp_path):
     ]) == 0
 
     text = out.read_text(encoding="utf-8")
-    assert "# Humanprint Writing Brief" in text
+    assert "# ProseKernel Writing Brief" in text
     assert "No model call was made" in text
     assert "Retrieval mode: hybrid" in text
     assert "PATTERN_EMAIL_001" in text

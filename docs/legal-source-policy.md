@@ -1,6 +1,6 @@
 # Legal Source Policy
 
-Humanprint is an open-source writing-quality repo for AI agents, so source handling must be clean, rights-safe, and reviewable.
+ProseKernel is an open-source writing-quality repo for AI agents, so source handling must be clean, rights-safe, and reviewable.
 
 ## Prefer
 
@@ -36,4 +36,4 @@ Do not store full text.
 
 ## Principle
 
-Humanprint teaches structure, taste, and craft. It does not need to hoard copyrighted text.
+ProseKernel teaches structure, taste, and craft. It does not need to hoard copyrighted text.

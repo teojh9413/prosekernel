@@ -1,6 +1,6 @@
-# Humanprint Roadmap
+# ProseKernel Roadmap
 
-Humanprint is an open-source writing taste layer for AI agents.
+ProseKernel is an open-source taste engine for AI writing agents.
 
 It helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
 
@@ -15,8 +15,8 @@ Completed:
 - Phase 4 — Corpus depth expansion: 100 annotated examples across 12 populated categories, with eight priority categories at 10-example taste depth.
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
 - Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
-- Phase 6A — Provider-agnostic dry-run brief mode: `humanprint brief` builds an agent-ready writing packet without model/API calls.
-- Phase 6B — Explicit provider write mode: adapter interface, `humanprint write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
+- Phase 6A — Provider-agnostic dry-run brief mode: `prosekernel brief` builds an agent-ready writing packet without model/API calls.
+- Phase 6B — Explicit provider write mode: adapter interface, `prosekernel write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
 - Phase 8 — Offline semantic/hybrid retrieval: optional `--mode semantic|hybrid`, score explanations, cached concept expansion, and no new runtime dependencies.
 
 Current corpus: 100 annotated examples across 12 populated categories.
@@ -110,14 +110,14 @@ Deliverables now implemented:
 - `evals/writing-scorecard.md` for the human-readable rubric.
 - `evals/tasks/*.md` for benchmark task prompts.
 - `evals/fixtures/weak/*.md` and `evals/fixtures/strong/*.md` for regression fixtures.
-- `src/humanprint/evals.py` for deterministic scorecard scoring.
-- `humanprint scorecard draft.md --task "..."` for draft scoring.
-- `humanprint eval` for weak/strong fixture regression tests.
+- `src/prosekernel/evals.py` for deterministic scorecard scoring.
+- `prosekernel scorecard draft.md --task "..."` for draft scoring.
+- `prosekernel eval` for weak/strong fixture regression tests.
 - `write-demo` reports include scorecard improvement by dimension.
 
 ## Phase 6 — LLM-backed drafting adapter
 
-Goal: make Humanprint draft, not just brief.
+Goal: make ProseKernel draft, not just brief.
 
 Keep it provider-agnostic:
 
@@ -130,13 +130,13 @@ Keep it provider-agnostic:
 Commands:
 
 ```bash
-humanprint brief "write a launch email for an AI writing library"
-humanprint write "write a launch email for an AI writing library"
+prosekernel brief "write a launch email for an AI writing library"
+prosekernel write "write a launch email for an AI writing library"
 ```
 
 Phase 6A deliverables now implemented:
 
-- `humanprint brief` dry-run command.
+- `prosekernel brief` dry-run command.
 - provider-neutral `WritingBrief` object and markdown renderer.
 - strict pattern agent instructions pulled from `patterns/PATTERN_*.md`.
 - quality gate instructions for lint + scorecard.
@@ -144,9 +144,9 @@ Phase 6A deliverables now implemented:
 
 Phase 6B deliverables now implemented:
 
-- explicit provider adapter protocol in `src/humanprint/providers.py`.
+- explicit provider adapter protocol in `src/prosekernel/providers.py`.
 - initial OpenAI, OpenRouter, and Anthropic HTTP adapters using stdlib HTTP calls.
-- `humanprint write --provider ... --model ...`.
+- `prosekernel write --provider ... --model ...`.
 - no-default-provider refusal path to prevent accidental paid calls.
 - missing credential errors that name the exact env var and confirm no API call was made.
 - write reports with provider/model trace, retrieved examples, pattern IDs, draft, lint, scorecard, and quality gate.
@@ -168,12 +168,12 @@ task → retrieve examples/patterns → build brief → LLM drafts → lint crit
 
 Status: implemented.
 
-Humanprint keeps lexical/category scoring as the default and adds explicit opt-in modes:
+ProseKernel keeps lexical/category scoring as the default and adds explicit opt-in modes:
 
 ```bash
-humanprint search-examples "write a security incident update for customers" --mode hybrid --explain
-humanprint brief "write a customer trust update after a compromised credential scare" --mode hybrid
-humanprint write-demo "write an outage apology" --mode hybrid
+prosekernel search-examples "write a security incident update for customers" --mode hybrid --explain
+prosekernel brief "write a customer trust update after a compromised credential scare" --mode hybrid
+prosekernel write-demo "write an outage apology" --mode hybrid
 ```
 
 Implemented signals:
@@ -191,7 +191,7 @@ See `docs/phase-8-hybrid-retrieval.md`.
 
 ## Phase 9 — Agent workflow integration
 
-Make Humanprint agent-ready for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+Make ProseKernel agent-ready for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 
 Add/strengthen:
 
@@ -218,15 +218,15 @@ Keep the first product surface as CLI + Markdown reports.
 
 Commands:
 
-- `humanprint search`
-- `humanprint brief`
-- `humanprint lint`
-- `humanprint critique`
-- `humanprint rewrite`
-- `humanprint write`
-- `humanprint new-example`
-- `humanprint validate-library`
-- `humanprint index`
+- `prosekernel search`
+- `prosekernel brief`
+- `prosekernel lint`
+- `prosekernel critique`
+- `prosekernel rewrite`
+- `prosekernel write`
+- `prosekernel new-example`
+- `prosekernel validate-library`
+- `prosekernel index`
 
 Do not rush into a web UI.
 
@@ -237,20 +237,20 @@ Public use must not auto-save private user writing.
 Learning command should be explicit:
 
 ```bash
-humanprint learn --from output.md --review
+prosekernel learn --from output.md --review
 ```
 
 Flow:
 
 1. User writes.
-2. Humanprint critiques.
+2. ProseKernel critiques.
 3. User manually approves saving a lesson.
 4. System creates candidate pattern/example.
 5. Maintainer reviews before merge.
 
 ## Phase 12 — Writing OS endgame
 
-Humanprint is a writing operating system for agents: retrieve taste, apply structure, detect slop, improve drafts, and preserve reusable lessons.
+ProseKernel is a writing operating system for agents: retrieve taste, apply structure, detect slop, improve drafts, and preserve reusable lessons.
 
 Definition of done:
 

@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_HOOK_001, PATTERN_PERSUASION_001]
 ## Source
 - Author: Henry David Thoreau
 - URL: https://www.gutenberg.org/ebooks/71
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 The essay’s force comes from making conscience operational. Thoreau does not merely state values; he asks what a person must refuse when institutions violate those values. The prose turns principle into conduct.

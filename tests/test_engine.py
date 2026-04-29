@@ -1,12 +1,12 @@
 from pathlib import Path
 
-from humanprint.engine import render_demo_report, run_writing_demo
+from prosekernel.engine import render_demo_report, run_writing_demo
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_writing_demo_runs_full_pipeline():
-    result = run_writing_demo(ROOT, "write a launch email for Humanprint", limit=4)
+    result = run_writing_demo(ROOT, "write a launch email for ProseKernel", limit=4)
     assert result.retrieval_mode == "lexical"
     assert result.recommended_categories[0] == "email-newsletters"
     assert len(result.examples) == 4

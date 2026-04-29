@@ -1,4 +1,4 @@
-from humanprint.taxonomy import (
+from prosekernel.taxonomy import (
     CATEGORIES,
     BLENDED_FORMATS,
     expand_with_neighbors,
@@ -21,7 +21,7 @@ def test_expanded_categories_are_known():
 
 
 def test_recommend_email_newsletter_category():
-    assert recommend_categories("write a launch email and newsletter for Humanprint")[0] == "email-newsletters"
+    assert recommend_categories("write a launch email and newsletter for ProseKernel")[0] == "email-newsletters"
 
 
 def test_blended_formats_stay_mapped_not_flattened():

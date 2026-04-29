@@ -1,4 +1,4 @@
-# Humanprint Doctrine
+# ProseKernel Doctrine
 
 ## Prime directive
 
@@ -14,7 +14,7 @@ If the draft could appear on any generic SaaS blog, it fails.
 - **Active construction** — name who did what.
 - **Read aloud** — if the mouth stumbles, the mind stumbles.
 
-## Humanprint laws
+## ProseKernel laws
 
 ### 1. Specificity beats significance
 

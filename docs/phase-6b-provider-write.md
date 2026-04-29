@@ -1,11 +1,11 @@
 # Phase 6B — Explicit Provider Write Mode
 
-Humanprint write mode turns the Phase 6A brief into an LLM draft, then immediately runs the Humanprint quality gates.
+ProseKernel write mode turns the Phase 6A brief into an LLM draft, then immediately runs the ProseKernel quality gates.
 
 The safety contract is strict:
 
-- `humanprint brief` remains the no-credential, no-model-call dry run.
-- `humanprint write` never chooses a provider by default.
+- `prosekernel brief` remains the no-credential, no-model-call dry run.
+- `prosekernel write` never chooses a provider by default.
 - A write run requires both `--provider` and `--model`.
 - Missing credentials fail before any API call.
 - Provider calls are adapter-based so agents can inject their own local or test provider.
@@ -15,7 +15,7 @@ The safety contract is strict:
 Use this when you want an agent-ready packet without spend or credentials:
 
 ```bash
-humanprint brief "write a launch email for Humanprint" --output /tmp/humanprint-brief.md
+prosekernel brief "write a launch email for ProseKernel" --output /tmp/prosekernel-brief.md
 ```
 
 The brief includes:
@@ -32,10 +32,10 @@ The brief includes:
 Write mode requires explicit provider and model selection:
 
 ```bash
-humanprint write "write a launch email for Humanprint" \
+prosekernel write "write a launch email for ProseKernel" \
   --provider openai \
   --model gpt-4o-mini \
-  --output /tmp/humanprint-write.md
+  --output /tmp/prosekernel-write.md
 ```
 
 Supported initial providers:
@@ -51,13 +51,13 @@ You can also pass `--api-key` explicitly, but environment variables are preferre
 This intentionally fails:
 
 ```bash
-humanprint write "write a launch email for Humanprint"
+prosekernel write "write a launch email for ProseKernel"
 ```
 
 Expected behavior:
 
 ```text
-No default provider is configured. Humanprint will not choose a paid provider for you. Use `humanprint brief` for a no-credential dry run, or pass --provider and --model explicitly.
+No default provider is configured. ProseKernel will not choose a paid provider for you. Use `prosekernel brief` for a no-credential dry run, or pass --provider and --model explicitly.
 ```
 
 ## Missing credentials
@@ -65,13 +65,13 @@ No default provider is configured. Humanprint will not choose a paid provider fo
 This also fails safely if the provider key is absent:
 
 ```bash
-humanprint write "write a launch email for Humanprint" --provider openai --model gpt-4o-mini
+prosekernel write "write a launch email for ProseKernel" --provider openai --model gpt-4o-mini
 ```
 
 Expected behavior:
 
 ```text
-Missing credential for provider 'openai'. Set OPENAI_API_KEY or pass --api-key explicitly. No API call was made. Use `humanprint brief` for a no-credential dry run.
+Missing credential for provider 'openai'. Set OPENAI_API_KEY or pass --api-key explicitly. No API call was made. Use `prosekernel brief` for a no-credential dry run.
 ```
 
 ## Output contract
@@ -101,8 +101,8 @@ class ProviderAdapter(Protocol):
         ...
 ```
 
-This lets coding agents, tests, or local model wrappers run Humanprint without coupling the engine to a specific vendor SDK.
+This lets coding agents, tests, or local model wrappers run ProseKernel without coupling the engine to a specific vendor SDK.
 
 ## Design principle
 
-Humanprint should be taste infrastructure, not a hidden spending surface. If a model call happens, the caller must have made a visible provider/model/credential choice.
+ProseKernel should be taste infrastructure, not a hidden spending surface. If a model call happens, the caller must have made a visible provider/model/credential choice.

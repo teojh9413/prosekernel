@@ -1,8 +1,8 @@
-# Humanprint
+# ProseKernel
 
-**Give AI writing a fingerprint.**
+An open-source taste engine for AI writing agents.
 
-Humanprint is an open-source writing taste layer for AI agents. In public terms, it is an open-source writing system for AI agents: it helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
+ProseKernel helps AI agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, critique generic output, and improve prose through evals and agent-ready workflows.
 
 The system has four layers:
 
@@ -11,7 +11,7 @@ The system has four layers:
 3. **Doctrine** — rules for clear, specific, persuasive, human writing.
 4. **Evals** — anti-slop checks that catch fake significance, generic claims, weak proof, and AI cadence.
 
-Humanprint preserves source metadata, summarizes what matters, extracts craft concepts, connects related ideas, and turns writing knowledge into reusable operating rules for agents.
+ProseKernel preserves source metadata, summarizes what matters, extracts craft concepts, connects related ideas, and turns writing knowledge into reusable operating rules for agents.
 
 ## Why this exists
 
@@ -24,7 +24,7 @@ Most AI writing is not bad because it is grammatically wrong. It is bad because 
 - formatted like an answer instead of written like a human
 - full of phrases no serious writer would choose
 
-Humanprint is designed to make future agents pause, study, retrieve relevant examples, and write with taste.
+ProseKernel is designed to make future agents pause, study, retrieve relevant examples, and write with taste.
 
 ## How agents should use this repo
 
@@ -63,19 +63,19 @@ The repo also includes CLI tools for common AI-slop markers, deterministic/hybri
 
 ```bash
 python -m pip install -e .
-humanprint lint examples/ai-slop-sample.md
-humanprint search-examples "write a launch email for Humanprint"
-humanprint search-examples "write a security incident update for customers" --mode hybrid --explain
-humanprint brief "write a launch email for Humanprint" --output /tmp/humanprint-brief.md
-humanprint write "write a launch email for Humanprint" --provider openai --model gpt-4o-mini --output /tmp/humanprint-write.md
-humanprint write-demo "write a launch email for Humanprint" --output /tmp/humanprint-demo.md
-humanprint scorecard draft.md --task "write a launch email for Humanprint" --output /tmp/humanprint-scorecard.md
-humanprint eval
+prosekernel lint examples/ai-slop-sample.md
+prosekernel search-examples "write a launch email for ProseKernel"
+prosekernel search-examples "write a security incident update for customers" --mode hybrid --explain
+prosekernel brief "write a launch email for ProseKernel" --output /tmp/prosekernel-brief.md
+prosekernel write "write a launch email for ProseKernel" --provider openai --model gpt-4o-mini --output /tmp/prosekernel-write.md
+prosekernel write-demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
+prosekernel scorecard draft.md --task "write a launch email for ProseKernel" --output /tmp/prosekernel-scorecard.md
+prosekernel eval
 ```
 
 ## Core standard
 
-Good Humanprint writing must be:
+Good ProseKernel writing must be:
 
 - **clear** — the reader understands the point fast
 - **specific** — claims have names, numbers, examples, or scenes
@@ -86,7 +86,7 @@ Good Humanprint writing must be:
 
 ## Public source policy
 
-Humanprint teaches structure, taste, and craft. It is not a copyrighted text mirror.
+ProseKernel teaches structure, taste, and craft. It is not a copyrighted text mirror.
 
 For modern copyrighted writing, default to:
 
@@ -106,7 +106,7 @@ See `ROADMAP.md`. The build order is: public readiness → corpus depth → patt
 
 ## Source ingestion
 
-Use `docs/source-ingestion.md` and `humanprint new-example` to add new examples safely and consistently. Run `humanprint validate-library` before committing.
+Use `docs/source-ingestion.md` and `prosekernel new-example` to add new examples safely and consistently. Run `prosekernel validate-library` before committing.
 
 ## Retrieval + writing demo
 

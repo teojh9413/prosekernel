@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_SPEECH_001, PATTERN_STRATEGY_001]
 ## Source
 - Author: George Washington
 - URL: https://avalon.law.yale.edu/18th_century/washing.asp
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 The address works as a transfer of judgment. Washington is not merely saying goodbye; he is packaging hard-won civic principles for future moments when the audience may forget them.

@@ -39,7 +39,7 @@ Zinsser treats simplicity as the result of hard thinking. His core standard is b
 6. Rewrite until the piece sounds inevitable.
 
 ## Excerpt or summary
-Humanprint takeaway: sound like a person, not someone trying to sound like a writer.
+ProseKernel takeaway: sound like a person, not someone trying to sound like a writer.
 
 ## Reusable pattern
 For each paragraph, ask: what is the one job? If it has two jobs, split it. If it has none, cut it.

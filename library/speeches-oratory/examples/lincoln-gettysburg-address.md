@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_SPEECH_001, PATTERN_HOOK_001, PATTERN_EMAIL_001]
 ## Source
 - Author: Abraham Lincoln
 - URL: https://rmc.library.cornell.edu/gettysburg/good_cause/transcript.htm
-- Rights note: Public-domain speech; Humanprint stores analysis and source link.
+- Rights note: Public-domain speech; ProseKernel stores analysis and source link.
 
 ## Why this is good
 The speech is a masterclass in compression. It does not narrate the battle. It reframes the battlefield as a test of national purpose, then transfers responsibility from the dead to the living. Its power comes from sequence: origin, test, sacrifice, obligation.

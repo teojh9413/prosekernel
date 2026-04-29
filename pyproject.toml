@@ -3,22 +3,22 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "humanprint"
+name = "prosekernel"
 version = "0.1.0"
-description = "Open-source writing taste layer for AI agents."
+description = "An open-source taste engine for AI writing agents."
 readme = "README.md"
 requires-python = ">=3.10"
-authors = [{ name = "Humanprint contributors" }]
+authors = [{ name = "ProseKernel contributors" }]
 license = { text = "MIT" }
 
 [project.scripts]
-humanprint = "humanprint.cli:main"
+prosekernel = "prosekernel.cli:main"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
 
 [project.urls]
-Homepage = "https://github.com/teojh9413/humanprint"
-Repository = "https://github.com/teojh9413/humanprint"
-Issues = "https://github.com/teojh9413/humanprint/issues"
+Homepage = "https://github.com/teojh9413/prosekernel"
+Repository = "https://github.com/teojh9413/prosekernel"
+Issues = "https://github.com/teojh9413/prosekernel/issues"

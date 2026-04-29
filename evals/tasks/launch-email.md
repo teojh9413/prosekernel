@@ -1,7 +1,7 @@
 # Eval Task — Launch Email
 
 ## Task
-Write a launch email for Humanprint, an open-source writing taste layer for AI agents.
+Write a launch email for ProseKernel, an open-source writing taste layer for AI agents.
 
 ## Reader
 AI builders, agent framework maintainers, and technical founders who know AI writing often sounds generic but do not yet have a reusable taste system.
@@ -13,7 +13,7 @@ AI builders, agent framework maintainers, and technical founders who know AI wri
 
 ## Must demonstrate
 - Clear reader promise and cadence/next action.
-- Concrete explanation of what Humanprint helps an agent do.
+- Concrete explanation of what ProseKernel helps an agent do.
 - At least one proof marker: example count, pattern count, command, file, or workflow.
 
 ## Failure modes

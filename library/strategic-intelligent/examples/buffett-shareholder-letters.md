@@ -38,7 +38,7 @@ Buffett’s letters make complex financial ideas feel understandable without mak
 5. Name mistakes or risks directly.
 
 ## Excerpt or summary
-Humanprint takeaway: intelligent writing does not need to sound academic. It needs to make hard things clear without hiding tradeoffs.
+ProseKernel takeaway: intelligent writing does not need to sound academic. It needs to make hard things clear without hiding tradeoffs.
 
 ## Reusable pattern
 When writing about complex performance, explain what happened, why it happened, what might be misleading, and what decision follows.

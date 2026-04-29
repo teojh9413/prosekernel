@@ -1,4 +1,4 @@
-from humanprint.lint import lint_text
+from prosekernel.lint import lint_text
 
 
 def test_slop_fails():

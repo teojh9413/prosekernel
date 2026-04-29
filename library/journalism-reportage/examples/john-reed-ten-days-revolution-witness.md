@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_REPORTAGE_001, PATTERN_SPEECH_001]
 ## Source
 - Author: John Reed
 - URL: https://www.gutenberg.org/ebooks/3076
-- Rights note: Public-domain source; Humanprint stores analysis and source link.
+- Rights note: Public-domain source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 Reed’s reportage is useful for its immediacy. The writer tracks events as lived experience: crowds, rooms, arguments, uncertainty, and movement. The craft lesson is preserving momentum without losing political context.

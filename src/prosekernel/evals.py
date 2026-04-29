@@ -204,7 +204,7 @@ def _non_generic_rationale(metrics: EvalMetrics, findings: list[Finding]) -> str
     return f"Task overlap {metrics.task_token_overlap}; slop phrases {metrics.slop_phrase_count}; smart-empty={empty}."
 
 
-def render_scorecard_report(report: ScorecardReport, title: str = "Humanprint Scorecard") -> str:
+def render_scorecard_report(report: ScorecardReport, title: str = "ProseKernel Scorecard") -> str:
     lines = [f"# {title}", "", f"Total score: {report.total}/100", f"Lint score: {report.lint_report.score}/100", f"Status: {'PASS' if report.passed else 'REVISE'}", ""]
     lines.append("## Dimension scores")
     for dimension in report.dimensions:
@@ -243,7 +243,7 @@ def evaluate_fixtures(root: Path) -> list[FixtureEvalResult]:
 
 
 def render_fixture_eval_report(results: list[FixtureEvalResult], root: Path) -> str:
-    lines = ["# Humanprint Fixture Eval", ""]
+    lines = ["# ProseKernel Fixture Eval", ""]
     passed = sum(1 for result in results if result.passed)
     lines.append(f"Passed: {passed}/{len(results)}")
     lines.append("")

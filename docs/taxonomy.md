@@ -1,6 +1,6 @@
-# Humanprint Taxonomy
+# ProseKernel Taxonomy
 
-Humanprint uses categories to help agents retrieve the right craft examples before drafting. The taxonomy is deliberately small enough to stay usable and broad enough to cover real writing work.
+ProseKernel uses categories to help agents retrieve the right craft examples before drafting. The taxonomy is deliberately small enough to stay usable and broad enough to cover real writing work.
 
 ## Rule
 
@@ -35,4 +35,4 @@ Add a top-level category only when the writing mode has a distinct reader situat
 
 ## Retrieval behavior
 
-`humanprint search-examples` and `humanprint write-demo` use keyword/category heuristics. New categories can be recommended even before they have examples; until populated, retrieval falls back to the closest populated categories.
+`prosekernel search-examples` and `prosekernel write-demo` use keyword/category heuristics. New categories can be recommended even before they have examples; until populated, retrieval falls back to the closest populated categories.

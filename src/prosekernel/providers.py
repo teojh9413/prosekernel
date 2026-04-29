@@ -13,7 +13,7 @@ class ProviderAdapter(Protocol):
     model: str
 
     def generate(self, prompt: str) -> str:
-        """Generate a draft from an agent-ready Humanprint prompt."""
+        """Generate a draft from an agent-ready ProseKernel prompt."""
 
 
 class ProviderError(RuntimeError):
@@ -30,7 +30,7 @@ class MissingProviderCredential(ProviderError):
         self.env_var = env_var
         super().__init__(
             f"Missing credential for provider '{provider}'. Set {env_var} or pass --api-key explicitly. "
-            "No API call was made. Use `humanprint brief` for a no-credential dry run."
+            "No API call was made. Use `prosekernel brief` for a no-credential dry run."
         )
 
 
@@ -91,7 +91,7 @@ class HTTPProviderAdapter:
             "messages": [
                 {
                     "role": "system",
-                    "content": "You are drafting with Humanprint. Follow the supplied brief exactly and avoid generic AI slop.",
+                    "content": "You are drafting with ProseKernel. Follow the supplied brief exactly and avoid generic AI slop.",
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -103,8 +103,8 @@ class HTTPProviderAdapter:
             "Content-Type": "application/json",
         }
         if self.provider == "openrouter":
-            headers["HTTP-Referer"] = "https://github.com/teojh9413/humanprint"
-            headers["X-Title"] = "Humanprint"
+            headers["HTTP-Referer"] = "https://github.com/teojh9413/prosekernel"
+            headers["X-Title"] = "ProseKernel"
         data = _post_json(self.endpoint, payload, headers, timeout=self.timeout)
         try:
             return data["choices"][0]["message"]["content"].strip()
@@ -136,7 +136,7 @@ def provider_adapter_from_env(provider: str, model: str, *, api_key: str | None 
         supported = ", ".join(sorted(PROVIDER_SPECS))
         raise UnknownProviderError(
             f"Unknown provider '{provider}'. Supported providers: {supported}. "
-            "No API call was made. Use `humanprint brief` for a no-credential dry run."
+            "No API call was made. Use `prosekernel brief` for a no-credential dry run."
         )
     spec = PROVIDER_SPECS[provider_key]
     credential = api_key or os.environ.get(spec.env_var)

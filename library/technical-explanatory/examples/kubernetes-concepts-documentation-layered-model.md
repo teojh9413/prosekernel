@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_EXPLAIN_001]
 ## Source
 - Author: Kubernetes Documentation Contributors
 - URL: https://kubernetes.io/docs/concepts/
-- Rights note: Open-license source; Humanprint stores original analysis and uses the source URL for provenance.
+- Rights note: Open-license source; ProseKernel stores original analysis and uses the source URL for provenance.
 
 ## Why this is good
 Kubernetes concepts docs are useful because they do not attempt to explain the whole platform in one linear essay. They segment the system into concepts, objects, and control loops, allowing readers to build a map before diving into commands.

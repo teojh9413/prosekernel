@@ -39,7 +39,7 @@ This is not a “how to write well” page. It is more useful: a field guide to 
 6. Human signs: explainable editorial choices.
 
 ## Excerpt or summary
-Core Humanprint takeaway: AI writing often makes the subject sound more important while making the actual facts less specific.
+Core ProseKernel takeaway: AI writing often makes the subject sound more important while making the actual facts less specific.
 
 ## Reusable pattern
 When editing a draft, search for places where specificity faded and importance inflated. Replace broad significance with concrete mechanism.

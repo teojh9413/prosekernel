@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_INTERNAL_001, PATTERN_CRISIS_001]
 ## Source
 - Author: Google SRE
 - URL: https://sre.google/sre-book/postmortem-culture/
-- Rights note: Open-license or public documentation source; Humanprint stores analysis and source link.
+- Rights note: Open-license or public documentation source; ProseKernel stores analysis and source link.
 
 ## Why this is good
 The chapter makes an internal cultural norm operational. “Blameless” is not a slogan; it is a documentation practice that captures facts, contributing factors, remediation, and learning without making people hide information.

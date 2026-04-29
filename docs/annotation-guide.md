@@ -1,6 +1,6 @@
 # Annotation Guide
 
-Every Humanprint library item must teach a future agent how to write better.
+Every ProseKernel library item must teach a future agent how to write better.
 
 ## Required questions
 

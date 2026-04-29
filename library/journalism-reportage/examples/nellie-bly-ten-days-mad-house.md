@@ -19,7 +19,7 @@ pattern_ids: [PATTERN_REPORTAGE_001]
 ## Source
 - Author: Nellie Bly
 - URL: https://www.gutenberg.org/ebooks/59899
-- Rights note: Public-domain source via Project Gutenberg; Humanprint stores analysis and summary.
+- Rights note: Public-domain source via Project Gutenberg; ProseKernel stores analysis and summary.
 
 ## Why this is good
 Bly’s reporting works because it puts the reader inside an institution instead of merely denouncing it from outside. The authority comes from witnessed detail: rooms, procedures, conversations, and the gap between official purpose and lived reality.
