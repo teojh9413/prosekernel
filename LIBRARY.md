@@ -127,6 +127,10 @@ Phase 5 turns the corpus into executable writing intelligence. Strict pattern fi
 - [`patterns/PATTERN_HOOK_001-portable-distinction.md`](patterns/PATTERN_HOOK_001-portable-distinction.md) — turn a felt but unnamed problem into a memorable reusable distinction.
 - [`patterns/PATTERN_EMAIL_001-promised-cadence.md`](patterns/PATTERN_EMAIL_001-promised-cadence.md) — make recurring email value predictable through promise, cadence, and one next action.
 - [`patterns/PATTERN_CRISIS_001-impact-timeline-cause-prevention.md`](patterns/PATTERN_CRISIS_001-impact-timeline-cause-prevention.md) — repair trust through impact, timeline, cause, remediation, and prevention.
+- [`patterns/PATTERN_UX_001-actionable-recovery-microcopy.md`](patterns/PATTERN_UX_001-actionable-recovery-microcopy.md) — help users recover or decide at moments of product friction.
+- [`patterns/PATTERN_STRATEGY_001-decision-grade-principles.md`](patterns/PATTERN_STRATEGY_001-decision-grade-principles.md) — turn strategic beliefs into tradeoffs, refusals, and operating consequences.
+- [`patterns/PATTERN_BRAND_001-worldview-positioning.md`](patterns/PATTERN_BRAND_001-worldview-positioning.md) — make product features prove a worldview and audience identity.
+- [`patterns/PATTERN_EXPLAIN_001-progressive-disclosure.md`](patterns/PATTERN_EXPLAIN_001-progressive-disclosure.md) — teach complex topics one useful rung at a time.
 
 ## Tooling
 

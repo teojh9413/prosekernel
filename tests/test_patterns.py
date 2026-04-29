@@ -22,6 +22,10 @@ def test_phase5_strict_pattern_files_exist():
     assert "PATTERN_HOOK_001-portable-distinction.md" in pattern_names
     assert "PATTERN_EMAIL_001-promised-cadence.md" in pattern_names
     assert "PATTERN_CRISIS_001-impact-timeline-cause-prevention.md" in pattern_names
+    assert "PATTERN_UX_001-actionable-recovery-microcopy.md" in pattern_names
+    assert "PATTERN_STRATEGY_001-decision-grade-principles.md" in pattern_names
+    assert "PATTERN_BRAND_001-worldview-positioning.md" in pattern_names
+    assert "PATTERN_EXPLAIN_001-progressive-disclosure.md" in pattern_names
 
 
 def test_strict_patterns_follow_schema():

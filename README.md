@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 5 has started: public-release readiness is complete, the corpus has reached the lower bound of the 60-80 example target, and the first strict reusable pattern files are being extracted from the corpus.
+Phase 5 is in progress: public-release readiness is complete, the corpus has reached the lower bound of the 60-80 example target, and strict reusable pattern files are being extracted from the corpus.
 
 Seed corpus includes examples/resources across:
 
