@@ -119,6 +119,15 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 
 - [`internal-ops-docs/examples/gitlab-directly-responsible-individuals.md`](library/internal-ops-docs/examples/gitlab-directly-responsible-individuals.md) — Internal ownership docs that make decision rights explicit.
 
+## Pattern layer
+
+Phase 5 turns the corpus into executable writing intelligence. Strict pattern files now live beside the older broad pattern notes:
+
+- [`patterns/PATTERN_PROOF_001-specific-proof-ladder.md`](patterns/PATTERN_PROOF_001-specific-proof-ladder.md) — make claims credible with observable evidence and reader-level implications.
+- [`patterns/PATTERN_HOOK_001-portable-distinction.md`](patterns/PATTERN_HOOK_001-portable-distinction.md) — turn a felt but unnamed problem into a memorable reusable distinction.
+- [`patterns/PATTERN_EMAIL_001-promised-cadence.md`](patterns/PATTERN_EMAIL_001-promised-cadence.md) — make recurring email value predictable through promise, cadence, and one next action.
+- [`patterns/PATTERN_CRISIS_001-impact-timeline-cause-prevention.md`](patterns/PATTERN_CRISIS_001-impact-timeline-cause-prevention.md) — repair trust through impact, timeline, cause, remediation, and prevention.
+
 ## Tooling
 
 - `humanprint lint <file>` — score drafts for AI-slop markers.
