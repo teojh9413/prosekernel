@@ -1,22 +1,16 @@
 # Crisis Communications
 
-Apologies, incident reports, postmortems, recalls, trust repair, and high-stakes updates.
-
-## Status
-
-Phase 4 expansion in progress. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+Annotated examples in this category.
 
 ## Examples
 
-- [`cloudflare-june-2022-outage-postmortem.md`](examples/cloudflare-june-2022-outage-postmortem.md) — Use impact, timeline, cause, and prevention to make trust repair concrete.
-- [`gitlab-database-outage-postmortem.md`](examples/gitlab-database-outage-postmortem.md) — Incident communication through impact, timeline, cause, and prevention.
-- [`slack-january-2021-outage-explanation.md`](examples/slack-january-2021-outage-explanation.md) — Explain the incident in layers so different readers can follow.
-## Target examples
-
-- Incident notes with chronology, responsibility, fix, and prevention.
-- Apologies that avoid legal mush and fake empathy.
-- Postmortems that separate facts, impact, cause, and commitments.
+- [`atlassian-april-2022-outage-update.md`](examples/atlassian-april-2022-outage-update.md) — When a long-running customer-impacting incident needs transparent staged communication.
+- [`cloudflare-june-2022-outage-postmortem.md`](examples/cloudflare-june-2022-outage-postmortem.md) — When explaining a major incident with enough specificity to rebuild trust.
+- [`fastly-june-2021-outage-summary.md`](examples/fastly-june-2021-outage-summary.md) — When an infrastructure company needs to explain a high-impact outage quickly and concretely.
+- [`gitlab-database-outage-postmortem.md`](examples/gitlab-database-outage-postmortem.md) — When writing an incident report, apology, outage note, or trust-repair update after a failure.
+- [`slack-january-2021-outage-explanation.md`](examples/slack-january-2021-outage-explanation.md) — When turning a service outage into a clear public explanation for technical and nontechnical readers.
+- [`twilio-august-2022-social-engineering-attack.md`](examples/twilio-august-2022-social-engineering-attack.md) — When a security incident requires customer-facing facts without speculation or minimization.
 
 ## Use protocol
 
-Study 2-4 examples once populated, extract craft moves, then transfer structure without copying phrases.
+Study 2-4 examples, extract craft moves, then transfer structure without copying phrases.

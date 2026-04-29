@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_load_examples_reads_current_corpus():
     examples = load_examples(ROOT)
-    assert len(examples) >= 60
+    assert len(examples) >= 80
     assert any(example.title == "Apple iPod — 1,000 Songs in Your Pocket" for example in examples)
     assert any(example.category == "email-newsletters" for example in examples)
     assert any(example.category == "crisis-communications" for example in examples)
@@ -30,10 +30,10 @@ def test_select_examples_uses_seeded_new_category_first():
 
 
 def test_select_examples_uses_neighbors_for_sparse_new_category():
-    examples = select_examples(ROOT, "write an outage apology after a product incident", limit=5)
+    examples = select_examples(ROOT, "write a civic speech about public duty", limit=5)
     categories = {example.category for example in examples}
-    assert examples[0].category == "crisis-communications"
-    assert "technical-explanatory" in categories or "strategic-intelligent" in categories
+    assert examples[0].category == "speeches-oratory"
+    assert "essays-literary" in categories or "strategic-intelligent" in categories
 
 
 def test_parse_frontmatter_and_sections():

@@ -12,13 +12,13 @@ Completed:
 - Phase 2 — Taxonomy expansion and deterministic retrieval demo.
 - Phase 3 — Seed expanded categories.
 - Phase 3.5 — Public release readiness metadata/docs.
-- Phase 4 — Corpus depth lower bound: 60 annotated examples across 12 populated categories.
+- Phase 4 — Corpus depth expansion: 80 annotated examples across 12 populated categories, with priority categories moved closer to 10-example taste depth.
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
 - Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
 - Phase 6A — Provider-agnostic dry-run brief mode: `humanprint brief` builds an agent-ready writing packet without model/API calls.
 - Phase 6B — Explicit provider write mode: adapter interface, `humanprint write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
 
-Current corpus: 60 annotated examples across 12 populated categories.
+Current corpus: 80 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
 Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
 Current adapter layer: dry-run `brief` mode plus explicit provider-backed `write` mode. No default paid provider is selected; writes require explicit `--provider` and `--model`.
@@ -29,7 +29,7 @@ Goal: expand from representation to taste.
 
 Target:
 
-- 60-80 annotated examples.
+- 80-100 annotated examples next.
 - Prioritize public usefulness instead of even expansion.
 
 Priority order:

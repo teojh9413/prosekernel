@@ -1,23 +1,18 @@
 # UX / Product Microcopy
 
-Onboarding, empty states, errors, labels, tooltips, product flows, support-adjacent language.
-
-## Status
-
-Phase 4 expansion in progress. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+Annotated examples in this category.
 
 ## Examples
 
-- [`apple-hig-writing-guidance.md`](examples/apple-hig-writing-guidance.md) — Use brevity as usability, not as a style affectation.
-- [`govuk-error-message.md`](examples/govuk-error-message.md) — Validation copy that tells users exactly how to recover.
-- [`mailchimp-voice-and-tone-content-guide.md`](examples/mailchimp-voice-and-tone-content-guide.md) — Separate stable voice from situational tone.
-- [`shopify-polaris-actionable-language.md`](examples/shopify-polaris-actionable-language.md) — Make interface language action-oriented and consequence-aware.
-## Target examples
-
-- Error messages that name the problem and next action.
-- Onboarding flows that reduce uncertainty at each step.
-- Empty states that teach without sounding cute or fake.
+- [`apple-hig-writing-guidance.md`](examples/apple-hig-writing-guidance.md) — When writing UI text that must be brief, direct, and behaviorally clear.
+- [`atlassian-content-design-foundations.md`](examples/atlassian-content-design-foundations.md) — When collaborative software needs product language that helps teams move work forward.
+- [`govuk-confirmation-pages-recovery-closure.md`](examples/govuk-confirmation-pages-recovery-closure.md) — When a product flow needs to confirm completion and tell users what happens next.
+- [`govuk-error-message.md`](examples/govuk-error-message.md) — When writing validation errors, form guidance, empty states, or product copy that must help users recover.
+- [`mailchimp-voice-and-tone-content-guide.md`](examples/mailchimp-voice-and-tone-content-guide.md) — When product copy needs to adapt tone to user emotion and context.
+- [`material-design-content-design-overview.md`](examples/material-design-content-design-overview.md) — When product teams need content rules that scale across interfaces.
+- [`microsoft-fluent-content-guidance.md`](examples/microsoft-fluent-content-guidance.md) — When enterprise product copy needs to stay helpful, direct, and consistent across many surfaces.
+- [`shopify-polaris-actionable-language.md`](examples/shopify-polaris-actionable-language.md) — When interface copy needs to tell users exactly what they can do next.
 
 ## Use protocol
 
-Study 2-4 examples once populated, extract craft moves, then transfer structure without copying phrases.
+Study 2-4 examples, extract craft moves, then transfer structure without copying phrases.
