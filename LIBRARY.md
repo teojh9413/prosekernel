@@ -121,7 +121,7 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 
 ## Pattern layer
 
-Phase 5 turns the corpus into executable writing intelligence. Strict pattern files now live beside the older broad pattern notes:
+Phase 5 turns the corpus into executable writing intelligence. Strict pattern files now live beside the older broad pattern notes, every example includes `pattern_ids` in frontmatter, and retrieval/demo output cites those IDs so agents can move from source example → strict pattern → draft instruction.
 
 - [`patterns/PATTERN_PROOF_001-specific-proof-ladder.md`](patterns/PATTERN_PROOF_001-specific-proof-ladder.md) — make claims credible with observable evidence and reader-level implications.
 - [`patterns/PATTERN_HOOK_001-portable-distinction.md`](patterns/PATTERN_HOOK_001-portable-distinction.md) — turn a felt but unnamed problem into a memorable reusable distinction.

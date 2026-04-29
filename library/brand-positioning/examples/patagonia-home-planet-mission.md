@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [mission, brand, values, constraint]
 quality_score: 10
 use_when: "When a brand needs to make its operating constraint more memorable than its products."
+pattern_ids: [PATTERN_BRAND_001]
+
 ---
 
 # Patagonia home planet mission

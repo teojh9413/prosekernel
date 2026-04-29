@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [saas, positioning, focus, product-development]
 quality_score: 9
 use_when: "When a SaaS product must signal focus, craft, and category fit fast."
+pattern_ids: [PATTERN_BRAND_001]
+
 ---
 
 # Linear purpose built product development positioning

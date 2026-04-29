@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [strategy, tradeoffs, product, scope]
 quality_score: 9
 use_when: "When a memo must constrain effort and make tradeoffs explicit."
+pattern_ids: [PATTERN_STRATEGY_001]
+
 ---
 
 # Basecamp Shape Up — Appetite as Strategy

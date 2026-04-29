@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [workspace, modularity, category, collaboration]
 quality_score: 8
 use_when: "When positioning a flexible product without making it sound vague."
+pattern_ids: [PATTERN_BRAND_001]
+
 ---
 
 # Notion connected workspace positioning

@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [direct-response, humor, offer, founder]
 quality_score: 9
 use_when: "When a commodity offer needs immediate differentiation and a clear buying reason."
+pattern_ids: [PATTERN_PERSUASION_001]
+
 ---
 
 # Dollar Shave Club launch video direct promise

@@ -10,6 +10,8 @@ def test_writing_demo_runs_full_pipeline():
     assert result.recommended_categories[0] == "email-newsletters"
     assert len(result.examples) == 4
     assert result.craft_moves
+    assert result.pattern_ids
+    assert "PATTERN_EMAIL_001" in result.pattern_ids
     assert result.final_report.passed
 
 
@@ -19,6 +21,7 @@ def test_render_demo_report_contains_contract_sections():
     for heading in [
         "## Recommended categories",
         "## Retrieved examples",
+        "## Patterns used",
         "## Craft moves to transfer",
         "## Lint result",
         "## Rewrite",

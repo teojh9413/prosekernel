@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [dri, ownership, decision-making, operating-system]
 quality_score: 9
 use_when: "When writing internal docs that clarify ownership, decision rights, and execution responsibility."
+pattern_ids: [PATTERN_INTERNAL_001, PATTERN_STRATEGY_001, PATTERN_EXPLAIN_001]
+
 ---
 
 # GitLab Handbook — Directly Responsible Individuals

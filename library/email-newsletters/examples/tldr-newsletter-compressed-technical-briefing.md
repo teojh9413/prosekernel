@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [technical, briefing, compression, links]
 quality_score: 9
 use_when: "When curating technical updates for busy expert readers."
+pattern_ids: [PATTERN_EMAIL_001, PATTERN_HOOK_001]
+
 ---
 
 # TLDR newsletter compressed technical briefing

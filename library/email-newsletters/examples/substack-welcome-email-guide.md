@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [welcome-email, onboarding, reader-relationship, promise]
 quality_score: 8
 use_when: "When writing a welcome email, newsletter onboarding note, or first-touch creator message."
+pattern_ids: [PATTERN_EMAIL_001, PATTERN_UX_001]
+
 ---
 
 # Substack — Writing a good welcome email

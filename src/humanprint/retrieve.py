@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 import re
+from .patterns import infer_pattern_ids, normalize_pattern_ids
 from .taxonomy import CATEGORIES, expand_with_neighbors, recommend_categories, tokenize
 
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
@@ -20,6 +21,7 @@ class ExampleRecord:
     tags: tuple[str, ...]
     quality_score: int
     use_when: str
+    pattern_ids: tuple[str, ...]
     craft_moves: tuple[str, ...]
     summary: str
 
@@ -27,7 +29,7 @@ class ExampleRecord:
     def search_text(self) -> str:
         return " ".join([
             self.title, self.author, self.category, self.format, self.use_when,
-            " ".join(self.tags), " ".join(self.craft_moves), self.summary,
+            " ".join(self.tags), " ".join(self.pattern_ids), " ".join(self.craft_moves), self.summary,
         ])
 
 
@@ -93,6 +95,9 @@ def load_examples(root: Path) -> list[ExampleRecord]:
         tags = fm.get("tags") or []
         if isinstance(tags, str):
             tags = [tags]
+        pattern_ids = normalize_pattern_ids(fm.get("pattern_ids"))
+        if not pattern_ids:
+            pattern_ids = infer_pattern_ids(str(fm.get("category", path.parent.parent.name)), tuple(str(t) for t in tags), text)
         examples.append(ExampleRecord(
             path=path,
             title=str(fm.get("title", path.stem)),
@@ -104,6 +109,7 @@ def load_examples(root: Path) -> list[ExampleRecord]:
             tags=tuple(str(t) for t in tags),
             quality_score=int(fm.get("quality_score", 8)),
             use_when=str(fm.get("use_when", "")),
+            pattern_ids=pattern_ids,
             craft_moves=craft,
             summary=summary[:800],
         ))
@@ -119,6 +125,8 @@ def score_example(task: str, example: ExampleRecord, preferred_categories: tuple
         # Prefer exact category hits strongly; neighbors are fallbacks, not replacements.
         score += 30 if category_rank == 0 else max(6, 18 - (category_rank * 2))
     score += example.quality_score
+    if task_tokens & tokenize(" ".join(example.pattern_ids).replace("_", " ")):
+        score += 3
     # Nudge generally useful examples upward when direct overlap is sparse.
     if {"clarity", "specificity", "proof", "structure"} & set(example.tags):
         score += 2

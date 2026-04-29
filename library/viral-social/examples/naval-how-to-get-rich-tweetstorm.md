@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [thread, aphorism, wealth, compression]
 quality_score: 10
 use_when: "When converting a large thesis into portable, shareable principles."
+pattern_ids: [PATTERN_HOOK_001]
+
 ---
 
 # Naval how to get rich tweetstorm

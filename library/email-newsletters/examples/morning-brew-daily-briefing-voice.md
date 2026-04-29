@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [briefing, voice, curation, business]
 quality_score: 9
 use_when: "When summarizing serious information without making the email feel like homework."
+pattern_ids: [PATTERN_EMAIL_001]
+
 ---
 
 # Morning Brew daily briefing voice

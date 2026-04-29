@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [habit, compression, self-improvement, mental-model]
 quality_score: 9
 use_when: "When making an abstract improvement principle concrete and repeatable."
+pattern_ids: [PATTERN_HOOK_001, PATTERN_EXPLAIN_001]
+
 ---
 
 # James Clear one percent better compression

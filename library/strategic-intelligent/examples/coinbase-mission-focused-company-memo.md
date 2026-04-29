@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [memo, mission, tradeoffs, culture]
 quality_score: 8
 use_when: "When a company needs to make a contentious strategic boundary explicit."
+pattern_ids: [PATTERN_STRATEGY_001, PATTERN_BRAND_001]
+
 ---
 
 # Coinbase mission focused company memo

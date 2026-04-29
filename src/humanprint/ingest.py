@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from pathlib import Path
 import re
+from .patterns import KNOWN_PATTERN_IDS
 from .taxonomy import CATEGORIES
 
 RIGHTS = {"public-domain", "open-license", "short-excerpt", "metadata-only", "user-provided"}
+FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 
 REQUIRED_SECTIONS = [
     "Source",
@@ -31,6 +33,7 @@ class ExampleMetadata:
     tags: list[str]
     quality_score: int
     use_when: str
+    pattern_ids: list[str] = field(default_factory=list)
 
     def validate(self) -> list[str]:
         errors: list[str] = []
@@ -44,6 +47,11 @@ class ExampleMetadata:
             errors.append("source_url is required")
         if len(self.tags) < 2:
             errors.append("at least two tags are required")
+        if not self.pattern_ids:
+            errors.append("at least one pattern_id is required")
+        unknown_patterns = [pattern_id for pattern_id in self.pattern_ids if pattern_id not in KNOWN_PATTERN_IDS]
+        if unknown_patterns:
+            errors.append("Unknown pattern_ids: " + ", ".join(unknown_patterns))
         return errors
 
 
@@ -63,6 +71,8 @@ def render_frontmatter(meta: ExampleMetadata) -> str:
     lines.append(f"tags: {tags}")
     lines.append(f"quality_score: {meta.quality_score}")
     lines.append(f'use_when: "{meta.use_when}"')
+    if meta.pattern_ids:
+        lines.append("pattern_ids: [" + ", ".join(meta.pattern_ids) + "]")
     lines.append("---")
     return "\n".join(lines) + "\n\n"
 
@@ -109,10 +119,29 @@ def example_path(root: Path, meta: ExampleMetadata) -> Path:
     return root / "library" / meta.category / "examples" / f"{slugify(meta.title)}.md"
 
 
+def _frontmatter_pattern_ids(text: str) -> list[str]:
+    match = FRONTMATTER_RE.match(text)
+    if not match:
+        return []
+    for line in match.group(1).splitlines():
+        if line.startswith("pattern_ids:"):
+            raw = line.split(":", 1)[1].strip()
+            if raw.startswith("[") and raw.endswith("]"):
+                return [item.strip().strip('"\'') for item in raw[1:-1].split(",") if item.strip()]
+    return []
+
+
 def validate_example_text(text: str) -> list[str]:
     errors: list[str] = []
     if not text.startswith("---\n"):
         errors.append("missing YAML frontmatter")
+    pattern_ids = _frontmatter_pattern_ids(text)
+    if not pattern_ids:
+        errors.append("missing frontmatter: pattern_ids")
+    else:
+        unknown_patterns = [pattern_id for pattern_id in pattern_ids if pattern_id not in KNOWN_PATTERN_IDS]
+        if unknown_patterns:
+            errors.append("unknown pattern_ids: " + ", ".join(unknown_patterns))
     for section in REQUIRED_SECTIONS:
         if f"## {section}" not in text:
             errors.append(f"missing section: {section}")

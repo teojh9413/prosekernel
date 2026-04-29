@@ -10,6 +10,8 @@ rights: short-excerpt
 tags: [headline, proof, specificity, positioning]
 quality_score: 10
 use_when: When a claim needs proof instead of adjectives.
+pattern_ids: [PATTERN_PERSUASION_001, PATTERN_PROOF_001, PATTERN_BRAND_001]
+
 ---
 
 # Ogilvy Rolls-Royce Specific Proof

@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [incident, postmortem, timeline, technical]
 quality_score: 10
 use_when: "When explaining a major incident with enough specificity to rebuild trust."
+pattern_ids: [PATTERN_CRISIS_001]
+
 ---
 
 # Cloudflare June 2022 outage postmortem

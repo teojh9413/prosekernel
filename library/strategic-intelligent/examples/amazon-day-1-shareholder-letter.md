@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [strategy, principles, decision-making, shareholder-letter]
 quality_score: 10
 use_when: "When explaining operating principles as a defense against organizational decay."
+pattern_ids: [PATTERN_STRATEGY_001]
+
 ---
 
 # Amazon Day 1 shareholder letter

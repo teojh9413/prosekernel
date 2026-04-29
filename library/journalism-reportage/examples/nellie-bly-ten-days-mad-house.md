@@ -10,6 +10,8 @@ rights: "public-domain"
 tags: [reported-narrative, immersion, scene, institutional-accountability]
 quality_score: 9
 use_when: "When writing reportage that needs scenes, firsthand observation, and institutional accountability."
+pattern_ids: [PATTERN_REPORTAGE_001]
+
 ---
 
 # Ten Days in a Mad-House

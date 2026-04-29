@@ -196,7 +196,14 @@ def lint_text(text: str) -> LintReport:
         ))
 
     proof_markers = re.findall(r"\b\d+[\d,%$xkmb\.]*\b|for example|because|case study|customer|user|source|data", lowered)
-    if len(text.split()) > 250 and len(proof_markers) < 2:
+    word_count = len(text.split())
+    if word_count > 60 and len(proof_markers) < 2 and len(abstract_hits) >= 3:
+        findings.append(Finding(
+            rule="smart_sounding_empty",
+            severity="error",
+            message="Draft sounds analytical but has few proof markers and too many abstractions. Add names, numbers, mechanisms, examples, or scenes.",
+        ))
+    if word_count > 250 and len(proof_markers) < 2:
         findings.append(Finding(
             rule="no_proof",
             severity="error",

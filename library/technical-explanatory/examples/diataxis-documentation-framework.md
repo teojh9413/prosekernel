@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [documentation, explanation, tutorials, reference]
 quality_score: 9
 use_when: "When organizing technical knowledge for users with different needs."
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Diátaxis Documentation Framework

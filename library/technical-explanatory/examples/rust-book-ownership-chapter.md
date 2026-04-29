@@ -10,6 +10,8 @@ rights: "open-license"
 tags: [mental-model, ownership, examples, programming]
 quality_score: 10
 use_when: "When explaining an unfamiliar technical concept that changes how readers think."
+pattern_ids: [PATTERN_EXPLAIN_001, PATTERN_INTERNAL_001]
+
 ---
 
 # Rust Book ownership chapter

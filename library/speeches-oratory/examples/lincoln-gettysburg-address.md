@@ -10,6 +10,8 @@ rights: "public-domain"
 tags: [brevity, moral-frame, cadence, contrast]
 quality_score: 10
 use_when: "When writing a short speech that must give shared sacrifice a larger meaning."
+pattern_ids: [PATTERN_SPEECH_001, PATTERN_HOOK_001, PATTERN_EMAIL_001]
+
 ---
 
 # Gettysburg Address

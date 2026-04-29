@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [voice-and-tone, microcopy, context, support]
 quality_score: 9
 use_when: "When product copy needs to adapt tone to user emotion and context."
+pattern_ids: [PATTERN_UX_001]
+
 ---
 
 # Mailchimp voice and tone content guide

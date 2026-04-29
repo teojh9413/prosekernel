@@ -10,6 +10,8 @@ rights: "open-license"
 tags: [systems, concepts, architecture, layering]
 quality_score: 9
 use_when: "When explaining a large technical system with many interacting nouns."
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Kubernetes concepts documentation layered model

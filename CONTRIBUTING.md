@@ -90,6 +90,12 @@ When extracting patterns, use stable IDs:
 - `PATTERN_CRISIS_001`
 - `PATTERN_UX_001`
 - `PATTERN_STRATEGY_001`
+- `PATTERN_BRAND_001`
+- `PATTERN_EXPLAIN_001`
+- `PATTERN_SPEECH_001`
+- `PATTERN_REPORTAGE_001`
+- `PATTERN_INTERNAL_001`
+- `PATTERN_PERSUASION_001`
 
 Patterns should follow the schema in `docs/pattern-schema.md`.
 

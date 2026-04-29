@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [strategy, principles, long-term-thinking, tradeoffs]
 quality_score: 10
 use_when: When writing a strategic memo that must establish operating principles.
+pattern_ids: [PATTERN_STRATEGY_001]
+
 ---
 
 # Bezos 1997 Shareholder Letter

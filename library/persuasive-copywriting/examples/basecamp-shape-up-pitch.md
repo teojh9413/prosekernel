@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [pitch, appetite, problem, solution, constraints]
 quality_score: 9
 use_when: "When writing a product pitch, feature proposal, or internal persuasive memo."
+pattern_ids: [PATTERN_PERSUASION_001]
+
 ---
 
 # Basecamp Shape Up — Write the Pitch

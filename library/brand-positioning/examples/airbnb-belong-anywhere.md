@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [brand, belonging, worldview, community]
 quality_score: 9
 use_when: "When a brand needs to express a worldview larger than product functionality."
+pattern_ids: [PATTERN_BRAND_001]
+
 ---
 
 # Airbnb — Belong Anywhere

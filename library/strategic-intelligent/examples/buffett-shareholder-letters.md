@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [plainspoken, trust, finance, explanation]
 quality_score: 10
 use_when: When complex business ideas need to become clear and trustworthy.
+pattern_ids: [PATTERN_STRATEGY_001, PATTERN_EXPLAIN_001]
+
 ---
 
 # Buffett Shareholder Letters

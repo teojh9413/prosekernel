@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [actionable-language, ux-writing, commerce, clarity]
 quality_score: 9
 use_when: "When interface copy needs to tell users exactly what they can do next."
+pattern_ids: [PATTERN_UX_001]
+
 ---
 
 # Shopify Polaris actionable language

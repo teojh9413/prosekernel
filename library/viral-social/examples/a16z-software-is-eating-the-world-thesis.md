@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [thesis, category-shift, technology, memorable-frame]
 quality_score: 9
 use_when: "When writing a market thesis that needs to become a reusable frame."
+pattern_ids: [PATTERN_HOOK_001, PATTERN_STRATEGY_001, PATTERN_BRAND_001]
+
 ---
 
 # A16Z software is eating the world thesis

@@ -10,6 +10,8 @@ rights: "open-license"
 tags: [newsletter, publishing, member-context, workflow]
 quality_score: 8
 use_when: "When explaining email publishing as a workflow rather than a one-off send."
+pattern_ids: [PATTERN_EMAIL_001]
+
 ---
 
 # Ghost newsletter publishing docs

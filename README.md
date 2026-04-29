@@ -2,7 +2,7 @@
 
 **Give AI writing a fingerprint.**
 
-Humanprint is an open-source writing taste layer for AI agents. It helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
+Humanprint is an open-source writing taste layer for AI agents. In public terms, it is an open-source writing system for AI agents: it helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
 
 The system has four layers:
 
@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 5 is in progress: public-release readiness is complete, the corpus has reached the lower bound of the 60-80 example target, and strict reusable pattern files are being extracted from the corpus.
+Phase 5 initial pattern extraction is complete enough for the next build step: public-release readiness is in place, the corpus has reached the lower bound of the 60-80 example target, and 12 strict reusable pattern families now connect examples to agent-executable moves.
 
 Seed corpus includes examples/resources across:
 

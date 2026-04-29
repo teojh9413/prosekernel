@@ -10,6 +10,8 @@ rights: user-provided
 tags: [hooks, viral, social, compression]
 quality_score: 8
 use_when: When drafting social posts or threads that need immediate attention.
+pattern_ids: [PATTERN_HOOK_001]
+
 ---
 
 # Viral Hook Architecture

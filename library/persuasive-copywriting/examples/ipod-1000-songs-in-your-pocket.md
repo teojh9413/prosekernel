@@ -10,6 +10,8 @@ rights: "short-excerpt"
 tags: [benefit, specificity, compression, product-copy]
 quality_score: 10
 use_when: "When turning a technical feature into a simple human benefit."
+pattern_ids: [PATTERN_PERSUASION_001, PATTERN_PROOF_001, PATTERN_HOOK_001]
+
 ---
 
 # Apple iPod — 1,000 Songs in Your Pocket

@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [attention, structure, social, clarity]
 quality_score: 8
 use_when: "When writing for skim behavior, short attention windows, or mobile-first social formats."
+pattern_ids: [PATTERN_HOOK_001]
+
 ---
 
 # NN/g Inverted Pyramid for Social Attention

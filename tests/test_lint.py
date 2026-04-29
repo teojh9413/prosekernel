@@ -22,3 +22,16 @@ def test_legacy_inflation_fails():
 def test_vague_attribution_warns():
     report = lint_text("Many experts believe this improves productivity, but the draft names no source.")
     assert any(f.rule == "vague_attribution" for f in report.findings)
+
+
+def test_smart_sounding_empty_fails():
+    text = " ".join([
+        "This platform improves productivity, quality, growth, and value across the ecosystem.",
+        "The experience creates a solution that supports innovation and success for modern teams.",
+        "It gives organizations a better journey, a stronger impact, and a clearer way to operate.",
+        "The approach is flexible enough for different workflows while remaining useful for every stakeholder.",
+        "Overall, it helps teams move faster and communicate better without unnecessary complexity."
+    ])
+    report = lint_text(text)
+    assert not report.passed
+    assert any(f.rule == "smart_sounding_empty" for f in report.findings)

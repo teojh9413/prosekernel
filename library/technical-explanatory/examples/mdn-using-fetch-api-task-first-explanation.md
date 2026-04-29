@@ -10,6 +10,8 @@ rights: "open-license"
 tags: [api-docs, examples, web, task-first]
 quality_score: 9
 use_when: "When explaining an API through common tasks and copyable examples."
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # MDN using Fetch API task-first explanation

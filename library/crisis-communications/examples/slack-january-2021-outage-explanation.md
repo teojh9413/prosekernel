@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [outage, engineering, trust, explanation]
 quality_score: 9
 use_when: "When turning a service outage into a clear public explanation for technical and nontechnical readers."
+pattern_ids: [PATTERN_CRISIS_001, PATTERN_EXPLAIN_001]
+
 ---
 
 # Slack January 2021 outage explanation

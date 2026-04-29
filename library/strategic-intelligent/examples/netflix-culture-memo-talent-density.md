@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [culture, principles, talent, operating-system]
 quality_score: 9
 use_when: "When writing culture principles that are meant to guide hard decisions."
+pattern_ids: [PATTERN_STRATEGY_001, PATTERN_INTERNAL_001]
+
 ---
 
 # Netflix culture memo talent density

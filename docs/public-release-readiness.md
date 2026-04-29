@@ -20,9 +20,9 @@ Short positioning options:
 - [x] Add CONTRIBUTING.md with example acceptance rules.
 - [x] Add example quality rubric.
 - [x] Add pattern schema with stable pattern IDs.
-- [ ] Confirm GitHub repo visibility should be switched to public.
-- [ ] Add issue templates after first external users appear.
-- [ ] Add CI once public.
+- [ ] Confirm GitHub repo visibility should be switched to public when release is explicit.
+- [ ] Post-public: add issue templates after first external users appear.
+- [ ] Post-public: add CI once public collaboration starts.
 
 ## Non-goals
 

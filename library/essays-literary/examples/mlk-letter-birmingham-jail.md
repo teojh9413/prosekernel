@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [rhetoric, moral-argument, structure, audience]
 quality_score: 10
 use_when: "When writing must answer critics, establish moral urgency, and persuade a hostile or cautious audience."
+pattern_ids: [PATTERN_EXPLAIN_001, PATTERN_SPEECH_001]
+
 ---
 
 # MLK — Letter from Birmingham Jail

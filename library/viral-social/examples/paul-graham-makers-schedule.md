@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [distinction, hook, founder-writing, compression]
 quality_score: 9
 use_when: "When turning an abstract productivity idea into a memorable distinction that travels socially."
+pattern_ids: [PATTERN_HOOK_001]
+
 ---
 
 # Paul Graham — Maker's Schedule, Manager's Schedule

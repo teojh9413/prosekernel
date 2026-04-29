@@ -47,6 +47,8 @@ Suggested prefixes:
 - `PATTERN_EXPLAIN_` — docs, tutorials, explanation
 - `PATTERN_SPEECH_` — public address and oratory
 - `PATTERN_REPORTAGE_` — journalism and reported narrative
+- `PATTERN_INTERNAL_` — ownership, process, internal operating docs
+- `PATTERN_PERSUASION_` — reader awareness, objection handling, conversion logic
 
 ## Rule
 

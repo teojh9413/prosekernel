@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [docs, examples, hierarchy, technical-writing]
 quality_score: 9
 use_when: When explaining complex implementation steps without overwhelming the reader.
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Stripe Docs: Progressive Disclosure

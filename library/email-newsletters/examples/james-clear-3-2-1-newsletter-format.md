@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [newsletter, format, cadence, habit]
 quality_score: 10
 use_when: "When designing a newsletter readers can recognize, skim, and keep opening."
+pattern_ids: [PATTERN_EMAIL_001, PATTERN_SPEECH_001]
+
 ---
 
 # James Clear 3-2-1 newsletter format

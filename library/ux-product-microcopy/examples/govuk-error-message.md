@@ -10,6 +10,8 @@ rights: "open-license"
 tags: [error-message, validation, user-action, clarity]
 quality_score: 10
 use_when: "When writing validation errors, form guidance, empty states, or product copy that must help users recover."
+pattern_ids: [PATTERN_UX_001]
+
 ---
 
 # GOV.UK Design System — Error message

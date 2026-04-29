@@ -64,6 +64,25 @@
         "type": "string"
       }
     },
+    "pattern_ids": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "PATTERN_PROOF_001",
+          "PATTERN_HOOK_001",
+          "PATTERN_EMAIL_001",
+          "PATTERN_CRISIS_001",
+          "PATTERN_UX_001",
+          "PATTERN_STRATEGY_001",
+          "PATTERN_BRAND_001",
+          "PATTERN_EXPLAIN_001",
+          "PATTERN_SPEECH_001",
+          "PATTERN_REPORTAGE_001",
+          "PATTERN_INTERNAL_001",
+          "PATTERN_PERSUASION_001"
+        ]
+      }
+    },
     "quality_score": {
       "type": "integer",
       "minimum": 1,

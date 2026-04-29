@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [market, desire, direct-response, proof]
 quality_score: 9
 use_when: When copy must start from market hunger rather than clever wording.
+pattern_ids: [PATTERN_PERSUASION_001, PATTERN_PROOF_001]
+
 ---
 
 # Halbert Starving Crowd Principle

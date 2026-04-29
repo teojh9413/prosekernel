@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [plain-language, content-design, usability, clarity]
 quality_score: 10
 use_when: "When explaining services, instructions, policies, or any user-facing process."
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # GOV.UK — Writing for GOV.UK

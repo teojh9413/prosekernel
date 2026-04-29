@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [launch, reveal, product-positioning, contrast]
 quality_score: 10
 use_when: "When introducing a product by collapsing complexity into one memorable reveal."
+pattern_ids: [PATTERN_PERSUASION_001, PATTERN_HOOK_001, PATTERN_BRAND_001]
+
 ---
 
 # Jobs iPhone keynote three devices reveal

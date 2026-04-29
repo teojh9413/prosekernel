@@ -10,6 +10,8 @@ rights: "short-excerpt"
 tags: [brand, action, compression, identity]
 quality_score: 10
 use_when: "When a brand needs a compressed call to action that carries identity."
+pattern_ids: [PATTERN_BRAND_001, PATTERN_HOOK_001]
+
 ---
 
 # Nike — Just Do It

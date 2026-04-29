@@ -10,6 +10,8 @@ rights: short-excerpt
 tags: [clarity, plain-language, editing, thought]
 quality_score: 10
 use_when: When prose needs to become sharper, plainer, and more honest.
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Orwell: Politics and the English Language

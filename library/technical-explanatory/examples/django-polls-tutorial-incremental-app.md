@@ -10,6 +10,8 @@ rights: "open-license"
 tags: [tutorial, incremental, web-development, scaffolding]
 quality_score: 9
 use_when: "When teaching a framework through a concrete small project."
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Django polls tutorial incremental app

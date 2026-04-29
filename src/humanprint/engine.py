@@ -11,6 +11,7 @@ class WritingDemoResult:
     task: str
     recommended_categories: list[str]
     examples: list[ExampleRecord]
+    pattern_ids: list[str]
     craft_moves: list[str]
     draft: str
     initial_report: LintReport
@@ -30,6 +31,17 @@ def extract_craft_moves(examples: list[ExampleRecord], limit: int = 7) -> list[s
             if len(moves) >= limit:
                 return moves
     return moves
+
+
+def collect_pattern_ids(examples: list[ExampleRecord], limit: int = 6) -> list[str]:
+    pattern_ids: list[str] = []
+    for example in examples:
+        for pattern_id in example.pattern_ids:
+            if pattern_id not in pattern_ids:
+                pattern_ids.append(pattern_id)
+            if len(pattern_ids) >= limit:
+                return pattern_ids
+    return pattern_ids
 
 
 def _task_subject(task: str) -> str:
@@ -93,6 +105,7 @@ def rewrite_from_lint(draft: str, report: LintReport) -> str:
 def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None = None) -> WritingDemoResult:
     examples = select_examples(root, task, limit=limit, category=category)
     moves = extract_craft_moves(examples)
+    pattern_ids = collect_pattern_ids(examples)
     draft = draft_from_task(task, examples, moves)
     initial = lint_text(draft)
     rewrite = rewrite_from_lint(draft, initial)
@@ -101,6 +114,7 @@ def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None
         task=task,
         recommended_categories=recommend_categories(task, limit=3),
         examples=examples,
+        pattern_ids=pattern_ids,
         craft_moves=moves,
         draft=draft,
         initial_report=initial,
@@ -122,6 +136,10 @@ def render_demo_report(result: WritingDemoResult) -> str:
     lines.append("## Retrieved examples")
     for example in result.examples:
         lines.append(f"- {example.title} — {example.category} — `{example.path}`")
+    lines.append("")
+    lines.append("## Patterns used")
+    for pattern_id in result.pattern_ids:
+        lines.append(f"- `{pattern_id}`")
     lines.append("")
     lines.append("## Craft moves to transfer")
     for move in result.craft_moves:

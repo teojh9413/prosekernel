@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [homepage, problem-aware, seo, tooling]
 quality_score: 8
 use_when: "When selling a technical tool to buyers who already know the job they need done."
+pattern_ids: [PATTERN_PERSUASION_001]
+
 ---
 
 # Ahrefs homepage problem aware SEO promise

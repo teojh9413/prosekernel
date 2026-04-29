@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [clarity, simplicity, voice, rewriting]
 quality_score: 10
 use_when: When a draft needs simplicity, unity, and human voice.
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Zinsser: On Writing Well

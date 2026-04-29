@@ -19,9 +19,11 @@ def test_render_example_has_required_sections():
         tags=["hook", "clarity"],
         quality_score=8,
         use_when="When testing.",
+        pattern_ids=["PATTERN_HOOK_001"],
     )
     text = render_example(meta)
     assert validate_example_text(text) == []
+    assert "pattern_ids: [PATTERN_HOOK_001]" in text
     assert example_path(Path("/repo"), meta) == Path("/repo/library/viral-social/examples/test-example.md")
 
 
@@ -38,12 +40,14 @@ def test_invalid_metadata_rejected():
         tags=["one"],
         quality_score=99,
         use_when="Never.",
+        pattern_ids=["PATTERN_FAKE_999"],
     )
     errors = meta.validate()
     assert "Unknown category: bad-category" in errors
     assert "Unknown rights value: unknown" in errors
     assert "quality_score must be 1-10" in errors
     assert "source_url is required" in errors
+    assert "Unknown pattern_ids: PATTERN_FAKE_999" in errors
 
 
 def test_current_library_validates():

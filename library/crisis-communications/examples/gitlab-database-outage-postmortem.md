@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [postmortem, incident, transparency, trust-repair]
 quality_score: 9
 use_when: "When writing an incident report, apology, outage note, or trust-repair update after a failure."
+pattern_ids: [PATTERN_CRISIS_001]
+
 ---
 
 # GitLab — Postmortem of database outage of January 31

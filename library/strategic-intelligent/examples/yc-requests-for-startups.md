@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [market-thesis, startup, opportunity, framing]
 quality_score: 8
 use_when: "When writing about market opportunities, startup ideas, or strategic theses."
+pattern_ids: [PATTERN_STRATEGY_001]
+
 ---
 
 # Y Combinator — Requests for Startups

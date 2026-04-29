@@ -5,6 +5,7 @@ from pathlib import Path
 from .lint import lint_file
 from .ingest import ExampleMetadata, example_path, render_example, validate_library
 from .engine import render_demo_report, run_writing_demo
+from .patterns import infer_pattern_ids
 from .retrieve import select_examples
 from .taxonomy import recommend_categories
 
@@ -29,6 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     new_p.add_argument("--tags", required=True, help="Comma-separated tags")
     new_p.add_argument("--quality-score", type=int, default=8)
     new_p.add_argument("--use-when", required=True)
+    new_p.add_argument("--pattern-ids", default="", help="Optional comma-separated strict pattern IDs")
     new_p.add_argument("--force", action="store_true")
 
     val_p = sub.add_parser("validate-library", help="Validate library example structure")
@@ -62,6 +64,10 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if report.passed else 1
 
     if args.command == "new-example":
+        tags = [t.strip() for t in args.tags.split(",") if t.strip()]
+        pattern_ids = [p.strip() for p in args.pattern_ids.split(",") if p.strip()]
+        if not pattern_ids:
+            pattern_ids = list(infer_pattern_ids(args.category, tuple(tags)))
         meta = ExampleMetadata(
             title=args.title,
             author=args.author,
@@ -71,9 +77,10 @@ def main(argv: list[str] | None = None) -> int:
             category=args.category,
             format=args.format,
             rights=args.rights,
-            tags=[t.strip() for t in args.tags.split(",") if t.strip()],
+            tags=tags,
             quality_score=args.quality_score,
             use_when=args.use_when,
+            pattern_ids=pattern_ids,
         )
         path = example_path(args.root, meta)
         if path.exists() and not args.force:
@@ -101,7 +108,8 @@ def main(argv: list[str] | None = None) -> int:
         print("Recommended categories: " + ", ".join(categories))
         for example in select_examples(args.root, args.task, limit=args.limit, category=args.category):
             rel = example.path.relative_to(args.root) if example.path.is_relative_to(args.root) else example.path
-            print(f"- {example.title} [{example.category}] {rel}")
+            patterns = ", ".join(example.pattern_ids)
+            print(f"- {example.title} [{example.category}] patterns: {patterns} {rel}")
         return 0
 
     if args.command == "write-demo":

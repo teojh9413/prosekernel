@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [compression, permission, creator, insight]
 quality_score: 9
 use_when: "When encouraging people to share expertise they underestimate."
+pattern_ids: [PATTERN_HOOK_001, PATTERN_BRAND_001]
+
 ---
 
 # Derek Sivers obvious to you amazing to others

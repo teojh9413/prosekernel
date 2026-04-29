@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [compression, essays, social, insight]
 quality_score: 8
 use_when: When turning an essay-grade idea into a social post without dumbing it down.
+pattern_ids: [PATTERN_HOOK_001]
+
 ---
 
 # Paul Graham Essay Insight to Social Compression

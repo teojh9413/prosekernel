@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [essay, revision, sound, discovery]
 quality_score: 9
 use_when: When writing should discover and clarify thought rather than package a known answer.
+pattern_ids: [PATTERN_EXPLAIN_001]
+
 ---
 
 # Paul Graham: Good Writing

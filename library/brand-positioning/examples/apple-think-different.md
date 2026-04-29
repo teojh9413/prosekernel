@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [brand, manifesto, worldview, identity]
 quality_score: 9
 use_when: When writing needs to make a brand feel like a worldview.
+pattern_ids: [PATTERN_BRAND_001]
+
 ---
 
 # Apple: Think Different

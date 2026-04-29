@@ -10,6 +10,8 @@ rights: "public-domain"
 tags: [speech, contrast, moral-argument, rhetoric]
 quality_score: 10
 use_when: "When writing must expose contradiction between stated values and lived reality."
+pattern_ids: [PATTERN_EXPLAIN_001, PATTERN_HOOK_001, PATTERN_SPEECH_001]
+
 ---
 
 # Frederick Douglass — What to the Slave Is the Fourth of July?

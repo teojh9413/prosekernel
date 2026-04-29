@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [landing-page, visual-proof, comparison, benefit]
 quality_score: 9
 use_when: "When a product benefit is best proved visually rather than argued abstractly."
+pattern_ids: [PATTERN_PERSUASION_001, PATTERN_PROOF_001]
+
 ---
 
 # Bellroy slim your wallet landing page

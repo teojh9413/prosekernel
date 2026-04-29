@@ -12,8 +12,11 @@ Completed:
 - Phase 2 — Taxonomy expansion and deterministic retrieval demo.
 - Phase 3 — Seed expanded categories.
 - Phase 3.5 — Public release readiness metadata/docs.
+- Phase 4 — Corpus depth lower bound: 60 annotated examples across 12 populated categories.
+- Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
 
-Current corpus: 32 annotated examples across 12 populated categories.
+Current corpus: 60 annotated examples across 12 populated categories.
+Current pattern layer: 12 strict pattern families.
 
 ## Phase 4 — Corpus depth
 

@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [platform, category, community, developer-tools]
 quality_score: 9
 use_when: "When positioning a platform by the scale and identity of its community."
+pattern_ids: [PATTERN_BRAND_001]
+
 ---
 
 # GitHub where the world builds software

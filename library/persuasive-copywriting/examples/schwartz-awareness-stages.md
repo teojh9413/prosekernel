@@ -10,6 +10,8 @@ rights: metadata-only
 tags: [persuasion, awareness, sales, messaging]
 quality_score: 10
 use_when: When writing must persuade readers at different levels of readiness.
+pattern_ids: [PATTERN_PERSUASION_001]
+
 ---
 
 # Schwartz Awareness Stages

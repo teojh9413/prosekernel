@@ -10,6 +10,8 @@ rights: short-excerpt
 tags: [anti-slop, ai-writing, editing, specificity, proof]
 quality_score: 10
 use_when: When an agent needs to detect or avoid AI-slop patterns.
+pattern_ids: [PATTERN_EXPLAIN_001, PATTERN_PROOF_001]
+
 ---
 
 # Wikipedia: Signs of AI Writing

@@ -10,6 +10,8 @@ rights: short-excerpt
 tags: [positioning, compression, contrast, memorability]
 quality_score: 10
 use_when: When a product needs compressed positioning that breaks a category assumption.
+pattern_ids: [PATTERN_BRAND_001, PATTERN_HOOK_001, PATTERN_STRATEGY_001]
+
 ---
 
 # SQLite: Small. Fast. Reliable. Choose any three.

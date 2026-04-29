@@ -10,6 +10,8 @@ rights: "metadata-only"
 tags: [interface-writing, brevity, clarity, product]
 quality_score: 9
 use_when: "When writing UI text that must be brief, direct, and behaviorally clear."
+pattern_ids: [PATTERN_UX_001]
+
 ---
 
 # Apple HIG writing guidance
