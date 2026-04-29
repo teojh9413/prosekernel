@@ -12,6 +12,7 @@ from .taxonomy import recommend_categories
 @dataclass
 class WritingBrief:
     task: str
+    retrieval_mode: str
     recommended_categories: list[str]
     examples: list[ExampleRecord]
     pattern_ids: list[str]
@@ -23,6 +24,7 @@ class WritingBrief:
 @dataclass
 class WritingDemoResult:
     task: str
+    retrieval_mode: str
     recommended_categories: list[str]
     examples: list[ExampleRecord]
     pattern_ids: list[str]
@@ -132,14 +134,15 @@ def build_agent_prompt(task: str, examples: list[ExampleRecord], pattern_ids: li
     return "\n".join(lines).rstrip()
 
 
-def build_writing_brief(root: Path, task: str, limit: int = 5, category: str | None = None) -> WritingBrief:
-    examples = select_examples(root, task, limit=limit, category=category)
+def build_writing_brief(root: Path, task: str, limit: int = 5, category: str | None = None, mode: str = "lexical") -> WritingBrief:
+    examples = select_examples(root, task, limit=limit, category=category, mode=mode)
     pattern_ids = collect_pattern_ids(examples)
     craft_moves = extract_craft_moves(examples)
     pattern_instructions = pattern_agent_instructions(root, pattern_ids)
     prompt = build_agent_prompt(task, examples, pattern_ids, pattern_instructions, craft_moves)
     return WritingBrief(
         task=task,
+        retrieval_mode=mode,
         recommended_categories=recommend_categories(task, limit=3),
         examples=examples,
         pattern_ids=pattern_ids,
@@ -154,6 +157,7 @@ def render_brief_report(brief: WritingBrief) -> str:
     lines.append("# Humanprint Writing Brief")
     lines.append("")
     lines.append(f"Task: {brief.task}")
+    lines.append(f"Retrieval mode: {brief.retrieval_mode}")
     lines.append("")
     lines.append("> Dry-run mode: No model call was made. This report is a provider-agnostic brief for any AI agent or LLM adapter.")
     lines.append("")
@@ -199,8 +203,9 @@ def run_provider_write(
     provider_adapter: ProviderAdapter,
     limit: int = 5,
     category: str | None = None,
+    mode: str = "lexical",
 ) -> ProviderWriteResult:
-    brief = build_writing_brief(root, task, limit=limit, category=category)
+    brief = build_writing_brief(root, task, limit=limit, category=category, mode=mode)
     draft = provider_adapter.generate(brief.agent_prompt).strip()
     lint_report = lint_text(draft)
     scorecard = score_text(draft, task=task)
@@ -220,6 +225,7 @@ def render_provider_write_report(result: ProviderWriteResult) -> str:
     lines.append("# Humanprint Write Report")
     lines.append("")
     lines.append(f"Task: {result.task}")
+    lines.append(f"Retrieval mode: {result.brief.retrieval_mode}")
     lines.append(f"Provider: {result.provider}")
     lines.append(f"Model: {result.model}")
     lines.append("")
@@ -317,8 +323,8 @@ def rewrite_from_lint(draft: str, report: LintReport) -> str:
     return revised
 
 
-def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None = None) -> WritingDemoResult:
-    examples = select_examples(root, task, limit=limit, category=category)
+def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None = None, mode: str = "lexical") -> WritingDemoResult:
+    examples = select_examples(root, task, limit=limit, category=category, mode=mode)
     moves = extract_craft_moves(examples)
     pattern_ids = collect_pattern_ids(examples)
     draft = draft_from_task(task, examples, moves)
@@ -329,6 +335,7 @@ def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None
     final_scorecard = score_text(rewrite, task=task)
     return WritingDemoResult(
         task=task,
+        retrieval_mode=mode,
         recommended_categories=recommend_categories(task, limit=3),
         examples=examples,
         pattern_ids=pattern_ids,
@@ -347,6 +354,7 @@ def render_demo_report(result: WritingDemoResult) -> str:
     lines.append("# Humanprint Retrieval + Writing Demo")
     lines.append("")
     lines.append(f"Task: {result.task}")
+    lines.append(f"Retrieval mode: {result.retrieval_mode}")
     lines.append("")
     lines.append("## Recommended categories")
     for category in result.recommended_categories:

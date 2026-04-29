@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 6 provider drafting has started: the repo now includes `humanprint brief`, a provider-agnostic writing brief that retrieves examples, pattern IDs, strict pattern instructions, craft moves, and a quality gate without making any model/API call. It also includes `humanprint write`, an explicit provider adapter path that requires `--provider` and `--model` before any LLM call.
+Phase 8 retrieval is now implemented: `search-examples`, `brief`, `write`, and `write-demo` default to the existing deterministic lexical/category scorer, and can opt into `--mode semantic` or `--mode hybrid`. Hybrid retrieval remains offline and dependency-free, using curated concept aliases, category concepts, simple stemming, and cached semantic token expansion. `search-examples --explain` prints lexical/semantic/hybrid score components.
 
 Seed corpus includes examples/resources across:
 
@@ -59,12 +59,13 @@ Corpus depth rule: one example gives a direction; three to five examples create 
 
 ## Quick CLI
 
-The repo also includes CLI tools for common AI-slop markers, deterministic retrieval/drafting demos, and Phase 7A scorecards/evals:
+The repo also includes CLI tools for common AI-slop markers, deterministic/hybrid retrieval, drafting demos, and Phase 7A scorecards/evals:
 
 ```bash
 python -m pip install -e .
 humanprint lint examples/ai-slop-sample.md
 humanprint search-examples "write a launch email for Humanprint"
+humanprint search-examples "write a security incident update for customers" --mode hybrid --explain
 humanprint brief "write a launch email for Humanprint" --output /tmp/humanprint-brief.md
 humanprint write "write a launch email for Humanprint" --provider openai --model gpt-4o-mini --output /tmp/humanprint-write.md
 humanprint write-demo "write a launch email for Humanprint" --output /tmp/humanprint-demo.md
@@ -109,4 +110,4 @@ Use `docs/source-ingestion.md` and `humanprint new-example` to add new examples 
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current deterministic workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
+Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.

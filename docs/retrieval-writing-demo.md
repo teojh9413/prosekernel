@@ -14,7 +14,7 @@ The retrieval demo turns Humanprint from a static library into a writing workflo
 8. Rewrite or annotate the draft based on lint results.
 9. Return a markdown report with lint and scorecard improvement.
 
-This first version is deterministic and local. It does not call a paid model. It is meant to prove the operating loop before adding LLM drafting.
+This workflow is local-first. Default retrieval is deterministic lexical/category scoring. Optional Phase 8 modes add offline semantic or hybrid scoring without paid APIs, embedding services, or runtime dependencies.
 
 ## Commands
 
@@ -22,6 +22,12 @@ Search for examples:
 
 ```bash
 PYTHONPATH=src python3 -m humanprint.cli search-examples "write a launch email for a new AI writing library" --limit 5
+```
+
+Search with optional hybrid retrieval and score explanation:
+
+```bash
+PYTHONPATH=src python3 -m humanprint.cli search-examples "write a security incident update for customers" --mode hybrid --explain --limit 5
 ```
 
 Run the full demo:
@@ -40,4 +46,4 @@ If a selected category has no examples yet, omit `--category` and let retrieval 
 
 ## Current limitation
 
-The generated draft is a scaffold, not final prose. The next stage should add an LLM-backed drafting adapter that uses the retrieved examples, pattern IDs, craft moves, and scorecard as context while preserving the same lint/rewrite/report contract.
+The generated `write-demo` draft is a scaffold, not final prose. Provider-backed `humanprint write` exists for explicit, user-selected LLM calls, but Humanprint still refuses to choose a paid provider by default. Later retrieval upgrades may add true embeddings, but should preserve the current hybrid score breakdown and default lexical contract.

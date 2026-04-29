@@ -1,13 +1,49 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 import re
 from .patterns import infer_pattern_ids, normalize_pattern_ids
-from .taxonomy import CATEGORIES, expand_with_neighbors, recommend_categories, tokenize
+from .taxonomy import CATEGORY_DESCRIPTIONS, CATEGORIES, expand_with_neighbors, recommend_categories, tokenize
 
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 HEADING_RE = re.compile(r"^##\s+(.+?)\s*$", re.M)
+
+_RETRIEVAL_MODES = {"lexical", "semantic", "hybrid"}
+
+# Phase 8 keeps retrieval stdlib/offline: these aliases approximate semantic intent
+# without adding paid APIs, external embedding services, or heavyweight model deps.
+CONCEPT_ALIASES: dict[str, tuple[str, ...]] = {
+    "trust": ("confidence", "credibility", "reassurance", "belief", "safety", "rebuild", "repair"),
+    "security": ("credential", "credentials", "compromise", "compromised", "breach", "attack", "incident", "risk", "host", "key"),
+    "crisis": ("outage", "incident", "failure", "recall", "apology", "response", "postmortem", "remediation"),
+    "decision": ("approve", "approver", "ownership", "accountability", "responsible", "roles", "alignment", "tradeoff"),
+    "internal": ("ops", "process", "operating", "runbook", "handbook", "team", "workflow", "coordination"),
+    "speech": ("address", "remarks", "oratory", "keynote", "public", "civic", "audience", "duty"),
+    "journalism": ("reported", "reportage", "investigation", "profile", "scene", "witness", "accountability"),
+    "email": ("newsletter", "digest", "cadence", "inbox", "subscriber", "update", "launch"),
+    "ux": ("microcopy", "onboarding", "empty", "state", "error", "button", "interface", "flow"),
+    "proof": ("evidence", "specific", "numbers", "examples", "mechanism", "facts", "documents"),
+    "brand": ("positioning", "worldview", "category", "identity", "manifesto", "promise"),
+    "technical": ("docs", "documentation", "api", "tutorial", "guide", "explain", "developer"),
+}
+
+CATEGORY_CONCEPTS: dict[str, tuple[str, ...]] = {
+    "crisis-communications": ("crisis", "trust", "security", "proof"),
+    "internal-ops-docs": ("internal", "decision", "proof"),
+    "speeches-oratory": ("speech", "trust"),
+    "journalism-reportage": ("journalism", "proof"),
+    "email-newsletters": ("email",),
+    "ux-product-microcopy": ("ux", "technical"),
+    "brand-positioning": ("brand",),
+    "technical-explanatory": ("technical", "proof"),
+    "strategic-intelligent": ("decision", "proof"),
+    "persuasive-copywriting": ("proof", "brand"),
+    "viral-social": ("brand", "speech"),
+    "essays-literary": ("speech", "journalism"),
+}
+
 
 @dataclass(frozen=True)
 class ExampleRecord:
@@ -31,6 +67,16 @@ class ExampleRecord:
             self.title, self.author, self.category, self.format, self.use_when,
             " ".join(self.tags), " ".join(self.pattern_ids), " ".join(self.craft_moves), self.summary,
         ])
+
+
+@dataclass(frozen=True)
+class RetrievalMatch:
+    example: ExampleRecord
+    retrieval_mode: str
+    lexical_score: int
+    semantic_score: int
+    hybrid_score: int
+    preferred_categories: tuple[str, ...]
 
 
 def _parse_value(raw: str):
@@ -133,12 +179,107 @@ def score_example(task: str, example: ExampleRecord, preferred_categories: tuple
     return score
 
 
-def select_examples(root: Path, task: str, limit: int = 5, category: str | None = None) -> list[ExampleRecord]:
+def _stem_token(token: str) -> str:
+    for suffix in ("ications", "ication", "ments", "ing", "ers", "ies", "ed", "s"):
+        if len(token) > len(suffix) + 3 and token.endswith(suffix):
+            return token[: -len(suffix)]
+    return token
+
+
+@lru_cache(maxsize=2048)
+def _semantic_token_tuple(text: str, category: str | None = None) -> tuple[str, ...]:
+    base = tokenize(text)
+    expanded = set(base)
+    expanded.update(_stem_token(token) for token in base)
+    lowered = f" {text.lower()} "
+
+    for concept, aliases in CONCEPT_ALIASES.items():
+        alias_tokens = {concept, *aliases}
+        if base & tokenize(" ".join(alias_tokens)) or any(f" {alias.lower()} " in lowered for alias in aliases if " " in alias):
+            expanded.add(concept)
+            expanded.update(alias_tokens)
+
+    if category:
+        expanded.update(tokenize(category.replace("-", " ")))
+        expanded.update(tokenize(CATEGORY_DESCRIPTIONS.get(category, "")))
+        for concept in CATEGORY_CONCEPTS.get(category, ()):
+            expanded.add(concept)
+            expanded.update(CONCEPT_ALIASES.get(concept, ()))
+    return tuple(sorted(expanded))
+
+
+def semantic_tokens(text: str, category: str | None = None) -> set[str]:
+    """Return cached lightweight expanded concept tokens for offline semantic matching."""
+    return set(_semantic_token_tuple(text, category))
+
+
+def semantic_score_example(task: str, example: ExampleRecord, preferred_categories: tuple[str, ...] = ()) -> int:
+    task_tokens = semantic_tokens(task)
+    example_tokens = semantic_tokens(example.search_text, category=example.category)
+    overlap = task_tokens & example_tokens
+    score = len(overlap) * 3
+
+    # Reward concept/category alignment separately from raw lexical overlap.
+    task_concepts = set(CONCEPT_ALIASES) & task_tokens
+    example_concepts = set(CATEGORY_CONCEPTS.get(example.category, ())) | (set(CONCEPT_ALIASES) & example_tokens)
+    score += len(task_concepts & example_concepts) * 8
+
+    if example.category in preferred_categories:
+        category_rank = preferred_categories.index(example.category)
+        score += 12 if category_rank == 0 else max(3, 8 - category_rank)
+    score += max(0, example.quality_score - 7)
+    return score
+
+
+def _validate_mode(mode: str) -> str:
+    if mode not in _RETRIEVAL_MODES:
+        raise ValueError(f"Unknown retrieval mode: {mode}. Expected one of: {', '.join(sorted(_RETRIEVAL_MODES))}")
+    return mode
+
+
+def rank_examples(
+    root: Path,
+    task: str,
+    limit: int = 5,
+    category: str | None = None,
+    mode: str = "lexical",
+) -> list[RetrievalMatch]:
+    mode = _validate_mode(mode)
     examples = load_examples(root)
     if category:
         examples = [e for e in examples if e.category == category]
         preferred = (category,)
     else:
         preferred = expand_with_neighbors(recommend_categories(task, limit=3))
-    ranked = sorted(examples, key=lambda e: (score_example(task, e, preferred), e.quality_score, e.title), reverse=True)
-    return ranked[:limit]
+
+    matches: list[RetrievalMatch] = []
+    for example in examples:
+        lexical = score_example(task, example, preferred)
+        semantic = semantic_score_example(task, example, preferred)
+        hybrid = lexical + semantic
+        matches.append(RetrievalMatch(
+            example=example,
+            retrieval_mode=mode,
+            lexical_score=lexical,
+            semantic_score=semantic,
+            hybrid_score=hybrid,
+            preferred_categories=preferred,
+        ))
+
+    if mode == "semantic":
+        key = lambda match: (match.semantic_score, match.lexical_score, match.example.quality_score, match.example.title)
+    elif mode == "hybrid":
+        key = lambda match: (match.hybrid_score, match.lexical_score, match.semantic_score, match.example.quality_score, match.example.title)
+    else:
+        key = lambda match: (match.lexical_score, match.example.quality_score, match.example.title)
+    return sorted(matches, key=key, reverse=True)[:limit]
+
+
+def select_examples(
+    root: Path,
+    task: str,
+    limit: int = 5,
+    category: str | None = None,
+    mode: str = "lexical",
+) -> list[ExampleRecord]:
+    return [match.example for match in rank_examples(root, task, limit=limit, category=category, mode=mode)]

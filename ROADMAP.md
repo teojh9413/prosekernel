@@ -12,16 +12,18 @@ Completed:
 - Phase 2 — Taxonomy expansion and deterministic retrieval demo.
 - Phase 3 — Seed expanded categories.
 - Phase 3.5 — Public release readiness metadata/docs.
-- Phase 4 — Corpus depth expansion: 80 annotated examples across 12 populated categories, with priority categories moved closer to 10-example taste depth.
+- Phase 4 — Corpus depth expansion: 100 annotated examples across 12 populated categories, with eight priority categories at 10-example taste depth.
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
 - Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
 - Phase 6A — Provider-agnostic dry-run brief mode: `humanprint brief` builds an agent-ready writing packet without model/API calls.
 - Phase 6B — Explicit provider write mode: adapter interface, `humanprint write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
+- Phase 8 — Offline semantic/hybrid retrieval: optional `--mode semantic|hybrid`, score explanations, cached concept expansion, and no new runtime dependencies.
 
-Current corpus: 80 annotated examples across 12 populated categories.
+Current corpus: 100 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
 Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
 Current adapter layer: dry-run `brief` mode plus explicit provider-backed `write` mode. No default paid provider is selected; writes require explicit `--provider` and `--model`.
+Current retrieval layer: default lexical/category scoring plus optional offline semantic and hybrid scoring.
 
 ## Phase 4 — Corpus depth
 
@@ -164,16 +166,28 @@ task → retrieve examples/patterns → build brief → LLM drafts → lint crit
 
 ## Phase 8 — Semantic / hybrid retrieval
 
-Delay until the corpus is larger, around 80-150 examples.
+Status: implemented.
 
-Use hybrid retrieval, not pure vector search:
+Humanprint keeps lexical/category scoring as the default and adds explicit opt-in modes:
+
+```bash
+humanprint search-examples "write a security incident update for customers" --mode hybrid --explain
+humanprint brief "write a customer trust update after a compromised credential scare" --mode hybrid
+humanprint write-demo "write an outage apology" --mode hybrid
+```
+
+Implemented signals:
 
 - category match
 - keyword match
 - tag match
 - pattern match
-- semantic similarity
+- offline semantic concept aliases
+- category concepts
 - quality score
+- cached semantic token expansion
+
+See `docs/phase-8-hybrid-retrieval.md`.
 
 ## Phase 9 — Agent workflow integration
 

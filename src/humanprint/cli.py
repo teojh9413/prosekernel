@@ -16,7 +16,7 @@ from .engine import (
 from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
 from .patterns import infer_pattern_ids
 from .providers import ProviderCallError, ProviderError, provider_adapter_from_env
-from .retrieve import select_examples
+from .retrieve import rank_examples, select_examples
 from .taxonomy import recommend_categories
 
 
@@ -51,12 +51,15 @@ def main(argv: list[str] | None = None) -> int:
     search_p.add_argument("--root", type=Path, default=Path.cwd())
     search_p.add_argument("--limit", type=int, default=5)
     search_p.add_argument("--category")
+    search_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
+    search_p.add_argument("--explain", action="store_true", help="Print score breakdown for each retrieved example")
 
     brief_p = sub.add_parser("brief", help="Build a provider-agnostic dry-run writing brief")
     brief_p.add_argument("task")
     brief_p.add_argument("--root", type=Path, default=Path.cwd())
     brief_p.add_argument("--limit", type=int, default=5)
     brief_p.add_argument("--category")
+    brief_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
     brief_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     write_p = sub.add_parser("write", help="Draft with an explicit LLM provider and Humanprint quality report")
@@ -64,6 +67,7 @@ def main(argv: list[str] | None = None) -> int:
     write_p.add_argument("--root", type=Path, default=Path.cwd())
     write_p.add_argument("--limit", type=int, default=5)
     write_p.add_argument("--category")
+    write_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
     write_p.add_argument("--provider", help="Explicit provider: openai, anthropic, or openrouter")
     write_p.add_argument("--model", help="Explicit provider model name")
     write_p.add_argument("--api-key", help="Optional explicit API key; otherwise provider env var is used")
@@ -75,6 +79,7 @@ def main(argv: list[str] | None = None) -> int:
     demo_p.add_argument("--root", type=Path, default=Path.cwd())
     demo_p.add_argument("--limit", type=int, default=5)
     demo_p.add_argument("--category")
+    demo_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
     demo_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     score_p = sub.add_parser("scorecard", help="Score a draft with the Phase 7A Humanprint scorecard")
@@ -143,14 +148,26 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "search-examples":
         categories = recommend_categories(args.task, limit=3)
         print("Recommended categories: " + ", ".join(categories))
-        for example in select_examples(args.root, args.task, limit=args.limit, category=args.category):
-            rel = example.path.relative_to(args.root) if example.path.is_relative_to(args.root) else example.path
-            patterns = ", ".join(example.pattern_ids)
-            print(f"- {example.title} [{example.category}] patterns: {patterns} {rel}")
+        if args.explain:
+            print(f"Retrieval mode: {args.mode}")
+            matches = rank_examples(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode)
+            for match in matches:
+                example = match.example
+                rel = example.path.relative_to(args.root) if example.path.is_relative_to(args.root) else example.path
+                patterns = ", ".join(example.pattern_ids)
+                print(
+                    f"- {example.title} [{example.category}] patterns: {patterns} {rel} "
+                    f"lexical={match.lexical_score} semantic={match.semantic_score} hybrid={match.hybrid_score}"
+                )
+        else:
+            for example in select_examples(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode):
+                rel = example.path.relative_to(args.root) if example.path.is_relative_to(args.root) else example.path
+                patterns = ", ".join(example.pattern_ids)
+                print(f"- {example.title} [{example.category}] patterns: {patterns} {rel}")
         return 0
 
     if args.command == "brief":
-        brief = build_writing_brief(args.root, args.task, limit=args.limit, category=args.category)
+        brief = build_writing_brief(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode)
         report = render_brief_report(brief)
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -181,6 +198,7 @@ def main(argv: list[str] | None = None) -> int:
                 provider_adapter=provider_adapter,
                 limit=args.limit,
                 category=args.category,
+                mode=args.mode,
             )
         except ProviderCallError as exc:
             print(f"Provider call failed: {exc}", file=sys.stderr)
@@ -198,7 +216,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "write-demo":
-        result = run_writing_demo(args.root, args.task, limit=args.limit, category=args.category)
+        result = run_writing_demo(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode)
         report = render_demo_report(result)
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)
