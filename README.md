@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 5 initial pattern extraction is complete enough for the next build step: public-release readiness is in place, the corpus has reached the lower bound of the 60-80 example target, and 12 strict reusable pattern families now connect examples to agent-executable moves.
+Phase 7A deeper evals are now wired: the repo includes weak/strong benchmark fixtures, a six-dimension scorecard implementation, `humanprint scorecard`, and `humanprint eval` so agents can measure whether drafts improved before any LLM adapter work.
 
 Seed corpus includes examples/resources across:
 
@@ -59,13 +59,15 @@ Corpus depth rule: one example gives a direction; three to five examples create 
 
 ## Quick CLI
 
-The repo also includes a simple linter for common AI-slop markers:
+The repo also includes CLI tools for common AI-slop markers, deterministic retrieval/drafting demos, and Phase 7A scorecards/evals:
 
 ```bash
 python -m pip install -e .
 humanprint lint examples/ai-slop-sample.md
 humanprint search-examples "write a launch email for Humanprint"
 humanprint write-demo "write a launch email for Humanprint" --output /tmp/humanprint-demo.md
+humanprint scorecard draft.md --task "write a launch email for Humanprint" --output /tmp/humanprint-scorecard.md
+humanprint eval
 ```
 
 ## Core standard
@@ -105,4 +107,4 @@ Use `docs/source-ingestion.md` and `humanprint new-example` to add new examples 
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current deterministic workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → rewrite/report.
+Use `docs/retrieval-writing-demo.md` for the current deterministic workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI.

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from .evals import ScorecardReport, score_text
 from .lint import LintReport, lint_text
 from .retrieve import ExampleRecord, select_examples
 from .taxonomy import recommend_categories
@@ -15,8 +16,10 @@ class WritingDemoResult:
     craft_moves: list[str]
     draft: str
     initial_report: LintReport
+    initial_scorecard: ScorecardReport
     rewrite: str
     final_report: LintReport
+    final_scorecard: ScorecardReport
 
 
 def extract_craft_moves(examples: list[ExampleRecord], limit: int = 7) -> list[str]:
@@ -108,8 +111,10 @@ def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None
     pattern_ids = collect_pattern_ids(examples)
     draft = draft_from_task(task, examples, moves)
     initial = lint_text(draft)
+    initial_scorecard = score_text(draft, task=task)
     rewrite = rewrite_from_lint(draft, initial)
     final = lint_text(rewrite)
+    final_scorecard = score_text(rewrite, task=task)
     return WritingDemoResult(
         task=task,
         recommended_categories=recommend_categories(task, limit=3),
@@ -118,8 +123,10 @@ def run_writing_demo(root: Path, task: str, limit: int = 5, category: str | None
         craft_moves=moves,
         draft=draft,
         initial_report=initial,
+        initial_scorecard=initial_scorecard,
         rewrite=rewrite,
         final_report=final,
+        final_scorecard=final_scorecard,
     )
 
 
@@ -149,8 +156,20 @@ def render_demo_report(result: WritingDemoResult) -> str:
     lines.append(result.draft)
     lines.append("")
     lines.append("## Lint result")
-    lines.append(f"Initial score: {result.initial_report.score}/100")
-    lines.append(f"Final score: {result.final_report.score}/100")
+    lines.append(f"Initial lint score: {result.initial_report.score}/100")
+    lines.append(f"Final lint score: {result.final_report.score}/100")
+    lines.append("")
+    lines.append("## Score improvement")
+    lines.append(f"Initial scorecard: {result.initial_scorecard.total}/100")
+    lines.append(f"Final scorecard: {result.final_scorecard.total}/100")
+    delta = result.final_scorecard.total - result.initial_scorecard.total
+    lines.append(f"Scorecard delta: {delta:+d}")
+    lines.append("")
+    lines.append("Dimension movement:")
+    initial_dims = {dimension.name: dimension for dimension in result.initial_scorecard.dimensions}
+    for final_dim in result.final_scorecard.dimensions:
+        initial_dim = initial_dims[final_dim.name]
+        lines.append(f"- {final_dim.name}: {initial_dim.score}/{initial_dim.max_score} → {final_dim.score}/{final_dim.max_score}")
     lines.append("")
     if result.final_report.findings:
         lines.append("Findings:")

@@ -14,9 +14,11 @@ Completed:
 - Phase 3.5 — Public release readiness metadata/docs.
 - Phase 4 — Corpus depth lower bound: 60 annotated examples across 12 populated categories.
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
+- Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
 
 Current corpus: 60 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
+Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
 
 ## Phase 4 — Corpus depth
 
@@ -97,6 +99,16 @@ Eval types:
    - reader fit
    - memorability
    - non-genericness
+
+Deliverables now implemented:
+
+- `evals/writing-scorecard.md` for the human-readable rubric.
+- `evals/tasks/*.md` for benchmark task prompts.
+- `evals/fixtures/weak/*.md` and `evals/fixtures/strong/*.md` for regression fixtures.
+- `src/humanprint/evals.py` for deterministic scorecard scoring.
+- `humanprint scorecard draft.md --task "..."` for draft scoring.
+- `humanprint eval` for weak/strong fixture regression tests.
+- `write-demo` reports include scorecard improvement by dimension.
 
 ## Phase 6 — LLM-backed drafting adapter
 

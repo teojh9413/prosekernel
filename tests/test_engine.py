@@ -24,6 +24,7 @@ def test_render_demo_report_contains_contract_sections():
         "## Patterns used",
         "## Craft moves to transfer",
         "## Lint result",
+        "## Score improvement",
         "## Rewrite",
     ]:
         assert heading in report

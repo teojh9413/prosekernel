@@ -10,8 +10,9 @@ The retrieval demo turns Humanprint from a static library into a writing workflo
 4. Extract craft moves from those examples.
 5. Generate a local deterministic draft scaffold.
 6. Run the anti-slop linter.
-7. Rewrite or annotate the draft based on lint results.
-8. Return a markdown report.
+7. Score the draft with the Phase 7A scorecard.
+8. Rewrite or annotate the draft based on lint results.
+9. Return a markdown report with lint and scorecard improvement.
 
 This first version is deterministic and local. It does not call a paid model. It is meant to prove the operating loop before adding LLM drafting.
 
@@ -39,4 +40,4 @@ If a selected category has no examples yet, omit `--category` and let retrieval 
 
 ## Current limitation
 
-The generated draft is a scaffold, not final prose. The next stage should add an LLM-backed drafting adapter that uses the retrieved examples and craft moves as context while preserving the same lint/rewrite/report contract.
+The generated draft is a scaffold, not final prose. The next stage should add an LLM-backed drafting adapter that uses the retrieved examples, pattern IDs, craft moves, and scorecard as context while preserving the same lint/rewrite/report contract.

@@ -5,6 +5,7 @@ from pathlib import Path
 from .lint import lint_file
 from .ingest import ExampleMetadata, example_path, render_example, validate_library
 from .engine import render_demo_report, run_writing_demo
+from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
 from .patterns import infer_pattern_ids
 from .retrieve import select_examples
 from .taxonomy import recommend_categories
@@ -48,6 +49,15 @@ def main(argv: list[str] | None = None) -> int:
     demo_p.add_argument("--limit", type=int, default=5)
     demo_p.add_argument("--category")
     demo_p.add_argument("--output", type=Path, help="Optional markdown report path")
+
+    score_p = sub.add_parser("scorecard", help="Score a draft with the Phase 7A Humanprint scorecard")
+    score_p.add_argument("path", type=Path)
+    score_p.add_argument("--task", default="", help="Optional writing task for reader-fit/non-genericness scoring")
+    score_p.add_argument("--output", type=Path, help="Optional markdown report path")
+
+    eval_p = sub.add_parser("eval", help="Run built-in weak/strong fixture evals")
+    eval_p.add_argument("--root", type=Path, default=Path.cwd())
+    eval_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     args = parser.parse_args(argv)
 
@@ -122,6 +132,31 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(report)
         return 0 if result.final_report.passed else 1
+
+    if args.command == "scorecard":
+        scorecard = score_text(args.path.read_text(encoding="utf-8"), task=args.task)
+        report = render_scorecard_report(
+            scorecard,
+            title=f"Humanprint Scorecard — {args.path.name}",
+        )
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0 if scorecard.passed else 1
+
+    if args.command == "eval":
+        results = evaluate_fixtures(args.root)
+        report = render_fixture_eval_report(results, args.root)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0 if results and all(result.passed for result in results) else 1
 
     return 2
 
