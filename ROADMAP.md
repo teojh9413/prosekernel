@@ -16,11 +16,12 @@ Completed:
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
 - Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
 - Phase 6A — Provider-agnostic dry-run brief mode: `humanprint brief` builds an agent-ready writing packet without model/API calls.
+- Phase 6B — Explicit provider write mode: adapter interface, `humanprint write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
 
 Current corpus: 60 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
 Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
-Current adapter layer: dry-run `brief` mode, no credentials required.
+Current adapter layer: dry-run `brief` mode plus explicit provider-backed `write` mode. No default paid provider is selected; writes require explicit `--provider` and `--model`.
 
 ## Phase 4 — Corpus depth
 
@@ -139,12 +140,21 @@ Phase 6A deliverables now implemented:
 - quality gate instructions for lint + scorecard.
 - `docs/phase-6-brief-mode.md`.
 
-Remaining Phase 6B work:
+Phase 6B deliverables now implemented:
 
-- explicit provider adapter interface.
+- explicit provider adapter protocol in `src/humanprint/providers.py`.
+- initial OpenAI, OpenRouter, and Anthropic HTTP adapters using stdlib HTTP calls.
 - `humanprint write --provider ... --model ...`.
-- clear missing-credential errors; no default paid provider.
-- preserve `brief` as the no-credential dry run.
+- no-default-provider refusal path to prevent accidental paid calls.
+- missing credential errors that name the exact env var and confirm no API call was made.
+- write reports with provider/model trace, retrieved examples, pattern IDs, draft, lint, scorecard, and quality gate.
+- `docs/phase-6b-provider-write.md`.
+
+Remaining later work:
+
+- optional local model provider.
+- optional LLM critique/rewrite loop after the first draft.
+- richer provider configuration once real users exercise write mode.
 
 Flow:
 

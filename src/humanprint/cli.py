@@ -1,12 +1,21 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 from .lint import lint_file
 from .ingest import ExampleMetadata, example_path, render_example, validate_library
-from .engine import build_writing_brief, render_brief_report, render_demo_report, run_writing_demo
+from .engine import (
+    build_writing_brief,
+    render_brief_report,
+    render_demo_report,
+    render_provider_write_report,
+    run_provider_write,
+    run_writing_demo,
+)
 from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
 from .patterns import infer_pattern_ids
+from .providers import ProviderCallError, ProviderError, provider_adapter_from_env
 from .retrieve import select_examples
 from .taxonomy import recommend_categories
 
@@ -49,6 +58,17 @@ def main(argv: list[str] | None = None) -> int:
     brief_p.add_argument("--limit", type=int, default=5)
     brief_p.add_argument("--category")
     brief_p.add_argument("--output", type=Path, help="Optional markdown report path")
+
+    write_p = sub.add_parser("write", help="Draft with an explicit LLM provider and Humanprint quality report")
+    write_p.add_argument("task")
+    write_p.add_argument("--root", type=Path, default=Path.cwd())
+    write_p.add_argument("--limit", type=int, default=5)
+    write_p.add_argument("--category")
+    write_p.add_argument("--provider", help="Explicit provider: openai, anthropic, or openrouter")
+    write_p.add_argument("--model", help="Explicit provider model name")
+    write_p.add_argument("--api-key", help="Optional explicit API key; otherwise provider env var is used")
+    write_p.add_argument("--timeout", type=int, default=60)
+    write_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     demo_p = sub.add_parser("write-demo", help="Run deterministic retrieval + draft + lint + rewrite demo")
     demo_p.add_argument("task")
@@ -132,6 +152,43 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "brief":
         brief = build_writing_brief(args.root, args.task, limit=args.limit, category=args.category)
         report = render_brief_report(brief)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0
+
+    if args.command == "write":
+        if not args.provider or not args.model:
+            print(
+                "No default provider is configured. Humanprint will not choose a paid provider for you. "
+                "Use `humanprint brief` for a no-credential dry run, or pass --provider and --model explicitly.",
+                file=sys.stderr,
+            )
+            return 2
+        try:
+            provider_adapter = provider_adapter_from_env(
+                args.provider,
+                args.model,
+                api_key=args.api_key,
+                timeout=args.timeout,
+            )
+            result = run_provider_write(
+                args.root,
+                args.task,
+                provider_adapter=provider_adapter,
+                limit=args.limit,
+                category=args.category,
+            )
+        except ProviderCallError as exc:
+            print(f"Provider call failed: {exc}", file=sys.stderr)
+            return 1
+        except ProviderError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        report = render_provider_write_report(result)
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(report, encoding="utf-8")

@@ -5,6 +5,7 @@ from pathlib import Path
 from .evals import ScorecardReport, score_text
 from .lint import LintReport, lint_text
 from .patterns import PATTERN_FILES
+from .providers import ProviderAdapter
 from .retrieve import ExampleRecord, section_text, select_examples
 from .taxonomy import recommend_categories
 
@@ -32,6 +33,17 @@ class WritingDemoResult:
     rewrite: str
     final_report: LintReport
     final_scorecard: ScorecardReport
+
+
+@dataclass
+class ProviderWriteResult:
+    task: str
+    provider: str
+    model: str
+    brief: WritingBrief
+    draft: str
+    lint_report: LintReport
+    scorecard: ScorecardReport
 
 
 def extract_craft_moves(examples: list[ExampleRecord], limit: int = 7) -> list[str]:
@@ -177,6 +189,80 @@ def render_brief_report(brief: WritingBrief) -> str:
     lines.append("- Run `humanprint lint draft.md`.")
     lines.append(f"- Run `humanprint scorecard draft.md --task \"{brief.task}\"`.")
     lines.append("- Revise until the draft has concrete proof, reader fit, and non-genericness.")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def run_provider_write(
+    root: Path,
+    task: str,
+    *,
+    provider_adapter: ProviderAdapter,
+    limit: int = 5,
+    category: str | None = None,
+) -> ProviderWriteResult:
+    brief = build_writing_brief(root, task, limit=limit, category=category)
+    draft = provider_adapter.generate(brief.agent_prompt).strip()
+    lint_report = lint_text(draft)
+    scorecard = score_text(draft, task=task)
+    return ProviderWriteResult(
+        task=task,
+        provider=provider_adapter.provider,
+        model=provider_adapter.model,
+        brief=brief,
+        draft=draft,
+        lint_report=lint_report,
+        scorecard=scorecard,
+    )
+
+
+def render_provider_write_report(result: ProviderWriteResult) -> str:
+    lines: list[str] = []
+    lines.append("# Humanprint Write Report")
+    lines.append("")
+    lines.append(f"Task: {result.task}")
+    lines.append(f"Provider: {result.provider}")
+    lines.append(f"Model: {result.model}")
+    lines.append("")
+    lines.append("> Model call completed only because an explicit provider and model were supplied.")
+    lines.append("")
+    lines.append("## Recommended categories")
+    for category in result.brief.recommended_categories:
+        lines.append(f"- {category}")
+    lines.append("")
+    lines.append("## Retrieved examples")
+    for example in result.brief.examples:
+        lines.append(f"- {example.title} — {example.category} — `{example.path}`")
+    lines.append("")
+    lines.append("## Patterns used")
+    for pattern_id in result.brief.pattern_ids:
+        lines.append(f"- `{pattern_id}`")
+    lines.append("")
+    lines.append("## Craft moves")
+    for move in result.brief.craft_moves:
+        lines.append(f"- {move}")
+    lines.append("")
+    lines.append("## Draft")
+    lines.append(result.draft)
+    lines.append("")
+    lines.append("## Lint result")
+    status = "PASS" if result.lint_report.passed else "FAIL"
+    lines.append(f"Humanprint lint score: {result.lint_report.score}/100 — {status}")
+    if result.lint_report.findings:
+        for finding in result.lint_report.findings:
+            loc = f":{finding.line}" if finding.line else ""
+            lines.append(f"- [{finding.severity.upper()}] {finding.rule}{loc}: {finding.message}")
+    else:
+        lines.append("No automated slop markers found.")
+    lines.append("")
+    lines.append("## Scorecard")
+    lines.append(f"Total: {result.scorecard.total}/100")
+    for dimension in result.scorecard.dimensions:
+        lines.append(f"- {dimension.name}: {dimension.score}/{dimension.max_score} — {dimension.rationale}")
+    lines.append("")
+    lines.append("## Quality gate")
+    lines.append("- If lint or scorecard is weak, revise before publishing.")
+    lines.append("- Keep structure transfer; do not copy source phrases.")
+    lines.append("- Add real proof before claims of importance.")
     return "\n".join(lines).rstrip() + "\n"
 
 
