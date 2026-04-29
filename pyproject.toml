@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "humanprint"
 version = "0.1.0"
-description = "AI writing system for clear, specific, non-sloppy prose."
+description = "Open-source writing taste layer for AI agents."
 readme = "README.md"
 requires-python = ">=3.10"
-authors = [{ name = "Gamer" }]
-license = { text = "Private" }
+authors = [{ name = "Humanprint contributors" }]
+license = { text = "MIT" }
 
 [project.scripts]
 humanprint = "humanprint.cli:main"
@@ -17,3 +17,8 @@ humanprint = "humanprint.cli:main"
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+
+[project.urls]
+Homepage = "https://github.com/teojh9413/humanprint"
+Repository = "https://github.com/teojh9413/humanprint"
+Issues = "https://github.com/teojh9413/humanprint/issues"

@@ -18,6 +18,8 @@ Admit only if it teaches a reusable craft move:
 
 Popularity alone is not enough.
 
+For public contributions, also check `docs/example-quality-rubric.md` and `CONTRIBUTING.md`.
+
 ## 2. Classify rights
 
 Use one of:

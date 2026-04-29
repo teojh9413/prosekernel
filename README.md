@@ -1,8 +1,8 @@
 # Humanprint
 
-**AI writing with fingerprints. No AI slop.**
+**Give AI writing a fingerprint.**
 
-Humanprint is a private writing library and operating system for AI agents. It teaches agents to write from excellent examples instead of generic internet mush.
+Humanprint is an open-source writing taste layer for AI agents. It helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
 
 The system has four layers:
 
@@ -11,7 +11,7 @@ The system has four layers:
 3. **Doctrine** — rules for clear, specific, persuasive, human writing.
 4. **Evals** — anti-slop checks that catch fake significance, generic claims, weak proof, and AI cadence.
 
-Humanprint uses a Karpathy-style LLM wiki pattern: preserve sources, summarize what matters, extract concepts, connect related ideas, and turn knowledge into reusable operating rules.
+Humanprint preserves source metadata, summarizes what matters, extracts craft concepts, connects related ideas, and turns writing knowledge into reusable operating rules for agents.
 
 ## Why this exists
 
@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 2 has started: taxonomy expansion plus deterministic retrieval/writing demo.
+Phase 3.5 is complete: public-release metadata/docs are in place after taxonomy expansion, retrieval demo, and seeded expanded categories.
 
 Seed corpus includes examples/resources across:
 
@@ -76,6 +76,26 @@ Good Humanprint writing must be:
 - **persuasive** — structure fits reader awareness and desired action
 - **honest** — no fake certainty, fake citations, or inflated importance
 
+
+## Public source policy
+
+Humanprint teaches structure, taste, and craft. It is not a copyrighted text mirror.
+
+For modern copyrighted writing, default to:
+
+- source metadata
+- source URL
+- rights classification
+- short excerpt only when legally appropriate
+- original craft analysis
+- reusable pattern
+- imitation prompt
+
+See `docs/legal-source-policy.md`, `docs/source-ingestion.md`, and `CONTRIBUTING.md`.
+
+## Roadmap
+
+See `ROADMAP.md`. The build order is: public readiness → corpus depth → patterns → basic evals → LLM adapter → hybrid retrieval → agent workflow → productized CLI → public-safe learning loop.
 
 ## Source ingestion
 

@@ -1,6 +1,6 @@
 # Legal Source Policy
 
-Humanprint is a private research and writing-quality repo, but it should still be clean and careful.
+Humanprint is an open-source writing-quality repo for AI agents, so source handling must be clean, rights-safe, and reviewable.
 
 ## Prefer
 
