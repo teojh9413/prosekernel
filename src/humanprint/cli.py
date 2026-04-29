@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 from .lint import lint_file
 from .ingest import ExampleMetadata, example_path, render_example, validate_library
-from .engine import render_demo_report, run_writing_demo
+from .engine import build_writing_brief, render_brief_report, render_demo_report, run_writing_demo
 from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
 from .patterns import infer_pattern_ids
 from .retrieve import select_examples
@@ -42,6 +42,13 @@ def main(argv: list[str] | None = None) -> int:
     search_p.add_argument("--root", type=Path, default=Path.cwd())
     search_p.add_argument("--limit", type=int, default=5)
     search_p.add_argument("--category")
+
+    brief_p = sub.add_parser("brief", help="Build a provider-agnostic dry-run writing brief")
+    brief_p.add_argument("task")
+    brief_p.add_argument("--root", type=Path, default=Path.cwd())
+    brief_p.add_argument("--limit", type=int, default=5)
+    brief_p.add_argument("--category")
+    brief_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     demo_p = sub.add_parser("write-demo", help="Run deterministic retrieval + draft + lint + rewrite demo")
     demo_p.add_argument("task")
@@ -120,6 +127,17 @@ def main(argv: list[str] | None = None) -> int:
             rel = example.path.relative_to(args.root) if example.path.is_relative_to(args.root) else example.path
             patterns = ", ".join(example.pattern_ids)
             print(f"- {example.title} [{example.category}] patterns: {patterns} {rel}")
+        return 0
+
+    if args.command == "brief":
+        brief = build_writing_brief(args.root, args.task, limit=args.limit, category=args.category)
+        report = render_brief_report(brief)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
         return 0
 
     if args.command == "write-demo":

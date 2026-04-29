@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 7A deeper evals are now wired: the repo includes weak/strong benchmark fixtures, a six-dimension scorecard implementation, `humanprint scorecard`, and `humanprint eval` so agents can measure whether drafts improved before any LLM adapter work.
+Phase 6 dry-run brief mode has started: the repo now includes `humanprint brief`, a provider-agnostic writing brief that retrieves examples, pattern IDs, strict pattern instructions, craft moves, and a quality gate without making any model/API call.
 
 Seed corpus includes examples/resources across:
 
@@ -65,6 +65,7 @@ The repo also includes CLI tools for common AI-slop markers, deterministic retri
 python -m pip install -e .
 humanprint lint examples/ai-slop-sample.md
 humanprint search-examples "write a launch email for Humanprint"
+humanprint brief "write a launch email for Humanprint" --output /tmp/humanprint-brief.md
 humanprint write-demo "write a launch email for Humanprint" --output /tmp/humanprint-demo.md
 humanprint scorecard draft.md --task "write a launch email for Humanprint" --output /tmp/humanprint-scorecard.md
 humanprint eval
@@ -107,4 +108,4 @@ Use `docs/source-ingestion.md` and `humanprint new-example` to add new examples 
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current deterministic workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI.
+Use `docs/retrieval-writing-demo.md` for the current deterministic workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode.

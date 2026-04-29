@@ -4,8 +4,20 @@ from dataclasses import dataclass
 from pathlib import Path
 from .evals import ScorecardReport, score_text
 from .lint import LintReport, lint_text
-from .retrieve import ExampleRecord, select_examples
+from .patterns import PATTERN_FILES
+from .retrieve import ExampleRecord, section_text, select_examples
 from .taxonomy import recommend_categories
+
+@dataclass
+class WritingBrief:
+    task: str
+    recommended_categories: list[str]
+    examples: list[ExampleRecord]
+    pattern_ids: list[str]
+    pattern_instructions: list[str]
+    craft_moves: list[str]
+    agent_prompt: str
+
 
 @dataclass
 class WritingDemoResult:
@@ -52,6 +64,120 @@ def _task_subject(task: str) -> str:
     if len(clean) <= 90:
         return clean
     return clean[:87].rstrip() + "..."
+
+
+def pattern_agent_instructions(root: Path, pattern_ids: list[str]) -> list[str]:
+    instructions: list[str] = []
+    for pattern_id in pattern_ids:
+        rel = PATTERN_FILES.get(pattern_id)
+        if not rel:
+            continue
+        path = root / rel
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        instruction = section_text(text, "Agent instruction")
+        if instruction:
+            instructions.append(f"{pattern_id}: {instruction}")
+    return instructions
+
+
+def build_agent_prompt(task: str, examples: list[ExampleRecord], pattern_ids: list[str], pattern_instructions: list[str], craft_moves: list[str]) -> str:
+    lines: list[str] = []
+    lines.append("You are drafting with Humanprint, an open-source writing taste layer for AI agents.")
+    lines.append("")
+    lines.append(f"Task: {task}")
+    lines.append("")
+    lines.append("Operating rules:")
+    lines.append("- Do structure transfer, not phrase transfer.")
+    lines.append("- Do not copy source phrases.")
+    lines.append("- Lead with the reader's concrete situation before polish.")
+    lines.append("- Use specific proof: names, numbers, examples, mechanisms, scenes, or constraints.")
+    lines.append("- Avoid generic AI slop, fake significance, and unsupported certainty.")
+    lines.append("")
+    lines.append("Retrieved examples to study:")
+    for example in examples:
+        lines.append(f"- {example.title} [{example.category}] — use when: {example.use_when}")
+    lines.append("")
+    lines.append("Patterns to apply:")
+    if pattern_instructions:
+        for instruction in pattern_instructions:
+            lines.append(f"- {instruction}")
+    else:
+        for pattern_id in pattern_ids:
+            lines.append(f"- {pattern_id}")
+    lines.append("")
+    lines.append("Craft moves to transfer:")
+    for move in craft_moves:
+        lines.append(f"- {move}")
+    lines.append("")
+    lines.append("Drafting sequence:")
+    lines.append("1. Name the reader and their current moment.")
+    lines.append("2. Choose one primary pattern and make the structure visible.")
+    lines.append("3. Draft with concrete proof before claims of importance.")
+    lines.append("4. Cut any sentence that could describe any other product, company, or topic.")
+    lines.append("5. Score the draft before publishing with `humanprint scorecard draft.md --task \"...\"`.")
+    return "\n".join(lines).rstrip()
+
+
+def build_writing_brief(root: Path, task: str, limit: int = 5, category: str | None = None) -> WritingBrief:
+    examples = select_examples(root, task, limit=limit, category=category)
+    pattern_ids = collect_pattern_ids(examples)
+    craft_moves = extract_craft_moves(examples)
+    pattern_instructions = pattern_agent_instructions(root, pattern_ids)
+    prompt = build_agent_prompt(task, examples, pattern_ids, pattern_instructions, craft_moves)
+    return WritingBrief(
+        task=task,
+        recommended_categories=recommend_categories(task, limit=3),
+        examples=examples,
+        pattern_ids=pattern_ids,
+        pattern_instructions=pattern_instructions,
+        craft_moves=craft_moves,
+        agent_prompt=prompt,
+    )
+
+
+def render_brief_report(brief: WritingBrief) -> str:
+    lines: list[str] = []
+    lines.append("# Humanprint Writing Brief")
+    lines.append("")
+    lines.append(f"Task: {brief.task}")
+    lines.append("")
+    lines.append("> Dry-run mode: No model call was made. This report is a provider-agnostic brief for any AI agent or LLM adapter.")
+    lines.append("")
+    lines.append("## Recommended categories")
+    for category in brief.recommended_categories:
+        lines.append(f"- {category}")
+    lines.append("")
+    lines.append("## Retrieved examples")
+    for example in brief.examples:
+        lines.append(f"- {example.title} — {example.category} — `{example.path}`")
+        lines.append(f"  - Use when: {example.use_when}")
+        lines.append(f"  - Patterns: {', '.join(example.pattern_ids)}")
+    lines.append("")
+    lines.append("## Patterns to apply")
+    for pattern_id in brief.pattern_ids:
+        lines.append(f"- `{pattern_id}`")
+    if brief.pattern_instructions:
+        lines.append("")
+        lines.append("Agent instructions:")
+        for instruction in brief.pattern_instructions:
+            lines.append(f"- {instruction}")
+    lines.append("")
+    lines.append("## Craft moves")
+    for move in brief.craft_moves:
+        lines.append(f"- {move}")
+    lines.append("")
+    lines.append("## Agent drafting prompt")
+    lines.append("```text")
+    lines.append(brief.agent_prompt)
+    lines.append("```")
+    lines.append("")
+    lines.append("## Quality gate")
+    lines.append("- Run `humanprint lint draft.md`.")
+    lines.append(f"- Run `humanprint scorecard draft.md --task \"{brief.task}\"`.")
+    lines.append("- Revise until the draft has concrete proof, reader fit, and non-genericness.")
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def draft_from_task(task: str, examples: list[ExampleRecord], craft_moves: list[str]) -> str:

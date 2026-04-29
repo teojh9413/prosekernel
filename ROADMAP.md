@@ -15,10 +15,12 @@ Completed:
 - Phase 4 — Corpus depth lower bound: 60 annotated examples across 12 populated categories.
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
 - Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
+- Phase 6A — Provider-agnostic dry-run brief mode: `humanprint brief` builds an agent-ready writing packet without model/API calls.
 
 Current corpus: 60 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
 Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
+Current adapter layer: dry-run `brief` mode, no credentials required.
 
 ## Phase 4 — Corpus depth
 
@@ -128,6 +130,21 @@ Commands:
 humanprint brief "write a launch email for an AI writing library"
 humanprint write "write a launch email for an AI writing library"
 ```
+
+Phase 6A deliverables now implemented:
+
+- `humanprint brief` dry-run command.
+- provider-neutral `WritingBrief` object and markdown renderer.
+- strict pattern agent instructions pulled from `patterns/PATTERN_*.md`.
+- quality gate instructions for lint + scorecard.
+- `docs/phase-6-brief-mode.md`.
+
+Remaining Phase 6B work:
+
+- explicit provider adapter interface.
+- `humanprint write --provider ... --model ...`.
+- clear missing-credential errors; no default paid provider.
+- preserve `brief` as the no-credential dry run.
 
 Flow:
 
