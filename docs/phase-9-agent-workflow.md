@@ -80,6 +80,19 @@ The agent revises for cuts, specificity, proof, structure, and rhythm, then expl
 - Keep `~/wiki/session-state.md` updated after significant phases.
 - Preserve the public-safe rule: do not auto-save private user writing into the reusable corpus.
 
+## Phase 10/11 extensions
+
+Later productized CLI phases keep the same core loop but add command shortcuts:
+
+```bash
+prosekernel critique draft.md --task "<task>" --mode hybrid --output critique.md
+prosekernel rewrite draft.md --task "<task>" --mode hybrid --output rewrite-report.md --rewrite-output rewritten.md
+prosekernel learn draft.md --task "<task>" --source-title "<title>" --source-author "<author>" --source-url "<url>" --rights metadata-only --category technical-explanatory --tags "docs, clarity"
+prosekernel validate-learning
+```
+
+Learning is optional and explicit. It stores metadata, hash, metrics, and original lessons only; promotion uses `--promote --approved` and only safe rights.
+
 ## Public-safe boundaries
 
 - ProseKernel teaches structure, taste, and craft.

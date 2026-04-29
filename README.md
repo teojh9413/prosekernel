@@ -40,7 +40,9 @@ Before writing anything important:
 
 ## Current status
 
-Phase 10 productized CLI/usability is now implemented: `critique` and `rewrite` produce deterministic Markdown reports for existing drafts, and shorter aliases (`examples`, `demo`, `score`) preserve existing command contracts while making common flows easier to run.
+Phase 11 public-safe learning loop is implemented: `learn` creates metadata-only learning notes from drafts without storing source prose, `validate-learning` checks the learning directory, and promotion requests are blocked unless rights and explicit approval are safe.
+
+Phase 10 productized CLI/usability is implemented: `critique` and `rewrite` produce deterministic Markdown reports for existing drafts, `rewrite --rewrite-output` can also save the rewritten draft as a standalone file, and shorter aliases (`examples`, `demo`, `score`) preserve existing command contracts while making common flows easier to run.
 
 Phase 9 agent workflow integration is implemented: repo-local `SKILL.md`, reusable prompt contracts, and command-grounded agent docs package the workflow for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 
@@ -74,6 +76,9 @@ prosekernel search-examples "write a security incident update for customers" --m
 prosekernel brief "write a launch email for ProseKernel" --output /tmp/prosekernel-brief.md
 prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-critique.md
 prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-rewrite.md
+prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --output /tmp/prosekernel-rewrite-report.md --rewrite-output /tmp/prosekernel-rewritten.md
+prosekernel learn draft.md --task "write a launch email for ProseKernel" --source-title "Launch draft" --source-author "User" --source-url "https://example.com/launch-draft" --rights user-provided --category email-newsletters --tags "launch, email" --output /tmp/prosekernel-lesson.md
+prosekernel validate-learning
 prosekernel write "write a launch email for ProseKernel" --provider openai --model gpt-4o-mini --output /tmp/prosekernel-write.md
 prosekernel write-demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
 prosekernel demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
@@ -119,4 +124,4 @@ Use `docs/source-ingestion.md` and `prosekernel new-example` to add new examples
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-10-productized-cli.md` for deterministic critique/rewrite reports and short CLI aliases. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
+Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-11-public-safe-learning-loop.md` for metadata-only learning notes and safe promotion gates. Use `docs/phase-10-productized-cli.md` for deterministic critique/rewrite reports, standalone rewrite outputs, exit-code semantics, and short CLI aliases. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.

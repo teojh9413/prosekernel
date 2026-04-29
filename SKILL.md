@@ -20,7 +20,7 @@ Use this skill when an agent needs to write, critique, rewrite, or evaluate pros
 - Do not copy source phrases.
 - Do not mirror copyrighted writing.
 - Use source metadata, short excerpts only when legally appropriate, and original craft analysis.
-- Do not auto-save private user writing, private examples, or model outputs as reusable lessons. Public-safe learning must be explicit and reviewed.
+- Do not auto-save private user writing, private examples, or model outputs as reusable lessons. Public-safe learning must be explicit, metadata-only by default, and reviewed through `prosekernel learn` plus `prosekernel validate-learning`.
 - Do not choose a paid LLM provider implicitly. `prosekernel write` requires explicit `--provider` and `--model`.
 
 ## Default workflow
@@ -35,6 +35,7 @@ Follow this loop for serious writing:
 6. Run `prosekernel scorecard draft.md --task "<task>"`.
 7. Revise until the draft has specific proof, reader fit, and non-genericness.
 8. Explain what changed: structure, proof, cuts, specificity, voice, and remaining trade-offs.
+9. If learning is explicitly requested, run `prosekernel learn` and then `prosekernel validate-learning`; never store source prose in the learning note. Promotion-ready lessons require `--promote --approved` and safe rights.
 
 ## Useful commands
 
@@ -44,6 +45,10 @@ prosekernel --help
 prosekernel search-examples "write a launch email for ProseKernel" --mode hybrid --explain
 prosekernel brief "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-brief.md
 prosekernel write-demo "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-demo.md
+prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-critique.md
+prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-rewrite.md --rewrite-output /tmp/prosekernel-rewritten.md
+prosekernel learn draft.md --task "write a launch email for ProseKernel" --source-title "Launch draft" --source-author "User" --source-url "https://example.com/launch-draft" --rights user-provided --category email-newsletters --tags "launch, email" --output /tmp/prosekernel-lesson.md
+prosekernel validate-learning
 prosekernel lint draft.md
 prosekernel scorecard draft.md --task "write a launch email for ProseKernel"
 prosekernel validate-library

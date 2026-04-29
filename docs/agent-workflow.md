@@ -13,7 +13,7 @@ For copy-paste prompt contracts, see:
 - `prompts/critique.md`
 - `prompts/rewrite.md`
 
-For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`.
+For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`. For explicit metadata-only learning notes, see `docs/phase-11-public-safe-learning-loop.md`.
 
 ## Step 1: Classify the job
 
@@ -98,7 +98,7 @@ Also use:
 Perform manually or use the deterministic rewrite report as a working draft:
 
 ```bash
-prosekernel rewrite draft.md --task "<task>" --mode hybrid --output rewrite.md
+prosekernel rewrite draft.md --task "<task>" --mode hybrid --output rewrite.md --rewrite-output rewritten.md
 ```
 
 Revision passes:
@@ -120,3 +120,22 @@ Return the final draft plus:
 - cuts made,
 - lint/scorecard result,
 - remaining risks or manual follow-ups.
+
+## Step 9: Learn only when explicit and public-safe
+
+Do not auto-save private user writing or model outputs as reusable lessons. If the user or maintainer explicitly wants to preserve a reusable lesson, create a metadata-only note:
+
+```bash
+prosekernel learn draft.md \
+  --task "<task>" \
+  --source-title "<title>" \
+  --source-author "<author/company>" \
+  --source-url "<url>" \
+  --rights metadata-only \
+  --category technical-explanatory \
+  --tags "docs, clarity"
+
+prosekernel validate-learning
+```
+
+The learning note must not store source prose. Promotion into examples or patterns requires safe rights and explicit human approval.

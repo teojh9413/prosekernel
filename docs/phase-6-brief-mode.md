@@ -34,19 +34,21 @@ PYTHONPATH=src python3 -m prosekernel.cli brief "write a launch email for ProseK
 
 This protects users from accidental API spend and gives agent platforms a stable input packet they can pass to their own model of choice.
 
-## Next adapter step
+## Provider adapter status
 
-After brief mode is stable, add `prosekernel write` as a thin provider adapter around the same brief contract:
+Phase 6A brief mode is stable. Phase 6B has since added explicit provider-backed `write` mode; see `docs/phase-6b-provider-write.md`.
+
+Current provider adapter flow:
 
 ```text
-task → retrieve examples/patterns → build brief → provider drafts → lint → scorecard → rewrite/critique → report
+task → retrieve examples/patterns → build brief → explicit provider drafts → lint → scorecard → report
 ```
 
-Provider adapters should be explicit and credential-safe:
+Provider adapters are explicit and credential-safe:
 
-- `--provider openai|anthropic|openrouter|local`
+- `--provider openai|anthropic|openrouter`
 - `--model MODEL_NAME`
-- `--dry-run` or `brief` remains available without credentials
+- `brief` remains available without credentials or model calls
 - no default paid provider
 - clear error if required environment variables are missing
 

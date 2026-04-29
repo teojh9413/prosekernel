@@ -34,6 +34,21 @@ Store:
 
 Do not store full text.
 
+## Learning notes
+
+`prosekernel learn` is for public-safe lessons, not source storage. Learning notes may store:
+
+- source metadata
+- rights classification
+- source hash
+- word count and quality metrics
+- original craft lessons
+- promotion status
+
+Learning notes must set `source_text_stored: false` and must not include a `## Source text` section.
+
+Promotion into a library example or pattern requires explicit human approval and safe rights (`public-domain`, `open-license`, or `user-provided`).
+
 ## Principle
 
 ProseKernel teaches structure, taste, and craft. It does not need to hoard copyrighted text.

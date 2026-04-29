@@ -16,6 +16,21 @@ The retrieval demo turns ProseKernel from a static library into a writing workfl
 
 This workflow is local-first. Default retrieval is deterministic lexical/category scoring. Optional Phase 8 modes add offline semantic or hybrid scoring without paid APIs, embedding services, or runtime dependencies.
 
+## Modern productized loop
+
+For current CLI use, prefer the installed `prosekernel` command:
+
+```bash
+prosekernel examples "write a launch email for ProseKernel" --mode hybrid --explain
+prosekernel brief "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-brief.md
+prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-critique.md
+prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-rewrite-report.md --rewrite-output /tmp/prosekernel-rewritten.md
+prosekernel learn draft.md --task "write a launch email for ProseKernel" --source-title "Launch draft" --source-author "User" --source-url "https://example.com/launch-draft" --rights user-provided --category email-newsletters --tags "launch, email" --output /tmp/prosekernel-lesson.md
+prosekernel validate-learning
+```
+
+Use `learn` only when preserving a reusable lesson is explicit and public-safe. It stores metadata, hash, metrics, and original lessons—not source prose.
+
 ## Commands
 
 Search for examples:

@@ -19,7 +19,8 @@ Completed:
 - Phase 6B — Explicit provider write mode: adapter interface, `prosekernel write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
 - Phase 8 — Offline semantic/hybrid retrieval: optional `--mode semantic|hybrid`, score explanations, cached concept expansion, and no new runtime dependencies.
 - Phase 9 — Agent workflow integration: repo-local `SKILL.md`, prompt contracts, and command-grounded workflow docs for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
-- Phase 10 — Productized CLI/usability: `critique`, `rewrite`, productized Markdown reports, and friendlier aliases (`examples`, `demo`, `score`).
+- Phase 10 — Productized CLI/usability: `critique`, `rewrite`, productized Markdown reports, standalone rewrite outputs, exit-code docs, and friendlier aliases (`examples`, `demo`, `score`).
+- Phase 11 — Public-safe learning loop: `learn` metadata-only learning notes, `validate-learning`, source-text exclusion checks, and rights/approval gates for promotion.
 
 Current corpus: 100 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
@@ -230,6 +231,7 @@ Implemented commands:
 
 - `prosekernel critique draft.md --task "..." --output critique.md`
 - `prosekernel rewrite draft.md --task "..." --output rewrite.md`
+- `prosekernel rewrite draft.md --task "..." --output rewrite-report.md --rewrite-output rewritten.md`
 - `prosekernel examples "..."` as a shorter alias for `search-examples`
 - `prosekernel demo "..."` as a shorter alias for `write-demo`
 - `prosekernel score draft.md` as a shorter alias for `scorecard`
@@ -238,6 +240,8 @@ Implemented behavior:
 
 - Critique reports combine deterministic lint, scorecard, retrieved examples, pattern IDs, and a revision plan.
 - Rewrite reports produce a deterministic working rewrite plus score/lint deltas and quality gates.
+- `--rewrite-output` writes the rewritten draft as a standalone file for downstream editing.
+- Exit-code semantics are documented for product use and shell automation.
 - Existing command contracts remain stable.
 - No default provider/model is selected; no hidden paid model calls are made.
 
@@ -245,21 +249,36 @@ See `docs/phase-10-productized-cli.md`.
 
 ## Phase 11 — Public-safe learning loop
 
-Public use must not auto-save private user writing.
+Status: implemented.
 
-Learning command should be explicit:
+Public use must not auto-save private user writing or mirror copyrighted text. Learning is explicit, metadata-first, and validation-backed.
+
+Implemented commands:
 
 ```bash
-prosekernel learn --from output.md --review
+prosekernel learn draft.md \
+  --task "rewrite help center copy for delayed refunds" \
+  --source-title "Refund workflow draft" \
+  --source-author "Support Team" \
+  --source-url "https://example.com/refund-workflow" \
+  --rights metadata-only \
+  --category ux-product-microcopy \
+  --tags "refunds, support" \
+  --output learning/lessons/refund-workflow-draft.md
+
+prosekernel validate-learning
 ```
 
-Flow:
+Implemented behavior:
 
-1. User writes.
-2. ProseKernel critiques.
-3. User manually approves saving a lesson.
-4. System creates candidate pattern/example.
-5. Maintainer reviews before merge.
+1. User or maintainer explicitly invokes `learn`.
+2. ProseKernel reads the source draft for local metrics only.
+3. The generated learning note stores metadata, source hash, word count, lint score, scorecard total, pattern IDs, and original reusable lessons.
+4. The generated note sets `source_text_stored: false` and omits source prose.
+5. `validate-learning` rejects notes that claim source text is stored or include a `## Source text` section.
+6. Promotion is refused unless `--approved` is supplied and rights are `public-domain`, `open-license`, or `user-provided`.
+
+See `docs/phase-11-public-safe-learning-loop.md`.
 
 ## Phase 12 — Writing OS endgame
 

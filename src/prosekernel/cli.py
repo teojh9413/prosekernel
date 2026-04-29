@@ -18,6 +18,12 @@ from .engine import (
     run_writing_demo,
 )
 from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
+from .learning import (
+    build_learning_lesson,
+    default_learning_path,
+    render_learning_lesson,
+    validate_learning_directory,
+)
 from .patterns import infer_pattern_ids
 from .providers import ProviderCallError, ProviderError, provider_adapter_from_env
 from .retrieve import rank_examples, select_examples
@@ -95,6 +101,26 @@ def main(argv: list[str] | None = None) -> int:
     rewrite_p.add_argument("--category")
     rewrite_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use for reference examples")
     rewrite_p.add_argument("--output", type=Path, help="Optional markdown report path")
+    rewrite_p.add_argument("--rewrite-output", type=Path, help="Optional path for the standalone rewritten draft only")
+
+    learn_p = sub.add_parser("learn", help="Create a public-safe metadata-only learning note from a draft")
+    learn_p.add_argument("path", type=Path)
+    learn_p.add_argument("--root", type=Path, default=Path.cwd())
+    learn_p.add_argument("--task", default="", help="Writing task or reason this source is being studied")
+    learn_p.add_argument("--source-title", required=True)
+    learn_p.add_argument("--source-author", required=True)
+    learn_p.add_argument("--source-url", required=True)
+    learn_p.add_argument("--rights", required=True, help="Rights value: public-domain, open-license, short-excerpt, metadata-only, or user-provided")
+    learn_p.add_argument("--category", required=True)
+    learn_p.add_argument("--tags", required=True, help="Comma-separated tags")
+    learn_p.add_argument("--pattern-ids", default="", help="Optional comma-separated strict pattern IDs; inferred from category/tags when omitted")
+    learn_p.add_argument("--output", type=Path, help="Optional learning note path; defaults to learning/lessons/<source-title>.md")
+    learn_p.add_argument("--force", action="store_true", help="Overwrite an existing learning note")
+    learn_p.add_argument("--promote", action="store_true", help="Mark as a candidate for promotion after rights checks")
+    learn_p.add_argument("--approved", action="store_true", help="Human approval flag required for promotion")
+
+    learn_val_p = sub.add_parser("validate-learning", help="Validate public-safe learning notes")
+    learn_val_p.add_argument("--root", type=Path, default=Path.cwd())
 
     demo_p = sub.add_parser("write-demo", aliases=["demo"], help="Run deterministic retrieval + draft + lint + rewrite demo")
     demo_p.add_argument("task")
@@ -256,6 +282,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if result.scorecard.passed else 1
 
     if args.command == "rewrite":
+        if args.output and args.rewrite_output and args.output.resolve() == args.rewrite_output.resolve():
+            print("Refusing to write report and standalone rewrite to the same path.", file=sys.stderr)
+            return 2
         result = run_rewrite(
             args.root,
             args.path,
@@ -271,7 +300,53 @@ def main(argv: list[str] | None = None) -> int:
             print(args.output)
         else:
             print(report)
+        if args.rewrite_output:
+            args.rewrite_output.parent.mkdir(parents=True, exist_ok=True)
+            args.rewrite_output.write_text(result.rewritten_text.strip() + "\n", encoding="utf-8")
+            print(args.rewrite_output)
         return 0 if result.final_scorecard.total >= result.initial_scorecard.total else 1
+
+    if args.command == "learn":
+        tags = [tag.strip() for tag in args.tags.split(",") if tag.strip()]
+        pattern_ids = [pattern_id.strip() for pattern_id in args.pattern_ids.split(",") if pattern_id.strip()]
+        try:
+            lesson = build_learning_lesson(
+                args.path,
+                task=args.task or args.source_title,
+                source_title=args.source_title,
+                source_author=args.source_author,
+                source_url=args.source_url,
+                rights=args.rights,
+                category=args.category,
+                tags=tags,
+                pattern_ids=pattern_ids or None,
+                promote=args.promote,
+                approved=args.approved,
+            )
+        except ValueError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
+        report = render_learning_lesson(lesson)
+        output_path = args.output or default_learning_path(args.root, lesson)
+        if output_path.exists() and not args.force:
+            print(f"Refusing to overwrite existing learning note: {output_path}", file=sys.stderr)
+            return 1
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(report, encoding="utf-8")
+        print(output_path)
+        return 0
+
+    if args.command == "validate-learning":
+        issues = validate_learning_directory(args.root)
+        if not issues:
+            print("Learning validation passed.")
+            return 0
+        print("Learning validation failed:")
+        for path, errors in issues.items():
+            print(f"- {path}")
+            for error in errors:
+                print(f"  - {error}")
+        return 1
 
     if args.command in {"write-demo", "demo"}:
         result = run_writing_demo(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode)

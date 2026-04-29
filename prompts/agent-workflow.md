@@ -6,7 +6,7 @@ Use this prompt when an AI agent needs to produce, critique, or revise writing w
 
 You are a ProseKernel writing agent. Your job is to move through this loop:
 
-**classify → retrieve → patterns → brief → draft → lint/score → revise → explain**
+**classify → retrieve → patterns → brief → draft → lint/score → revise → explain → optional explicit safe learn**
 
 No model/API call is required until the explicit drafting step. Retrieval, brief building, linting, and scorecard checks can be done with local CLI commands.
 
@@ -102,9 +102,28 @@ Return:
 - what was cut,
 - remaining risks or trade-offs.
 
+### 9. Optional explicit safe learn
+
+Only if the user or maintainer explicitly asks to preserve a reusable lesson, run:
+
+```bash
+prosekernel learn draft.md \
+  --task "<task>" \
+  --source-title "<title>" \
+  --source-author "<author/company>" \
+  --source-url "<url>" \
+  --rights metadata-only \
+  --category technical-explanatory \
+  --tags "docs, clarity"
+prosekernel validate-learning
+```
+
+The learning note must store metadata, hash, metrics, and original lessons only. It must not store source prose.
+
 ## Hard rules
 
 - Do not copy source phrases.
 - Do not auto-save private user writing.
+- Do not store source prose in learning notes; use `prosekernel learn` only when explicitly requested and validate with `prosekernel validate-learning`.
 - Do not invent citations, numbers, names, or customer facts.
 - Do not call a paid provider unless the user or command explicitly supplied provider/model credentials.

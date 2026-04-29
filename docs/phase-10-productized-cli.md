@@ -9,12 +9,13 @@ Phase 10 keeps ProseKernel's first product surface as a CLI plus Markdown report
 ```bash
 prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output critique.md
 prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output rewrite.md
+prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --output rewrite-report.md --rewrite-output rewritten.md
 ```
 
 Both commands are deterministic.
 
 - `critique` reads an existing draft, runs lint + scorecard, retrieves relevant examples/patterns, and emits a revision plan.
-- `rewrite` reads an existing draft, runs the critique path, produces a deterministic working rewrite, and reports score/lint deltas.
+- `rewrite` reads an existing draft, runs the critique path, produces a deterministic working rewrite, and reports score/lint deltas. Use `--rewrite-output rewritten.md` when you want the rewritten draft as a standalone file instead of extracting it from the report.
 
 ## Friendlier aliases
 
@@ -66,6 +67,21 @@ It explicitly states that no model call was made and that the rewrite is a sourc
 ```text
 brief → draft → critique → rewrite → score/lint → human edit
 ```
+
+## Exit-code semantics
+
+- `0`: command completed successfully for its contract.
+- `1`: command ran but found a quality/validation problem, a draft still needs revision, an overwrite was refused, fixture evals failed, or an explicit provider call failed.
+- `2`: usage/configuration/safety refusal, such as missing explicit provider/model, invalid learning metadata, unsafe promotion request, or conflicting output paths.
+
+Command-specific notes:
+
+- `critique`: exits `1` when the draft needs revision.
+- `rewrite`: exits `0` when the deterministic rewrite does not lower the scorecard total; this is not a guarantee that the draft is publish-ready.
+- `lint` / `scorecard`: exit `1` when the draft fails the automated threshold.
+- `write`: exits `0` after a successful explicit provider call even if the generated draft still needs editing; exits `1` for provider call failures and `2` for missing provider/model/config.
+- `learn`: exits `0` when a safe metadata-only learning note is created, `1` for overwrite refusal, and `2` for invalid metadata or unsafe promotion requests.
+- `validate-learning` / `validate-library` / `eval`: exit `1` when validation or fixture checks fail.
 
 Use `write` only when an explicit provider/model call is desired:
 
