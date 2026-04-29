@@ -116,7 +116,8 @@ def score_example(task: str, example: ExampleRecord, preferred_categories: tuple
     score = len(task_tokens & example_tokens) * 4
     if example.category in preferred_categories:
         category_rank = preferred_categories.index(example.category)
-        score += max(6, 18 - (category_rank * 2))
+        # Prefer exact category hits strongly; neighbors are fallbacks, not replacements.
+        score += 30 if category_rank == 0 else max(6, 18 - (category_rank * 2))
     score += example.quality_score
     # Nudge generally useful examples upward when direct overlap is sparse.
     if {"clarity", "specificity", "proof", "structure"} & set(example.tags):

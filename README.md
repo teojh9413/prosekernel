@@ -51,7 +51,7 @@ Seed corpus includes examples/resources across:
 - technical/explanatory writing
 - brand/positioning writing
 
-Target category scaffolds now also exist for email/newsletters, speeches/oratory, journalism/reportage, UX/product microcopy, crisis communications, and internal ops docs.
+Seed examples now exist for email/newsletters, speeches/oratory, journalism/reportage, UX/product microcopy, crisis communications, and internal ops docs.
 
 This is intentionally small and high-signal. Quality beats volume.
 

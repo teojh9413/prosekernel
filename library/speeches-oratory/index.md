@@ -4,7 +4,11 @@ Keynotes, public remarks, civic rhetoric, ceremonial speeches, and spoken persua
 
 ## Status
 
-Target category added. No annotated examples yet. Add examples with `humanprint new-example` and keep source storage metadata/analysis-first unless rights allow more.
+Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+
+## Examples
+
+- [`lincoln-gettysburg-address.md`](examples/lincoln-gettysburg-address.md) — Compressed public address: founding principle, present test, sacrifice, duty.
 
 ## Target examples
 

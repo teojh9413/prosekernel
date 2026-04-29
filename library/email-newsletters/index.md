@@ -4,7 +4,11 @@ Launch emails, lifecycle sequences, founder updates, editorial newsletters, and 
 
 ## Status
 
-Target category added. No annotated examples yet. Add examples with `humanprint new-example` and keep source storage metadata/analysis-first unless rights allow more.
+Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+
+## Examples
+
+- [`substack-welcome-email-guide.md`](examples/substack-welcome-email-guide.md) — Welcome email structure: promise, cadence, relationship, one next action.
 
 ## Target examples
 

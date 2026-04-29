@@ -4,7 +4,11 @@ Apologies, incident reports, postmortems, recalls, trust repair, and high-stakes
 
 ## Status
 
-Target category added. No annotated examples yet. Add examples with `humanprint new-example` and keep source storage metadata/analysis-first unless rights allow more.
+Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+
+## Examples
+
+- [`gitlab-database-outage-postmortem.md`](examples/gitlab-database-outage-postmortem.md) — Incident communication through impact, timeline, cause, and prevention.
 
 ## Target examples
 

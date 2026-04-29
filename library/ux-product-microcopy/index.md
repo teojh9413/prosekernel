@@ -4,7 +4,11 @@ Onboarding, empty states, errors, labels, tooltips, product flows, support-adjac
 
 ## Status
 
-Target category added. No annotated examples yet. Add examples with `humanprint new-example` and keep source storage metadata/analysis-first unless rights allow more.
+Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+
+## Examples
+
+- [`govuk-error-message.md`](examples/govuk-error-message.md) — Validation copy that tells users exactly how to recover.
 
 ## Target examples
 

@@ -4,7 +4,11 @@ Profiles, interviews, investigations, field reporting, and narrative nonfiction 
 
 ## Status
 
-Target category added. No annotated examples yet. Add examples with `humanprint new-example` and keep source storage metadata/analysis-first unless rights allow more.
+Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+
+## Examples
+
+- [`nellie-bly-ten-days-mad-house.md`](examples/nellie-bly-ten-days-mad-house.md) — Immersive investigative reportage through scene, sequence, and institutional detail.
 
 ## Target examples
 

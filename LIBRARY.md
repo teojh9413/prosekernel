@@ -6,8 +6,8 @@ Each entry is not merely a “good example.” It is a reusable teaching object 
 
 ## Current corpus
 
-- Total annotated examples: 26
-- Populated categories: 6
+- Total annotated examples: 32
+- Populated categories: 12
 - Target categories scaffolded: 12 total top-level categories
 - Rights posture: metadata/analysis-first, short excerpts only when useful and safe
 
@@ -64,6 +64,31 @@ Each entry is not merely a “good example.” It is a reusable teaching object 
 - [`brand-positioning/examples/airbnb-belong-anywhere.md`](library/brand-positioning/examples/airbnb-belong-anywhere.md) — Reframe a transaction category around emotional belonging.
 - [`brand-positioning/examples/nike-just-do-it.md`](library/brand-positioning/examples/nike-just-do-it.md) — Imperative brand positioning as identity and action.
 
+
+### Email / Newsletters
+
+- [`email-newsletters/examples/substack-welcome-email-guide.md`](library/email-newsletters/examples/substack-welcome-email-guide.md) — Welcome email structure: promise, cadence, relationship, one next action.
+
+### Speeches / Oratory
+
+- [`speeches-oratory/examples/lincoln-gettysburg-address.md`](library/speeches-oratory/examples/lincoln-gettysburg-address.md) — Compressed public address through founding principle, present test, sacrifice, and duty.
+
+### Journalism / Reportage
+
+- [`journalism-reportage/examples/nellie-bly-ten-days-mad-house.md`](library/journalism-reportage/examples/nellie-bly-ten-days-mad-house.md) — Immersive investigative reportage through scene, sequence, and institutional detail.
+
+### UX / Product Microcopy
+
+- [`ux-product-microcopy/examples/govuk-error-message.md`](library/ux-product-microcopy/examples/govuk-error-message.md) — Validation copy that tells users exactly how to recover.
+
+### Crisis Communications
+
+- [`crisis-communications/examples/gitlab-database-outage-postmortem.md`](library/crisis-communications/examples/gitlab-database-outage-postmortem.md) — Incident communication through impact, timeline, cause, and prevention.
+
+### Internal Ops Docs
+
+- [`internal-ops-docs/examples/gitlab-directly-responsible-individuals.md`](library/internal-ops-docs/examples/gitlab-directly-responsible-individuals.md) — Internal ownership docs that make decision rights explicit.
+
 ## Tooling
 
 - `humanprint lint <file>` — score drafts for AI-slop markers.
@@ -83,7 +108,7 @@ See `docs/taxonomy.md` for blended formats that stay as tags/subcategories.
 
 ## Next collection targets
 
-- Add seed examples for the six scaffolded target categories.
+- Add second and third examples for the six newly seeded target categories.
 - More modern public social posts from founders/operators.
 - More high-converting landing pages and sales emails.
 - More public investor memos and annual letters.

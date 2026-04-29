@@ -4,7 +4,11 @@ SOPs, decision records, operating memos, one-pagers, runbooks, and team cadence 
 
 ## Status
 
-Target category added. No annotated examples yet. Add examples with `humanprint new-example` and keep source storage metadata/analysis-first unless rights allow more.
+Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+
+## Examples
+
+- [`gitlab-directly-responsible-individuals.md`](examples/gitlab-directly-responsible-individuals.md) — Internal ownership docs that make decision rights explicit.
 
 ## Target examples
 
