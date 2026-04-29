@@ -1,8 +1,10 @@
 # ProseKernel
 
-An open-source taste engine for AI writing agents.
+Taste infrastructure for AI writing agents.
 
-ProseKernel helps AI agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, critique generic output, and improve prose through evals and agent-ready workflows.
+ProseKernel is an open-source writing operating system for AI agents.
+
+It helps agents retrieve strong writing examples, extract reusable craft patterns, build writing briefs, draft with structure, detect generic AI slop, rewrite with specificity and proof, and learn reusable lessons over time.
 
 The system has four layers:
 
@@ -39,6 +41,8 @@ Before writing anything important:
 7. Score the draft with `evals/writing-scorecard.md`.
 
 ## Current status
+
+Phase 12 is the official v1 endgame: ProseKernel now covers the full writing operating-system loop for agents — task understanding, retrieval, patterns, briefs, critique, rewrite, explanation, public-safe learning, and a human-review/import bridge. Later work is organized as Post-v1 Tracks, not new numbered phases.
 
 Phase 12 human-review/import bridge is implemented: approved, safe-rights learning notes can generate review-required example and pattern proposals with `propose-example` and `propose-pattern`; nothing is imported automatically into `library/` or `patterns/`.
 
@@ -120,7 +124,7 @@ See `docs/legal-source-policy.md`, `docs/source-ingestion.md`, and `CONTRIBUTING
 
 ## Roadmap
 
-See `ROADMAP.md`. The build order is: public readiness → corpus depth → patterns → basic evals → LLM adapter → hybrid retrieval → agent workflow → productized CLI → public-safe learning loop → human-review/import bridge.
+See `ROADMAP.md` and `docs/v1-definition-of-done.md`. The official numbered roadmap ends at Phase 12: public readiness → corpus depth → patterns → basic evals → LLM adapter → hybrid retrieval → agent workflow → productized CLI → public-safe learning loop → human-review/import bridge → v1 Writing OS endgame. Later work belongs in Post-v1 Tracks for structured outputs, CI/release hardening, public distribution, evaluation maturity, library/pattern scale, provider support, and optional product surfaces.
 
 ## Source ingestion
 

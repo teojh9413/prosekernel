@@ -1,8 +1,12 @@
 # ProseKernel Roadmap
 
-ProseKernel is an open-source taste engine for AI writing agents.
+ProseKernel is an open-source writing operating system for AI agents.
 
-It helps agents retrieve strong writing examples, extract reusable craft patterns, draft with structure, and detect generic AI slop before publishing.
+It helps agents retrieve strong writing examples, extract reusable craft patterns, build writing briefs, draft with structure, detect generic AI slop, rewrite with specificity and proof, and learn reusable lessons over time.
+
+Short positioning: **Taste infrastructure for AI writing agents.**
+
+ProseKernel is not a generic AI writing app, prompt library, personal writing system, private taste vault, web UI product, or only an anti-slop linter. The core product is a public, open-source, agent-friendly CLI and knowledge layer.
 
 ## Current status
 
@@ -14,14 +18,14 @@ Completed:
 - Phase 3.5 — Public release readiness metadata/docs.
 - Phase 4 — Corpus depth expansion: 100 annotated examples across 12 populated categories, with eight priority categories at 10-example taste depth.
 - Phase 5 — Initial strict pattern layer: 12 `PATTERN_*.md` families, example `pattern_ids`, and retrieval/demo output that cites pattern IDs.
-- Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
 - Phase 6A — Provider-agnostic dry-run brief mode: `prosekernel brief` builds an agent-ready writing packet without model/API calls.
 - Phase 6B — Explicit provider write mode: adapter interface, `prosekernel write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
+- Phase 7A — Deeper basic evals: six-dimension scorecard implementation, weak/strong fixtures, `scorecard` CLI, `eval` CLI, and write-demo score improvement reports.
 - Phase 8 — Offline semantic/hybrid retrieval: optional `--mode semantic|hybrid`, score explanations, cached concept expansion, and no new runtime dependencies.
 - Phase 9 — Agent workflow integration: repo-local `SKILL.md`, prompt contracts, and command-grounded workflow docs for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 - Phase 10 — Productized CLI/usability: `critique`, `rewrite`, productized Markdown reports, standalone rewrite outputs, exit-code docs, and friendlier aliases (`examples`, `demo`, `score`).
 - Phase 11 — Public-safe learning loop: `learn` metadata-only learning notes, `validate-learning`, source-text exclusion checks, and rights/approval gates for promotion.
-- Phase 12 — Human-review/import bridge: `propose-example` and `propose-pattern` generate review-required proposals from approved safe-rights learning notes without automatic import.
+- Phase 12 — Endgame: Writing Operating System. Human-review/import bridge plus the full agent loop from task understanding to brief, critique, rewrite, explanation, and safe learning.
 
 Current corpus: 100 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
@@ -29,29 +33,41 @@ Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
 Current adapter layer: dry-run `brief` mode plus explicit provider-backed `write` mode. No default paid provider is selected; writes require explicit `--provider` and `--model`.
 Current retrieval layer: default lexical/category scoring plus optional offline semantic and hybrid scoring.
 
+## Phase 1 — Foundation and initial corpus
+
+Status: implemented.
+
+Established the repo structure, public positioning, first annotated writing examples, doctrine, anti-slop rules, tests, and CLI foundation.
+
+## Phase 2 — Taxonomy expansion and deterministic retrieval demo
+
+Status: implemented.
+
+Added task classification, deterministic retrieval, and the first retrieval → craft moves → draft scaffold → lint/rewrite demo loop.
+
+## Phase 3 — Seed expanded categories
+
+Status: implemented.
+
+Expanded the corpus beyond the initial writing modes and added more category scaffolding for public usefulness.
+
+## Phase 3.5 — Public release readiness metadata/docs
+
+Status: implemented.
+
+Added public metadata, contributor docs, roadmap, quality bar, source policy, pattern schema, and release-readiness documentation.
+
 ## Phase 4 — Corpus depth
+
+Status: implemented.
 
 Goal: expand from representation to taste.
 
-Target:
+Implemented:
 
-- 80-100 annotated examples next.
-- Prioritize public usefulness instead of even expansion.
-
-Priority order:
-
-1. Persuasive / Copywriting
-2. Technical / Explanatory
-3. Viral / Social
-4. Brand / Positioning
-5. Email / Newsletters
-6. Strategic / Intelligent
-7. UX / Product Microcopy
-8. Crisis Communications
-9. Speeches / Oratory
-10. Journalism / Reportage
-11. Internal Ops Docs
-12. Essays / Literary Craft
+- 100 annotated examples across 12 populated categories.
+- Eight priority categories at 10-example taste depth.
+- Rights-safe metadata, source URLs, and original craft analysis.
 
 Principle:
 
@@ -59,9 +75,18 @@ Principle:
 
 ## Phase 5 — Pattern extraction layer
 
+Status: implemented.
+
 Goal: turn examples into reusable intelligence.
 
 Patterns are not summaries. They are agent-executable writing moves.
+
+Implemented:
+
+- 12 strict pattern files in `patterns/`.
+- Pattern IDs linked from examples.
+- Retrieval and demo output that cites pattern IDs.
+- Validation of known pattern IDs.
 
 Each pattern follows `docs/pattern-schema.md`:
 
@@ -74,42 +99,35 @@ Each pattern follows `docs/pattern-schema.md`:
 - anti-patterns
 - agent instruction
 
-Deliverables:
+## Phase 6 — LLM-backed drafting adapter
 
-- `patterns/*.md`
-- examples link to patterns
-- retrieval output includes pattern IDs
+Status: implemented.
+
+Goal: make ProseKernel draft, not just brief, while staying provider-agnostic.
+
+Phase 6A implemented:
+
+- `prosekernel brief` dry-run command.
+- Provider-neutral writing brief object and Markdown renderer.
+- Strict pattern instructions pulled from `patterns/PATTERN_*.md`.
+- Quality gate instructions for lint + scorecard.
+- `docs/phase-6-brief-mode.md`.
+
+Phase 6B implemented:
+
+- Explicit provider adapter protocol in `src/prosekernel/providers.py`.
+- Initial OpenAI, OpenRouter, and Anthropic HTTP adapters using stdlib HTTP calls.
+- `prosekernel write --provider ... --model ...`.
+- No-default-provider refusal path to prevent accidental paid calls.
+- Missing-credential errors that name the exact env var and confirm no API call was made.
+- Write reports with provider/model trace, retrieved examples, pattern IDs, draft, lint, scorecard, and quality gate.
+- `docs/phase-6b-provider-write.md`.
 
 ## Phase 7A — Basic eval tasks and scorecards
 
-Start evals before the LLM adapter.
+Status: implemented.
 
-Create benchmark tasks for:
-
-- launch email
-- generic social post rewrite
-- incident apology
-- technical explanation for non-technical users
-- strategic memo
-- onboarding empty state
-
-Eval types:
-
-1. Automated checks:
-   - slop phrase count
-   - proof markers
-   - weak opener detection
-   - abstract noun density
-   - long sentence count
-2. Human-readable scorecard:
-   - specificity
-   - proof
-   - structure
-   - reader fit
-   - memorability
-   - non-genericness
-
-Deliverables now implemented:
+Implemented:
 
 - `evals/writing-scorecard.md` for the human-readable rubric.
 - `evals/tasks/*.md` for benchmark task prompts.
@@ -117,56 +135,16 @@ Deliverables now implemented:
 - `src/prosekernel/evals.py` for deterministic scorecard scoring.
 - `prosekernel scorecard draft.md --task "..."` for draft scoring.
 - `prosekernel eval` for weak/strong fixture regression tests.
-- `write-demo` reports include scorecard improvement by dimension.
+- `write-demo` reports that include scorecard improvement by dimension.
 
-## Phase 6 — LLM-backed drafting adapter
+Eval dimensions:
 
-Goal: make ProseKernel draft, not just brief.
-
-Keep it provider-agnostic:
-
-- OpenAI
-- Anthropic
-- OpenRouter
-- local model later
-- dry-run mode with generated brief only
-
-Commands:
-
-```bash
-prosekernel brief "write a launch email for an AI writing library"
-prosekernel write "write a launch email for an AI writing library"
-```
-
-Phase 6A deliverables now implemented:
-
-- `prosekernel brief` dry-run command.
-- provider-neutral `WritingBrief` object and markdown renderer.
-- strict pattern agent instructions pulled from `patterns/PATTERN_*.md`.
-- quality gate instructions for lint + scorecard.
-- `docs/phase-6-brief-mode.md`.
-
-Phase 6B deliverables now implemented:
-
-- explicit provider adapter protocol in `src/prosekernel/providers.py`.
-- initial OpenAI, OpenRouter, and Anthropic HTTP adapters using stdlib HTTP calls.
-- `prosekernel write --provider ... --model ...`.
-- no-default-provider refusal path to prevent accidental paid calls.
-- missing credential errors that name the exact env var and confirm no API call was made.
-- write reports with provider/model trace, retrieved examples, pattern IDs, draft, lint, scorecard, and quality gate.
-- `docs/phase-6b-provider-write.md`.
-
-Remaining later work:
-
-- optional local model provider.
-- optional LLM critique/rewrite loop after the first draft.
-- richer provider configuration once real users exercise write mode.
-
-Flow:
-
-```text
-task → retrieve examples/patterns → build brief → LLM drafts → lint critiques → LLM rewrites → report
-```
+- specificity
+- proof
+- structure
+- reader fit
+- memorability
+- non-genericness
 
 ## Phase 8 — Semantic / hybrid retrieval
 
@@ -197,7 +175,7 @@ See `docs/phase-8-hybrid-retrieval.md`.
 
 Status: implemented.
 
-ProseKernel is now agent-ready for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+ProseKernel is agent-ready for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 
 Implemented assets:
 
@@ -278,17 +256,29 @@ Implemented behavior:
 4. The generated note sets `source_text_stored: false` and omits source prose.
 5. `validate-learning` rejects notes that claim source text is stored or include a `## Source text` section.
 6. Promotion is refused unless `--approved` is supplied and rights are `public-domain`, `open-license`, or `user-provided`.
-7. Approved safe-rights notes can generate review-required proposals with `propose-example` and `propose-pattern`; import still requires human review.
 
 See `docs/phase-11-public-safe-learning-loop.md`.
 
-## Phase 12 — Human-review / import bridge
+## Phase 12 — Endgame: Writing Operating System
 
 Status: implemented.
 
-Phase 12 creates a controlled bridge from learning notes into curation work.
+At Phase 12, ProseKernel becomes a complete writing operating system for AI agents.
 
-Implemented commands:
+It can:
+
+1. Understand the writing job.
+2. Identify the reader, format, and intent.
+3. Retrieve relevant examples.
+4. Retrieve relevant patterns.
+5. Build a writing brief.
+6. Draft in the correct structure.
+7. Detect generic AI slop.
+8. Rewrite with specificity, proof, rhythm, and taste.
+9. Explain why the piece works.
+10. Learn reusable lessons from the result through explicit public-safe review.
+
+Phase 12 also adds the final bridge between learning and corpus curation:
 
 ```bash
 prosekernel propose-example learning/lessons/refund-workflow-draft.md \
@@ -312,15 +302,242 @@ Implemented behavior:
 
 See `docs/phase-12-human-review-import-bridge.md`.
 
-## Phase 13 — Writing OS endgame
+### v1 Definition of Done
 
-ProseKernel is a writing operating system for agents: retrieve taste, apply structure, detect slop, improve drafts, and preserve reusable lessons.
+ProseKernel v1 is complete when a user can install it, run it on a serious writing task, receive a structured brief / critique / rewrite report, and understand why the output is better than a generic LLM draft.
 
-Definition of done:
+Concretely, a user can:
 
-- Handles most serious writing formats.
-- Produces better first drafts than generic AI.
-- Maintains a rights-safe corpus and pattern library.
-- Has evals that prove improvement.
-- Offers agent-ready CLI and Markdown outputs.
-- Learns only with explicit public-safe review.
+1. Install the package.
+2. Run it on a serious writing task.
+3. Generate a writing brief.
+4. Generate or evaluate a draft.
+5. Receive a structured critique.
+6. Receive a rewrite.
+7. See the examples and patterns used.
+8. Understand why the output improved.
+9. Run validation and tests successfully.
+
+v1 does not require:
+
+- web UI
+- MCP server
+- editor plugin
+- local model support
+- hundreds of examples
+- automatic library growth
+- fully automated corpus growth
+- complex benchmark suite
+
+See `docs/v1-definition-of-done.md`.
+
+## Stop Building Rule
+
+Do not expand the roadmap just because more features are possible.
+
+ProseKernel should be considered v1-complete when it can reliably help an agent produce a better writing brief, critique, and rewrite than a generic LLM workflow.
+
+After that, new work must fit into one of the Post-v1 Tracks and should improve stability, distribution, evaluation, or clearly demonstrated user value.
+
+## Post-v1 Tracks
+
+After Phase 12, ProseKernel is considered v1-complete.
+
+Further work is organized into tracks, not numbered phases. These tracks are for hardening, distribution, and optional expansion.
+
+Recommended practical priority:
+
+1. Track A — Structured Outputs / Agent API
+2. Track B — CI, Release, and Package Hardening
+3. Track C — Public Distribution
+
+Do not jump immediately into web UI, MCP server, editor plugins, local models, huge benchmark systems, automatic corpus growth, or a 200+ example corpus. The project should become stable and shippable before becoming bigger.
+
+### Track A — Structured Outputs / Agent API
+
+Status: Planned
+
+Goal: make ProseKernel easy for agents and automation tools to consume.
+
+Planned work:
+
+- JSON output for `brief`
+- JSON output for `critique`
+- JSON output for `rewrite`
+- JSON output for `learn`
+- JSON output for `eval`
+- Stable schemas for machine-readable reports
+- Better report objects for Codex, Claude Code, Cursor, OpenCode, Hermes, and future agent workflows
+
+Future structured output mode should support commands like:
+
+```bash
+prosekernel brief "Write a launch email for an AI writing tool" --json
+prosekernel critique draft.md --json
+prosekernel rewrite draft.md --json
+prosekernel learn final.md --json
+```
+
+JSON outputs should include stable fields such as:
+
+- task
+- inferred writing type
+- audience
+- examples used
+- patterns used
+- critique
+- scores
+- rewrite
+- rationale
+- warnings
+- next actions
+
+Why this matters:
+
+- Agents need structured outputs, not only Markdown.
+- JSON outputs make ProseKernel easier to use in automated workflows.
+- This should be the first post-v1 hardening track.
+
+### Track B — CI, Release, and Package Hardening
+
+Status: Planned
+
+Goal: make the repo stable, testable, and ready for public release.
+
+Planned work:
+
+- GitHub Actions
+- Run tests on pull requests
+- Validate library files
+- Validate pattern files
+- Validate learning notes
+- Run old-brand scan
+- Run schema checks
+- Add changelog
+- Add versioning
+- Prepare release artifacts
+- Prepare PyPI publishing
+
+Why this matters:
+
+- This is not feature bloat.
+- This makes the repo credible and safe for public use.
+- This should happen before major public distribution.
+
+### Track C — Public Distribution
+
+Status: Planned
+
+Goal: make ProseKernel easy for other people to install, understand, and try.
+
+Planned work:
+
+- PyPI package
+- Clean install docs
+- Demo repo or examples folder
+- Example reports
+- Quickstart guide
+- “Use ProseKernel with Claude Code” guide
+- “Use ProseKernel with Codex” guide
+- “Use ProseKernel with Cursor” guide
+- “Use ProseKernel with OpenCode” guide
+- “Use ProseKernel with Hermes” guide
+- Launch README improvements
+- 3 strong public demos
+
+Public launch should happen after:
+
+1. v1 definition of done is satisfied.
+2. Structured outputs are planned or partially implemented.
+3. CI checks pass.
+4. Install docs are clear.
+5. At least 3 strong demos exist.
+6. Old-brand references are cleaned up or documented.
+
+Why this matters:
+
+- Distribution matters more than adding more features too early.
+- The project should become shippable before expanding into more surfaces.
+
+### Track D — Evaluation Maturity
+
+Status: Later
+
+Goal: prove that ProseKernel-guided writing is better than generic LLM writing.
+
+Planned work:
+
+- Larger benchmark task set
+- Strong / weak fixture pairs
+- Regression scoring by writing category
+- Generic LLM draft vs ProseKernel-guided draft comparison
+- Human-readable scorecards
+- Category-specific evals
+
+Why this matters:
+
+- Without evals, quality claims are vibes.
+- With evals, ProseKernel becomes an improving system.
+
+### Track E — Library and Pattern Scale
+
+Status: Later
+
+Goal: grow the corpus and pattern system carefully without reducing quality.
+
+Planned work:
+
+- Grow beyond 100 examples only when quality can be maintained
+- Add more pattern families
+- Add stronger category-specific taste depth
+- Improve source provenance
+- Add duplicate detection
+- Keep rights checks fail-closed
+- Improve category indexes
+
+Why this matters:
+
+- Better examples create better retrieval.
+- But low-quality scale will weaken the project.
+- 80 excellent examples are better than 300 loose examples.
+
+### Track F — Provider and Local Model Support
+
+Status: Optional
+
+Goal: support deeper model workflows without making the project dependent on one provider.
+
+Planned work:
+
+- Optional local model provider
+- Provider config profiles
+- Multi-pass critique / rewrite loops
+- Model-specific adapter settings
+- OpenAI / Anthropic / OpenRouter / local model support where appropriate
+
+Why this matters:
+
+- Provider flexibility is useful.
+- But it is not required for v1.
+- Most users first need to see that ProseKernel improves writing quality.
+
+### Track G — Product Surfaces
+
+Status: Experimental
+
+Goal: explore additional interfaces only after the CLI and agent workflow prove useful.
+
+Possible surfaces:
+
+- CLI-only pro tool
+- MCP server
+- web UI
+- editor plugin
+- agent skill pack
+- Obsidian integration
+- local dashboard
+
+Why this matters:
+
+- These surfaces may become useful later.
+- They should not distract from making the core CLI and agent workflow excellent.
