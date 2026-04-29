@@ -6,7 +6,7 @@ Each entry is not merely a “good example.” It is a reusable teaching object 
 
 ## Current corpus
 
-- Total annotated examples: 80
+- Total annotated examples: 100
 - Populated categories: 12
 - Target categories scaffolded: 12 total top-level categories
 - Rights posture: metadata/analysis-first, short excerpts only when useful and safe
@@ -68,10 +68,13 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 
 ### Essays / Literary Craft
 
+- [`essays-literary/examples/emerson-self-reliance-inner-authority.md`](library/essays-literary/examples/emerson-self-reliance-inner-authority.md) — When an essay needs to make inner conviction feel urgent, quotable, and philosophically alive.
 - [`essays-literary/examples/frederick-douglass-july-fourth.md`](library/essays-literary/examples/frederick-douglass-july-fourth.md) — When writing must expose contradiction between stated values and lived reality.
 - [`essays-literary/examples/mlk-letter-birmingham-jail.md`](library/essays-literary/examples/mlk-letter-birmingham-jail.md) — When writing must answer critics, establish moral urgency, and persuade a hostile or cautious audience.
+- [`essays-literary/examples/montaigne-of-experience-thinking-on-page.md`](library/essays-literary/examples/montaigne-of-experience-thinking-on-page.md) — When an essay should feel like a mind examining life in motion rather than delivering a pre-packaged thesis.
 - [`essays-literary/examples/orwell-politics-english-language.md`](library/essays-literary/examples/orwell-politics-english-language.md) — When prose needs to become sharper, plainer, and more honest.
 - [`essays-literary/examples/paul-graham-good-writing.md`](library/essays-literary/examples/paul-graham-good-writing.md) — When writing should discover and clarify thought rather than package a known answer.
+- [`essays-literary/examples/thoreau-civil-disobedience-moral-refusal.md`](library/essays-literary/examples/thoreau-civil-disobedience-moral-refusal.md) — When an essay must turn a personal refusal into a general moral argument.
 - [`essays-literary/examples/zinsser-on-writing-well.md`](library/essays-literary/examples/zinsser-on-writing-well.md) — When a draft needs simplicity, unity, and human voice.
 
 
@@ -107,8 +110,10 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 
 - [`email-newsletters/examples/axios-am-smart-brevity-briefing-promise.md`](library/email-newsletters/examples/axios-am-smart-brevity-briefing-promise.md) — When a recurring newsletter must promise speed, selection, and reader usefulness.
 - [`email-newsletters/examples/ghost-newsletter-publishing-docs.md`](library/email-newsletters/examples/ghost-newsletter-publishing-docs.md) — When explaining email publishing as a workflow rather than a one-off send.
+- [`email-newsletters/examples/github-changelog-release-note-cadence.md`](library/email-newsletters/examples/github-changelog-release-note-cadence.md) — When recurring technical updates need to stay scannable, trustworthy, and useful without editorial padding.
 - [`email-newsletters/examples/james-clear-3-2-1-newsletter-format.md`](library/email-newsletters/examples/james-clear-3-2-1-newsletter-format.md) — When designing a newsletter readers can recognize, skim, and keep opening.
 - [`email-newsletters/examples/lennys-newsletter-operator-community-promise.md`](library/email-newsletters/examples/lennys-newsletter-operator-community-promise.md) — When a newsletter sells deep practical trust to a narrow professional audience.
+- [`email-newsletters/examples/marginalian-sunday-digest-curatorial-letter.md`](library/email-newsletters/examples/marginalian-sunday-digest-curatorial-letter.md) — When an editorial newsletter must feel like a recurring intellectual ritual rather than a list of links.
 - [`email-newsletters/examples/morning-brew-daily-briefing-voice.md`](library/email-newsletters/examples/morning-brew-daily-briefing-voice.md) — When summarizing serious information without making the email feel like homework.
 - [`email-newsletters/examples/substack-welcome-email-guide.md`](library/email-newsletters/examples/substack-welcome-email-guide.md) — When writing a welcome email, newsletter onboarding note, or first-touch creator message.
 - [`email-newsletters/examples/the-hustle-business-briefing-voice.md`](library/email-newsletters/examples/the-hustle-business-briefing-voice.md) — When making business news feel habit-forming through voice and compressed usefulness.
@@ -117,11 +122,17 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 
 ### Speeches / Oratory
 
+- [`speeches-oratory/examples/fdr-first-inaugural-fear-itself.md`](library/speeches-oratory/examples/fdr-first-inaugural-fear-itself.md) — When a leader must reduce public fear while preparing people for hard collective action.
 - [`speeches-oratory/examples/lincoln-gettysburg-address.md`](library/speeches-oratory/examples/lincoln-gettysburg-address.md) — When writing a short speech that must give shared sacrifice a larger meaning.
+- [`speeches-oratory/examples/sojourner-truth-aint-i-a-woman-refrain.md`](library/speeches-oratory/examples/sojourner-truth-aint-i-a-woman-refrain.md) — When a speech must expose hypocrisy through repeated question, lived evidence, and moral contrast.
+- [`speeches-oratory/examples/washington-farewell-address-civic-warning.md`](library/speeches-oratory/examples/washington-farewell-address-civic-warning.md) — When a leader must leave behind warnings, principles, and operating memory for a community.
 
 
 ### Journalism / Reportage
 
+- [`journalism-reportage/examples/ida-tarbell-standard-oil-system-investigation.md`](library/journalism-reportage/examples/ida-tarbell-standard-oil-system-investigation.md) — When investigative writing must show how a powerful system works through documents, chronology, and accumulated proof.
+- [`journalism-reportage/examples/jacob-riis-how-other-half-lives-conditions.md`](library/journalism-reportage/examples/jacob-riis-how-other-half-lives-conditions.md) — When reportage must make hidden living conditions visible enough to force public attention.
+- [`journalism-reportage/examples/john-reed-ten-days-revolution-witness.md`](library/journalism-reportage/examples/john-reed-ten-days-revolution-witness.md) — When writing eyewitness reportage about fast-moving events where atmosphere, sequence, and actors all matter.
 - [`journalism-reportage/examples/nellie-bly-ten-days-mad-house.md`](library/journalism-reportage/examples/nellie-bly-ten-days-mad-house.md) — When writing reportage that needs scenes, firsthand observation, and institutional accountability.
 
 
@@ -131,6 +142,8 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 - [`ux-product-microcopy/examples/atlassian-content-design-foundations.md`](library/ux-product-microcopy/examples/atlassian-content-design-foundations.md) — When collaborative software needs product language that helps teams move work forward.
 - [`ux-product-microcopy/examples/govuk-confirmation-pages-recovery-closure.md`](library/ux-product-microcopy/examples/govuk-confirmation-pages-recovery-closure.md) — When a product flow needs to confirm completion and tell users what happens next.
 - [`ux-product-microcopy/examples/govuk-error-message.md`](library/ux-product-microcopy/examples/govuk-error-message.md) — When writing validation errors, form guidance, empty states, or product copy that must help users recover.
+- [`ux-product-microcopy/examples/govuk-start-pages-task-entry.md`](library/ux-product-microcopy/examples/govuk-start-pages-task-entry.md) — When an onboarding or service entry page must tell users what they can do, what they need, and what happens next.
+- [`ux-product-microcopy/examples/ibm-carbon-content-overview.md`](library/ux-product-microcopy/examples/ibm-carbon-content-overview.md) — When enterprise product teams need interface language that stays clear and consistent across many complex workflows.
 - [`ux-product-microcopy/examples/mailchimp-voice-and-tone-content-guide.md`](library/ux-product-microcopy/examples/mailchimp-voice-and-tone-content-guide.md) — When product copy needs to adapt tone to user emotion and context.
 - [`ux-product-microcopy/examples/material-design-content-design-overview.md`](library/ux-product-microcopy/examples/material-design-content-design-overview.md) — When product teams need content rules that scale across interfaces.
 - [`ux-product-microcopy/examples/microsoft-fluent-content-guidance.md`](library/ux-product-microcopy/examples/microsoft-fluent-content-guidance.md) — When enterprise product copy needs to stay helpful, direct, and consistent across many surfaces.
@@ -140,16 +153,23 @@ One example gives a direction. Three to five examples create a pattern. Ten exam
 ### Crisis Communications
 
 - [`crisis-communications/examples/atlassian-april-2022-outage-update.md`](library/crisis-communications/examples/atlassian-april-2022-outage-update.md) — When a long-running customer-impacting incident needs transparent staged communication.
+- [`crisis-communications/examples/cloudflare-july-2020-outage-postmortem.md`](library/crisis-communications/examples/cloudflare-july-2020-outage-postmortem.md) — When explaining a technical outage with enough timeline, cause, and prevention detail to rebuild operational trust.
 - [`crisis-communications/examples/cloudflare-june-2022-outage-postmortem.md`](library/crisis-communications/examples/cloudflare-june-2022-outage-postmortem.md) — When explaining a major incident with enough specificity to rebuild trust.
 - [`crisis-communications/examples/fastly-june-2021-outage-summary.md`](library/crisis-communications/examples/fastly-june-2021-outage-summary.md) — When an infrastructure company needs to explain a high-impact outage quickly and concretely.
+- [`crisis-communications/examples/github-rsa-ssh-host-key-rotation.md`](library/crisis-communications/examples/github-rsa-ssh-host-key-rotation.md) — When a security-sensitive change requires clear customer action without panic or ambiguity.
 - [`crisis-communications/examples/gitlab-database-outage-postmortem.md`](library/crisis-communications/examples/gitlab-database-outage-postmortem.md) — When writing an incident report, apology, outage note, or trust-repair update after a failure.
+- [`crisis-communications/examples/okta-january-2022-security-incident-faq.md`](library/crisis-communications/examples/okta-january-2022-security-incident-faq.md) — When a security incident update must define scope, answer customer questions, and avoid speculation.
 - [`crisis-communications/examples/slack-january-2021-outage-explanation.md`](library/crisis-communications/examples/slack-january-2021-outage-explanation.md) — When turning a service outage into a clear public explanation for technical and nontechnical readers.
 - [`crisis-communications/examples/twilio-august-2022-social-engineering-attack.md`](library/crisis-communications/examples/twilio-august-2022-social-engineering-attack.md) — When a security incident requires customer-facing facts without speculation or minimization.
+- [`crisis-communications/examples/zoom-message-to-users-security-response.md`](library/crisis-communications/examples/zoom-message-to-users-security-response.md) — When a fast-growing product must respond publicly to trust and security criticism with commitments and changes.
 
 
 ### Internal Ops Docs
 
+- [`internal-ops-docs/examples/atlassian-daci-decision-playbook.md`](library/internal-ops-docs/examples/atlassian-daci-decision-playbook.md) — When an internal team needs to clarify decision roles, contributors, and final accountability before work stalls.
+- [`internal-ops-docs/examples/basecamp-shape-up-six-week-cycle.md`](library/internal-ops-docs/examples/basecamp-shape-up-six-week-cycle.md) — When an internal planning doc must turn product work into bounded cycles with explicit appetite and scope control.
 - [`internal-ops-docs/examples/gitlab-directly-responsible-individuals.md`](library/internal-ops-docs/examples/gitlab-directly-responsible-individuals.md) — When writing internal docs that clarify ownership, decision rights, and execution responsibility.
+- [`internal-ops-docs/examples/google-sre-postmortem-culture.md`](library/internal-ops-docs/examples/google-sre-postmortem-culture.md) — When an organization needs internal incident docs that turn failure into learning instead of blame.
 
 ## Pattern layer
 
