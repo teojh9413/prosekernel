@@ -3,15 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict
 from pathlib import Path
 import re
-
-CATEGORIES = {
-    "viral-social",
-    "persuasive-copywriting",
-    "strategic-intelligent",
-    "essays-literary",
-    "technical-explanatory",
-    "brand-positioning",
-}
+from .taxonomy import CATEGORIES
 
 RIGHTS = {"public-domain", "open-license", "short-excerpt", "metadata-only", "user-provided"}
 

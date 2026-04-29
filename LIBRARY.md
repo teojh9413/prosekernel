@@ -7,7 +7,8 @@ Each entry is not merely a “good example.” It is a reusable teaching object 
 ## Current corpus
 
 - Total annotated examples: 26
-- Categories: 6
+- Populated categories: 6
+- Target categories scaffolded: 12 total top-level categories
 - Rights posture: metadata/analysis-first, short excerpts only when useful and safe
 
 ## How to use this catalog
@@ -69,8 +70,20 @@ Each entry is not merely a “good example.” It is a reusable teaching object 
 - `humanprint new-example ...` — generate a compliant annotation skeleton.
 - `humanprint validate-library` — validate example files for required sections.
 
+## Target categories scaffolded
+
+- `email-newsletters` — launch emails, lifecycle sequences, founder updates, editorial newsletters.
+- `speeches-oratory` — keynotes, public remarks, civic rhetoric, ceremonial speeches.
+- `journalism-reportage` — profiles, interviews, investigations, reported features.
+- `ux-product-microcopy` — onboarding, empty states, errors, labels, product flows.
+- `crisis-communications` — apologies, incident notes, postmortems, recalls, trust repair.
+- `internal-ops-docs` — SOPs, decision records, internal memos, one-pagers, runbooks.
+
+See `docs/taxonomy.md` for blended formats that stay as tags/subcategories.
+
 ## Next collection targets
 
+- Add seed examples for the six scaffolded target categories.
 - More modern public social posts from founders/operators.
 - More high-converting landing pages and sales emails.
 - More public investor memos and annual letters.

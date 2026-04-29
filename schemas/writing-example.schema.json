@@ -37,7 +37,13 @@
         "strategic-intelligent",
         "essays-literary",
         "technical-explanatory",
-        "brand-positioning"
+        "brand-positioning",
+        "email-newsletters",
+        "speeches-oratory",
+        "journalism-reportage",
+        "ux-product-microcopy",
+        "crisis-communications",
+        "internal-ops-docs"
       ]
     },
     "format": {

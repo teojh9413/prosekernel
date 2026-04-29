@@ -4,6 +4,9 @@ import argparse
 from pathlib import Path
 from .lint import lint_file
 from .ingest import ExampleMetadata, example_path, render_example, validate_library
+from .engine import render_demo_report, run_writing_demo
+from .retrieve import select_examples
+from .taxonomy import recommend_categories
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -30,6 +33,19 @@ def main(argv: list[str] | None = None) -> int:
 
     val_p = sub.add_parser("validate-library", help="Validate library example structure")
     val_p.add_argument("--root", type=Path, default=Path.cwd())
+
+    search_p = sub.add_parser("search-examples", help="Select Humanprint examples for a writing task")
+    search_p.add_argument("task")
+    search_p.add_argument("--root", type=Path, default=Path.cwd())
+    search_p.add_argument("--limit", type=int, default=5)
+    search_p.add_argument("--category")
+
+    demo_p = sub.add_parser("write-demo", help="Run deterministic retrieval + draft + lint + rewrite demo")
+    demo_p.add_argument("task")
+    demo_p.add_argument("--root", type=Path, default=Path.cwd())
+    demo_p.add_argument("--limit", type=int, default=5)
+    demo_p.add_argument("--category")
+    demo_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     args = parser.parse_args(argv)
 
@@ -79,6 +95,25 @@ def main(argv: list[str] | None = None) -> int:
             for error in errors:
                 print(f"  - {error}")
         return 1
+
+    if args.command == "search-examples":
+        categories = recommend_categories(args.task, limit=3)
+        print("Recommended categories: " + ", ".join(categories))
+        for example in select_examples(args.root, args.task, limit=args.limit, category=args.category):
+            rel = example.path.relative_to(args.root) if example.path.is_relative_to(args.root) else example.path
+            print(f"- {example.title} [{example.category}] {rel}")
+        return 0
+
+    if args.command == "write-demo":
+        result = run_writing_demo(args.root, args.task, limit=args.limit, category=args.category)
+        report = render_demo_report(result)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0 if result.final_report.passed else 1
 
     return 2
 

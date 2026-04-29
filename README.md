@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 1 has started.
+Phase 2 has started: taxonomy expansion plus deterministic retrieval/writing demo.
 
 Seed corpus includes examples/resources across:
 
@@ -51,6 +51,8 @@ Seed corpus includes examples/resources across:
 - technical/explanatory writing
 - brand/positioning writing
 
+Target category scaffolds now also exist for email/newsletters, speeches/oratory, journalism/reportage, UX/product microcopy, crisis communications, and internal ops docs.
+
 This is intentionally small and high-signal. Quality beats volume.
 
 ## Quick CLI
@@ -60,6 +62,8 @@ The repo also includes a simple linter for common AI-slop markers:
 ```bash
 python -m pip install -e .
 humanprint lint examples/ai-slop-sample.md
+humanprint search-examples "write a launch email for Humanprint"
+humanprint write-demo "write a launch email for Humanprint" --output /tmp/humanprint-demo.md
 ```
 
 ## Core standard
@@ -76,3 +80,7 @@ Good Humanprint writing must be:
 ## Source ingestion
 
 Use `docs/source-ingestion.md` and `humanprint new-example` to add new examples safely and consistently. Run `humanprint validate-library` before committing.
+
+## Retrieval + writing demo
+
+Use `docs/retrieval-writing-demo.md` for the current deterministic workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → rewrite/report.

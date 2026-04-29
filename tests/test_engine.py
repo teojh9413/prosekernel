@@ -1,0 +1,26 @@
+from pathlib import Path
+
+from humanprint.engine import render_demo_report, run_writing_demo
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_writing_demo_runs_full_pipeline():
+    result = run_writing_demo(ROOT, "write a launch email for Humanprint", limit=4)
+    assert result.recommended_categories[0] == "email-newsletters"
+    assert len(result.examples) == 4
+    assert result.craft_moves
+    assert result.final_report.passed
+
+
+def test_render_demo_report_contains_contract_sections():
+    result = run_writing_demo(ROOT, "write an outage apology", limit=3)
+    report = render_demo_report(result)
+    for heading in [
+        "## Recommended categories",
+        "## Retrieved examples",
+        "## Craft moves to transfer",
+        "## Lint result",
+        "## Rewrite",
+    ]:
+        assert heading in report
