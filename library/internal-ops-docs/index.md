@@ -4,12 +4,11 @@ SOPs, decision records, operating memos, one-pagers, runbooks, and team cadence 
 
 ## Status
 
-Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+Phase 4 expansion in progress. Continue expanding with metadata/analysis-first source notes unless rights allow more.
 
 ## Examples
 
 - [`gitlab-directly-responsible-individuals.md`](examples/gitlab-directly-responsible-individuals.md) — Internal ownership docs that make decision rights explicit.
-
 ## Target examples
 
 - Decision records that preserve context and tradeoffs.

@@ -4,12 +4,11 @@ Profiles, interviews, investigations, field reporting, and narrative nonfiction 
 
 ## Status
 
-Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+Phase 4 expansion in progress. Continue expanding with metadata/analysis-first source notes unless rights allow more.
 
 ## Examples
 
 - [`nellie-bly-ten-days-mad-house.md`](examples/nellie-bly-ten-days-mad-house.md) — Immersive investigative reportage through scene, sequence, and institutional detail.
-
 ## Target examples
 
 - Profiles that reveal character through scenes and choices.

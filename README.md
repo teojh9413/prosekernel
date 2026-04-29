@@ -40,7 +40,7 @@ Before writing anything important:
 
 ## Current status
 
-Phase 3.5 is complete: public-release metadata/docs are in place after taxonomy expansion, retrieval demo, and seeded expanded categories.
+Phase 4 is in progress: public-release readiness is complete, and the corpus has been expanded toward the 60-80 example target.
 
 Seed corpus includes examples/resources across:
 
@@ -53,7 +53,9 @@ Seed corpus includes examples/resources across:
 
 Seed examples now exist for email/newsletters, speeches/oratory, journalism/reportage, UX/product microcopy, crisis communications, and internal ops docs.
 
-This is intentionally small and high-signal. Quality beats volume.
+This is intentionally high-signal. Quality beats volume.
+
+Corpus depth rule: one example gives a direction; three to five examples create a pattern; ten examples create taste.
 
 ## Quick CLI
 

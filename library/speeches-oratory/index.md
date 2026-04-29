@@ -4,12 +4,11 @@ Keynotes, public remarks, civic rhetoric, ceremonial speeches, and spoken persua
 
 ## Status
 
-Seed example added. Continue expanding with metadata/analysis-first source notes unless rights allow more.
+Phase 4 expansion in progress. Continue expanding with metadata/analysis-first source notes unless rights allow more.
 
 ## Examples
 
-- [`lincoln-gettysburg-address.md`](examples/lincoln-gettysburg-address.md) — Compressed public address: founding principle, present test, sacrifice, duty.
-
+- [`lincoln-gettysburg-address.md`](examples/lincoln-gettysburg-address.md) — Compressed public address through founding principle, present test, sacrifice, and duty.
 ## Target examples
 
 - Speeches with moral architecture and memorable cadence.

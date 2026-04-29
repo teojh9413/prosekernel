@@ -7,8 +7,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_load_examples_reads_current_corpus():
     examples = load_examples(ROOT)
-    assert len(examples) == 32
+    assert len(examples) >= 60
     assert any(example.title == "Apple iPod — 1,000 Songs in Your Pocket" for example in examples)
+    assert any(example.category == "email-newsletters" for example in examples)
+    assert any(example.category == "crisis-communications" for example in examples)
     assert all(example.craft_moves for example in examples)
 
 
