@@ -8,9 +8,13 @@ from .ingest import ExampleMetadata, example_path, render_example, validate_libr
 from .engine import (
     build_writing_brief,
     render_brief_report,
+    render_critique_report,
     render_demo_report,
     render_provider_write_report,
+    render_rewrite_report,
+    run_critique,
     run_provider_write,
+    run_rewrite,
     run_writing_demo,
 )
 from .evals import evaluate_fixtures, render_fixture_eval_report, render_scorecard_report, score_text
@@ -46,7 +50,7 @@ def main(argv: list[str] | None = None) -> int:
     val_p = sub.add_parser("validate-library", help="Validate library example structure")
     val_p.add_argument("--root", type=Path, default=Path.cwd())
 
-    search_p = sub.add_parser("search-examples", help="Select ProseKernel examples for a writing task")
+    search_p = sub.add_parser("search-examples", aliases=["examples"], help="Select ProseKernel examples for a writing task")
     search_p.add_argument("task")
     search_p.add_argument("--root", type=Path, default=Path.cwd())
     search_p.add_argument("--limit", type=int, default=5)
@@ -74,7 +78,25 @@ def main(argv: list[str] | None = None) -> int:
     write_p.add_argument("--timeout", type=int, default=60)
     write_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
-    demo_p = sub.add_parser("write-demo", help="Run deterministic retrieval + draft + lint + rewrite demo")
+    critique_p = sub.add_parser("critique", help="Critique a draft with deterministic lint, scorecard, retrieval, and revision guidance")
+    critique_p.add_argument("path", type=Path)
+    critique_p.add_argument("--root", type=Path, default=Path.cwd())
+    critique_p.add_argument("--task", default="", help="Optional writing task for reader-fit and retrieval context")
+    critique_p.add_argument("--limit", type=int, default=5)
+    critique_p.add_argument("--category")
+    critique_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use for reference examples")
+    critique_p.add_argument("--output", type=Path, help="Optional markdown report path")
+
+    rewrite_p = sub.add_parser("rewrite", help="Rewrite a draft deterministically using ProseKernel critique guidance")
+    rewrite_p.add_argument("path", type=Path)
+    rewrite_p.add_argument("--root", type=Path, default=Path.cwd())
+    rewrite_p.add_argument("--task", default="", help="Optional writing task for reader-fit and retrieval context")
+    rewrite_p.add_argument("--limit", type=int, default=5)
+    rewrite_p.add_argument("--category")
+    rewrite_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use for reference examples")
+    rewrite_p.add_argument("--output", type=Path, help="Optional markdown report path")
+
+    demo_p = sub.add_parser("write-demo", aliases=["demo"], help="Run deterministic retrieval + draft + lint + rewrite demo")
     demo_p.add_argument("task")
     demo_p.add_argument("--root", type=Path, default=Path.cwd())
     demo_p.add_argument("--limit", type=int, default=5)
@@ -82,7 +104,7 @@ def main(argv: list[str] | None = None) -> int:
     demo_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
     demo_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
-    score_p = sub.add_parser("scorecard", help="Score a draft with the Phase 7A ProseKernel scorecard")
+    score_p = sub.add_parser("scorecard", aliases=["score"], help="Score a draft with the Phase 7A ProseKernel scorecard")
     score_p.add_argument("path", type=Path)
     score_p.add_argument("--task", default="", help="Optional writing task for reader-fit/non-genericness scoring")
     score_p.add_argument("--output", type=Path, help="Optional markdown report path")
@@ -145,7 +167,7 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"  - {error}")
         return 1
 
-    if args.command == "search-examples":
+    if args.command in {"search-examples", "examples"}:
         categories = recommend_categories(args.task, limit=3)
         print("Recommended categories: " + ", ".join(categories))
         if args.explain:
@@ -215,7 +237,43 @@ def main(argv: list[str] | None = None) -> int:
             print(report)
         return 0
 
-    if args.command == "write-demo":
+    if args.command == "critique":
+        result = run_critique(
+            args.root,
+            args.path,
+            task=args.task,
+            limit=args.limit,
+            category=args.category,
+            mode=args.mode,
+        )
+        report = render_critique_report(result)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0 if result.scorecard.passed else 1
+
+    if args.command == "rewrite":
+        result = run_rewrite(
+            args.root,
+            args.path,
+            task=args.task,
+            limit=args.limit,
+            category=args.category,
+            mode=args.mode,
+        )
+        report = render_rewrite_report(result)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0 if result.final_scorecard.total >= result.initial_scorecard.total else 1
+
+    if args.command in {"write-demo", "demo"}:
         result = run_writing_demo(args.root, args.task, limit=args.limit, category=args.category, mode=args.mode)
         report = render_demo_report(result)
         if args.output:
@@ -226,7 +284,7 @@ def main(argv: list[str] | None = None) -> int:
             print(report)
         return 0 if result.final_report.passed else 1
 
-    if args.command == "scorecard":
+    if args.command in {"scorecard", "score"}:
         scorecard = score_text(args.path.read_text(encoding="utf-8"), task=args.task)
         report = render_scorecard_report(
             scorecard,

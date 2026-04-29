@@ -13,7 +13,7 @@ For copy-paste prompt contracts, see:
 - `prompts/critique.md`
 - `prompts/rewrite.md`
 
-For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`.
+For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`.
 
 ## Step 1: Classify the job
 
@@ -84,6 +84,7 @@ Run:
 ```bash
 prosekernel lint draft.md
 prosekernel scorecard draft.md --task "<task>"
+prosekernel critique draft.md --task "<task>" --mode hybrid --output critique.md
 ```
 
 Also use:
@@ -94,8 +95,13 @@ Also use:
 
 ## Step 7: Revise
 
-Perform:
+Perform manually or use the deterministic rewrite report as a working draft:
 
+```bash
+prosekernel rewrite draft.md --task "<task>" --mode hybrid --output rewrite.md
+```
+
+Revision passes:
 1. cut pass,
 2. specificity pass,
 3. proof pass,

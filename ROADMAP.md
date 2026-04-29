@@ -19,6 +19,7 @@ Completed:
 - Phase 6B — Explicit provider write mode: adapter interface, `prosekernel write --provider ... --model ...`, safe missing-credential errors, and provider/model trace reports.
 - Phase 8 — Offline semantic/hybrid retrieval: optional `--mode semantic|hybrid`, score explanations, cached concept expansion, and no new runtime dependencies.
 - Phase 9 — Agent workflow integration: repo-local `SKILL.md`, prompt contracts, and command-grounded workflow docs for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+- Phase 10 — Productized CLI/usability: `critique`, `rewrite`, productized Markdown reports, and friendlier aliases (`examples`, `demo`, `score`).
 
 Current corpus: 100 annotated examples across 12 populated categories.
 Current pattern layer: 12 strict pattern families.
@@ -221,21 +222,26 @@ Short form: classify → retrieve → patterns → brief → draft → lint/scor
 
 ## Phase 10 — Productization / usability
 
-Keep the first product surface as CLI + Markdown reports.
+Status: implemented.
 
-Commands:
+The first product surface remains CLI + Markdown reports.
 
-- `prosekernel search`
-- `prosekernel brief`
-- `prosekernel lint`
-- `prosekernel critique`
-- `prosekernel rewrite`
-- `prosekernel write`
-- `prosekernel new-example`
-- `prosekernel validate-library`
-- `prosekernel index`
+Implemented commands:
 
-Do not rush into a web UI.
+- `prosekernel critique draft.md --task "..." --output critique.md`
+- `prosekernel rewrite draft.md --task "..." --output rewrite.md`
+- `prosekernel examples "..."` as a shorter alias for `search-examples`
+- `prosekernel demo "..."` as a shorter alias for `write-demo`
+- `prosekernel score draft.md` as a shorter alias for `scorecard`
+
+Implemented behavior:
+
+- Critique reports combine deterministic lint, scorecard, retrieved examples, pattern IDs, and a revision plan.
+- Rewrite reports produce a deterministic working rewrite plus score/lint deltas and quality gates.
+- Existing command contracts remain stable.
+- No default provider/model is selected; no hidden paid model calls are made.
+
+See `docs/phase-10-productized-cli.md`.
 
 ## Phase 11 — Public-safe learning loop
 

@@ -40,7 +40,9 @@ Before writing anything important:
 
 ## Current status
 
-Phase 9 agent workflow integration is now implemented: repo-local `SKILL.md`, reusable prompt contracts, and command-grounded agent docs now package the workflow for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
+Phase 10 productized CLI/usability is now implemented: `critique` and `rewrite` produce deterministic Markdown reports for existing drafts, and shorter aliases (`examples`, `demo`, `score`) preserve existing command contracts while making common flows easier to run.
+
+Phase 9 agent workflow integration is implemented: repo-local `SKILL.md`, reusable prompt contracts, and command-grounded agent docs package the workflow for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
 
 Phase 8 retrieval is implemented: `search-examples`, `brief`, `write`, and `write-demo` default to the existing deterministic lexical/category scorer, and can opt into `--mode semantic` or `--mode hybrid`. Hybrid retrieval remains offline and dependency-free, using curated concept aliases, category concepts, simple stemming, and cached semantic token expansion. `search-examples --explain` prints lexical/semantic/hybrid score components.
 
@@ -61,17 +63,22 @@ Corpus depth rule: one example gives a direction; three to five examples create 
 
 ## Quick CLI
 
-The repo also includes CLI tools for common AI-slop markers, deterministic/hybrid retrieval, drafting demos, and Phase 7A scorecards/evals:
+The repo also includes CLI tools for common AI-slop markers, deterministic/hybrid retrieval, critique/rewrite reports, drafting demos, and Phase 7A scorecards/evals:
 
 ```bash
 python -m pip install -e .
 prosekernel lint examples/ai-slop-sample.md
 prosekernel search-examples "write a launch email for ProseKernel"
+prosekernel examples "write a launch email for ProseKernel"
 prosekernel search-examples "write a security incident update for customers" --mode hybrid --explain
 prosekernel brief "write a launch email for ProseKernel" --output /tmp/prosekernel-brief.md
+prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-critique.md
+prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-rewrite.md
 prosekernel write "write a launch email for ProseKernel" --provider openai --model gpt-4o-mini --output /tmp/prosekernel-write.md
 prosekernel write-demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
+prosekernel demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
 prosekernel scorecard draft.md --task "write a launch email for ProseKernel" --output /tmp/prosekernel-scorecard.md
+prosekernel score draft.md --task "write a launch email for ProseKernel"
 prosekernel eval
 ```
 
@@ -112,4 +119,4 @@ Use `docs/source-ingestion.md` and `prosekernel new-example` to add new examples
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
+Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-10-productized-cli.md` for deterministic critique/rewrite reports and short CLI aliases. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
+import shlex
 from .evals import ScorecardReport, score_text
 from .lint import LintReport, lint_text
 from .patterns import PATTERN_FILES
@@ -46,6 +48,39 @@ class ProviderWriteResult:
     draft: str
     lint_report: LintReport
     scorecard: ScorecardReport
+
+
+@dataclass
+class CritiqueResult:
+    path: Path
+    task: str
+    retrieval_mode: str
+    original_text: str
+    recommended_categories: list[str]
+    examples: list[ExampleRecord]
+    pattern_ids: list[str]
+    craft_moves: list[str]
+    lint_report: LintReport
+    scorecard: ScorecardReport
+    revision_plan: list[str]
+
+
+@dataclass
+class RewriteResult:
+    path: Path
+    task: str
+    retrieval_mode: str
+    original_text: str
+    rewritten_text: str
+    recommended_categories: list[str]
+    examples: list[ExampleRecord]
+    pattern_ids: list[str]
+    craft_moves: list[str]
+    revision_plan: list[str]
+    initial_lint_report: LintReport
+    final_lint_report: LintReport
+    initial_scorecard: ScorecardReport
+    final_scorecard: ScorecardReport
 
 
 def extract_craft_moves(examples: list[ExampleRecord], limit: int = 7) -> list[str]:
@@ -193,6 +228,246 @@ def render_brief_report(brief: WritingBrief) -> str:
     lines.append("- Run `prosekernel lint draft.md`.")
     lines.append(f"- Run `prosekernel scorecard draft.md --task \"{brief.task}\"`.")
     lines.append("- Revise until the draft has concrete proof, reader fit, and non-genericness.")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def revision_plan_from_reports(lint_report: LintReport, scorecard: ScorecardReport) -> list[str]:
+    plan: list[str] = []
+    weak_dimensions = [dimension for dimension in scorecard.dimensions if dimension.score / dimension.max_score < 0.65]
+    for dimension in weak_dimensions:
+        if dimension.name == "Specificity":
+            plan.append("Replace abstract claims with concrete nouns, named situations, numbers, or constraints.")
+        elif dimension.name == "Proof":
+            plan.append("Add proof before importance claims: example, user consequence, observed behavior, number, or mechanism.")
+        elif dimension.name == "Structure":
+            plan.append("Make the structure visible with a reader problem, claim, proof, tradeoff, and next action.")
+        elif dimension.name == "Reader fit":
+            plan.append("Name the reader and their current moment before explaining the product or idea.")
+        elif dimension.name == "Memorability":
+            plan.append("Add one contrast, rule, or bottom-line sentence the reader can repeat.")
+        elif dimension.name == "Non-genericness":
+            plan.append("Cut sentences that could describe any other product, company, or topic.")
+    for finding in lint_report.findings:
+        if finding.rule == "slop_phrase":
+            plan.append("Replace flagged AI-slop phrases with plain, testable language.")
+        elif finding.rule in {"no_proof", "smart_sounding_empty", "vague_attribution"}:
+            plan.append("Remove unsupported authority signals and add verifiable proof.")
+        elif finding.rule == "weak_lead":
+            plan.append("Rewrite the opener around the reader's concrete situation, not a generic trend.")
+    if not plan:
+        plan.append("Automated checks are acceptable; do a human pass for rhythm, compression, and source-safe originality.")
+    deduped: list[str] = []
+    seen: set[str] = set()
+    for item in plan:
+        if item not in seen:
+            deduped.append(item)
+            seen.add(item)
+    return deduped[:7]
+
+
+def run_critique(
+    root: Path,
+    path: Path,
+    *,
+    task: str = "",
+    limit: int = 5,
+    category: str | None = None,
+    mode: str = "lexical",
+) -> CritiqueResult:
+    text = path.read_text(encoding="utf-8")
+    examples = select_examples(root, task or text[:240], limit=limit, category=category, mode=mode)
+    pattern_ids = collect_pattern_ids(examples)
+    craft_moves = extract_craft_moves(examples)
+    lint_report = lint_text(text)
+    scorecard = score_text(text, task=task)
+    return CritiqueResult(
+        path=path,
+        task=task,
+        retrieval_mode=mode,
+        original_text=text,
+        recommended_categories=recommend_categories(task or text[:240], limit=3),
+        examples=examples,
+        pattern_ids=pattern_ids,
+        craft_moves=craft_moves,
+        lint_report=lint_report,
+        scorecard=scorecard,
+        revision_plan=revision_plan_from_reports(lint_report, scorecard),
+    )
+
+
+def render_critique_report(result: CritiqueResult) -> str:
+    lines: list[str] = []
+    lines.append("# ProseKernel Critique Report")
+    lines.append("")
+    lines.append(f"Draft: `{result.path}`")
+    if result.task:
+        lines.append(f"Task: {result.task}")
+    lines.append(f"Retrieval mode: {result.retrieval_mode}")
+    lines.append("")
+    lines.append("> No model call was made. This critique uses deterministic ProseKernel lint, scorecard, retrieval, and pattern guidance.")
+    lines.append("")
+    lines.append("## Verdict")
+    status = "PASS" if result.scorecard.passed else "REVISE"
+    lines.append(f"Status: {status}")
+    lines.append(f"Scorecard: {result.scorecard.total}/100")
+    lines.append(f"Lint: {result.lint_report.score}/100")
+    lines.append("")
+    lines.append("## Scorecard")
+    for dimension in result.scorecard.dimensions:
+        lines.append(f"- {dimension.name}: {dimension.score}/{dimension.max_score} — {dimension.rationale}")
+    lines.append("")
+    lines.append("## Lint findings")
+    if result.lint_report.findings:
+        for finding in result.lint_report.findings:
+            loc = f":{finding.line}" if finding.line else ""
+            lines.append(f"- [{finding.severity.upper()}] {finding.rule}{loc}: {finding.message}")
+    else:
+        lines.append("- None")
+    lines.append("")
+    lines.append("## Revision plan")
+    for item in result.revision_plan:
+        lines.append(f"- {item}")
+    lines.append("")
+    lines.append("## Retrieved examples")
+    for example in result.examples:
+        lines.append(f"- {example.title} — {example.category} — `{example.path}`")
+        lines.append(f"  - Use when: {example.use_when}")
+    lines.append("")
+    lines.append("## Patterns to apply")
+    for pattern_id in result.pattern_ids:
+        lines.append(f"- `{pattern_id}`")
+    if result.craft_moves:
+        lines.append("")
+        lines.append("Craft moves:")
+        for move in result.craft_moves[:5]:
+            lines.append(f"- {move}")
+    lines.append("")
+    lines.append("## Next command")
+    command_parts = ["prosekernel", "rewrite", str(result.path)]
+    if result.task:
+        command_parts.extend(["--task", result.task])
+    command_parts.extend(["--output", "rewrite.md"])
+    lines.append(f"`{shlex.join(command_parts)}`")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _compact_source_fact(text: str, limit: int = 180) -> str:
+    clean = " ".join(text.strip().split())
+    if not clean:
+        return "Add one concrete fact from the source draft before publishing."
+    sentence = re.split(r"(?<=[.!?])\s+", clean)[0]
+    if len(sentence) < 80 and len(clean) > len(sentence):
+        sentence = clean
+    if len(sentence) <= limit:
+        return sentence
+    return sentence[: limit - 3].rstrip() + "..."
+
+
+def rewrite_draft_deterministically(task: str, original_text: str, examples: list[ExampleRecord], craft_moves: list[str], revision_plan: list[str]) -> str:
+    subject = _task_subject(task or "revise this draft")
+    example_hint = examples[0].title if examples else "the strongest matching ProseKernel example"
+    first_move = craft_moves[0] if craft_moves else "Lead with the reader's concrete problem."
+    second_move = craft_moves[1] if len(craft_moves) > 1 else "Use proof before claims of importance."
+    source_fact = _compact_source_fact(original_text)
+    is_prosekernel_task = "prosekernel" in original_text.lower() or "prosekernel" in subject.lower()
+    if is_prosekernel_task:
+        claim = "ProseKernel gives an AI writing agent a visible editing loop: retrieve examples, apply named patterns, then score the draft before it ships."
+        proof = "In a 3-step workflow, the agent can compare the draft against retrieved examples, cut flagged phrases, and revise weak sections around reader fit, proof, structure, and non-genericness."
+    else:
+        claim = f"For this task, the draft should give the reader a clear path through {subject}, not a polished generality."
+        proof = f"Use the source fact as the anchor: {source_fact}"
+    return f"""# Rewritten draft
+
+Reader: you need the piece to answer the practical question before it tries to sound finished.
+
+Problem: {subject} fails if it opens with generic importance. The reader needs the concrete situation, the constraint, and the next action.
+
+Claim: {claim}
+
+Proof: {proof}
+
+Tradeoff: this is slower than instant polish, but it prevents the common failure mode: confident copy that could describe any product, policy, or workflow.
+
+Next action: fix the highest-penalty line first, preserve the source facts, then publish only after the scorecard and human read-aloud pass.
+
+Craft transfer:
+- {first_move}
+- {second_move}
+
+Source pattern studied: {example_hint}
+"""
+
+
+def run_rewrite(
+    root: Path,
+    path: Path,
+    *,
+    task: str = "",
+    limit: int = 5,
+    category: str | None = None,
+    mode: str = "lexical",
+) -> RewriteResult:
+    critique = run_critique(root, path, task=task, limit=limit, category=category, mode=mode)
+    rewritten = rewrite_draft_deterministically(task, critique.original_text, critique.examples, critique.craft_moves, critique.revision_plan)
+    final_lint = lint_text(rewritten)
+    final_scorecard = score_text(rewritten, task=task)
+    return RewriteResult(
+        path=path,
+        task=task,
+        retrieval_mode=mode,
+        original_text=critique.original_text,
+        rewritten_text=rewritten,
+        recommended_categories=critique.recommended_categories,
+        examples=critique.examples,
+        pattern_ids=critique.pattern_ids,
+        craft_moves=critique.craft_moves,
+        revision_plan=critique.revision_plan,
+        initial_lint_report=critique.lint_report,
+        final_lint_report=final_lint,
+        initial_scorecard=critique.scorecard,
+        final_scorecard=final_scorecard,
+    )
+
+
+def render_rewrite_report(result: RewriteResult) -> str:
+    lines: list[str] = []
+    lines.append("# ProseKernel Rewrite Report")
+    lines.append("")
+    lines.append(f"Source draft: `{result.path}`")
+    if result.task:
+        lines.append(f"Task: {result.task}")
+    lines.append(f"Retrieval mode: {result.retrieval_mode}")
+    lines.append("")
+    lines.append("> No model call was made. This rewrite is deterministic and should be treated as a source-safe working draft, not final copy.")
+    lines.append("")
+    lines.append("## Quality delta")
+    score_delta = result.final_scorecard.total - result.initial_scorecard.total
+    lint_delta = result.final_lint_report.score - result.initial_lint_report.score
+    lines.append(f"Scorecard: {result.initial_scorecard.total}/100 → {result.final_scorecard.total}/100 ({score_delta:+d})")
+    lines.append(f"Lint: {result.initial_lint_report.score}/100 → {result.final_lint_report.score}/100 ({lint_delta:+d})")
+    lines.append("")
+    lines.append("## Revision plan used")
+    for item in result.revision_plan:
+        lines.append(f"- {item}")
+    lines.append("")
+    lines.append("## Rewritten draft")
+    lines.append(result.rewritten_text.strip())
+    lines.append("")
+    lines.append("## Retrieved examples")
+    for example in result.examples:
+        lines.append(f"- {example.title} — {example.category} — `{example.path}`")
+    lines.append("")
+    lines.append("## Patterns applied")
+    for pattern_id in result.pattern_ids:
+        lines.append(f"- `{pattern_id}`")
+    lines.append("")
+    lines.append("## Quality gate")
+    scorecard_command = ["prosekernel", "scorecard", "rewritten.md"]
+    if result.task:
+        scorecard_command.extend(["--task", result.task])
+    lines.append(f"- Run `{shlex.join(scorecard_command)}`.")
+    lines.append(f"- Run `{shlex.join(['prosekernel', 'lint', 'rewritten.md'])}`.")
+    lines.append("- Do a human read-aloud pass for rhythm, compression, and factual proof.")
     return "\n".join(lines).rstrip() + "\n"
 
 
