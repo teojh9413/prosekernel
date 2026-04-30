@@ -2,17 +2,19 @@
 
 Taste infrastructure for AI writing agents.
 
-ProseKernel is an open-source, repo-local CLI and knowledge layer that helps agents write with taste: retrieve relevant examples, apply craft patterns, catch generic AI slop, score drafts, produce critique/rewrite reports, and learn safely without storing private source prose.
+ProseKernel is a local writing-quality layer for AI agents.
+
+It helps an agent study rights-safe examples, apply reusable writing patterns, catch generic AI slop, score drafts, and produce critique/rewrite reports before publishing.
 
 ## What ProseKernel does
 
-- retrieves rights-safe writing examples
-- extracts reusable craft patterns
-- builds agent-ready writing briefs
-- detects generic AI slop
-- scores drafts with a deterministic writing scorecard
-- produces critique/rewrite reports
-- learns safely through metadata-only notes and human-reviewed proposals
+- Retrieves rights-safe writing examples.
+- Extracts reusable craft patterns.
+- Builds agent-ready writing briefs.
+- Detects generic AI slop.
+- Scores drafts with a deterministic writing scorecard.
+- Produces critique and rewrite reports.
+- Learns safely through metadata-only notes and human-reviewed proposals.
 
 ## Who it is for
 
@@ -30,9 +32,11 @@ Run from the repo root:
 python -m pip install -e .
 prosekernel brief "write a launch email for an AI writing tool" --output /tmp/prosekernel-brief.md
 prosekernel search-examples "write a launch email for an AI writing tool" --limit 3
-prosekernel lint examples/ai-slop-sample.md
+prosekernel lint examples/ai-slop-sample.md || true
 prosekernel eval
 ```
+
+The lint command intentionally flags the sample draft; that is the point of the demo.
 
 You can also run the public demo script:
 
@@ -50,16 +54,15 @@ Commands can run from the repo root, with `--root /path/to/prosekernel`, or with
 
 ## Why this exists
 
-Most AI writing is not bad because it is grammatically wrong. It is bad because it is:
+Most AI writing is not bad because it is ungrammatical.
 
-- generic
-- over-smoothed
-- overconfident without proof
-- inflated with fake importance
-- formatted like an answer instead of written like a human
-- full of phrases no serious writer would choose
+It is bad because it sounds finished before it has judgment: generic claims, weak proof, inflated importance, and sentences that could describe any product.
 
-ProseKernel is designed to make future agents pause, study, retrieve relevant examples, and write with taste.
+ProseKernel gives agents a writing loop:
+
+```text
+retrieve examples → apply patterns → draft → lint → score → critique → rewrite → learn safely
+```
 
 ## How agents should use this repo
 
@@ -86,29 +89,18 @@ Most commands can be run from the repo root directly. If you run the installed C
 
 See [`docs/install.md`](docs/install.md) for full local usage and root-resolution details.
 
-## Quick CLI
+## Common commands
 
 ```bash
-python -m pip install -e .
-prosekernel lint examples/ai-slop-sample.md
-prosekernel search-examples "write a launch email for ProseKernel"
-prosekernel examples "write a launch email for ProseKernel"
-prosekernel search-examples "write a security incident update for customers" --mode hybrid --explain
-prosekernel brief "write a launch email for ProseKernel" --output /tmp/prosekernel-brief.md
-prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-critique.md
-prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-rewrite.md
-prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --output /tmp/prosekernel-rewrite-report.md --rewrite-output /tmp/prosekernel-rewritten.md
-prosekernel learn draft.md --task "write a launch email for ProseKernel" --source-title "Launch draft" --source-author "User" --source-url "https://example.com/launch-draft" --rights user-provided --category email-newsletters --tags "launch, email" --promote --approved --output /tmp/prosekernel-lesson.md
-prosekernel validate-learning
-prosekernel propose-example /tmp/prosekernel-lesson.md --root /root/prosekernel --output /tmp/prosekernel-example-proposal.md
-prosekernel propose-pattern /tmp/prosekernel-lesson.md --root /root/prosekernel --pattern-id PATTERN_EMAIL_999 --output /tmp/prosekernel-pattern-proposal.md
-prosekernel write "write a launch email for ProseKernel" --provider openai --model gpt-4o-mini --output /tmp/prosekernel-write.md
-prosekernel write-demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
-prosekernel demo "write a launch email for ProseKernel" --output /tmp/prosekernel-demo.md
-prosekernel scorecard draft.md --task "write a launch email for ProseKernel" --output /tmp/prosekernel-scorecard.md
-prosekernel score draft.md --task "write a launch email for ProseKernel"
+prosekernel brief "write a launch email for an AI writing tool"
+prosekernel search-examples "write a security incident update" --mode hybrid --explain
+prosekernel critique draft.md --task "write a launch email"
+prosekernel rewrite draft.md --task "write a launch email" --rewrite-output rewritten.md
+prosekernel scorecard draft.md --task "write a launch email"
 prosekernel eval
 ```
+
+For full workflows, provider-backed drafting, learning notes, and human-review proposals, see [`docs/install.md`](docs/install.md), [`docs/retrieval-writing-demo.md`](docs/retrieval-writing-demo.md), [`docs/phase-10-productized-cli.md`](docs/phase-10-productized-cli.md), [`docs/phase-11-public-safe-learning-loop.md`](docs/phase-11-public-safe-learning-loop.md), and [`docs/phase-12-human-review-import-bridge.md`](docs/phase-12-human-review-import-bridge.md).
 
 Root-aware commands resolve the ProseKernel repo/data root in this order: explicit `--root`, `PROSEKERNEL_ROOT`, then an upward search from the current directory for `pyproject.toml`, `library/`, `patterns/`, and `src/prosekernel`. If installed usage cannot find those assets, ProseKernel fails with a clear setup message instead of returning empty retrieval results.
 
@@ -128,7 +120,7 @@ Phase 12 is the official v1 endgame: ProseKernel now covers the full writing ope
 
 Track B release hardening is mostly implemented: root resolution, CI, validation hardening, old-brand scan, install docs, public-release checklist, and the v1 smoke-loop test are complete.
 
-Track C public launch prep is in progress: README clarity, sample reports, a public demo script, changelog, release-process docs, and GitHub release settings are being prepared for public v1.
+Track C public launch prep is implemented: README clarity, sample reports, public demo script, changelog, release-process docs, and GitHub release settings are ready for public v1.
 
 Seed corpus includes 100 annotated examples across 12 populated categories and 12 strict pattern families. This is intentionally high-signal. Quality beats volume.
 

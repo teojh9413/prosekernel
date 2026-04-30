@@ -22,6 +22,20 @@ def test_readme_links_public_launch_assets():
     assert "scripts/public_demo.sh" in readme
 
 
+def test_readme_keeps_demo_first_public_polish():
+    readme = _read("README.md")
+
+    assert "ProseKernel is a local writing-quality layer for AI agents." in readme
+    assert "sounds finished before it has judgment" in readme
+    assert "retrieve examples → apply patterns → draft → lint → score → critique → rewrite → learn safely" in readme
+    assert 'prosekernel lint examples/ai-slop-sample.md || true' in readme
+    assert "The lint command intentionally flags the sample draft; that is the point of the demo." in readme
+    assert "## Common commands" in readme
+    assert "## Quick CLI" not in readme
+    assert "Track C public launch prep is implemented" in readme
+    assert "Track C public launch prep is in progress" not in readme
+
+
 def test_public_launch_assets_exist_and_describe_v1_release():
     expected_paths = [
         "scripts/public_demo.sh",
