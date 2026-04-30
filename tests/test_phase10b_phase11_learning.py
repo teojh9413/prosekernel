@@ -324,3 +324,109 @@ def test_learn_rejects_multiline_metadata_to_prevent_frontmatter_injection(tmp_p
 
     assert exit_code == 2
     assert not output_path.exists()
+
+
+def _valid_learning_note(**overrides):
+    fields = {
+        "source_title": "Checkout copy",
+        "source_author": "Product Team",
+        "source_url": "https://example.com/checkout",
+        "rights": "user-provided",
+        "category": "ux-product-microcopy",
+        "tags": '["checkout", "microcopy"]',
+        "pattern_ids": '["PATTERN_UX_001"]',
+        "source_text_stored": "false",
+        "source_text_sha256": "abc123",
+        "source_word_count": "42",
+        "lint_score": "88",
+        "scorecard_total": "82",
+        "promotion_status": "ready-for-human-review",
+        "approved": "true",
+    }
+    fields.update(overrides)
+    frontmatter = "\n".join(f"{key}: {value}" for key, value in fields.items())
+    return f"""---
+{frontmatter}
+---
+
+# Learning lesson — Checkout copy
+
+## Reusable lesson
+- Name the failed action and give one recovery action.
+
+## Promotion gate
+- Status: {fields["promotion_status"].strip(chr(34))}
+"""
+
+
+def test_validate_learning_note_rejects_unknown_rights_category_and_pattern_ids():
+    text = _valid_learning_note(
+        rights="closed-license",
+        category="unknown-category",
+        pattern_ids='["PATTERN_DOES_NOT_EXIST_999"]',
+    )
+
+    errors = validate_learning_note_text(text)
+
+    assert "unknown rights value: closed-license" in errors
+    assert "unknown category: unknown-category" in errors
+    assert "unknown pattern_ids: PATTERN_DOES_NOT_EXIST_999" in errors
+
+
+def test_validate_learning_note_rejects_malformed_numeric_frontmatter():
+    text = _valid_learning_note(
+        source_word_count="not-a-number",
+        lint_score="ninety",
+        scorecard_total="eighty-two",
+    )
+
+    errors = validate_learning_note_text(text)
+
+    assert "source_word_count must be an integer" in errors
+    assert "lint_score must be an integer" in errors
+    assert "scorecard_total must be an integer" in errors
+
+
+def test_validate_learning_note_rejects_out_of_range_numeric_frontmatter():
+    text = _valid_learning_note(
+        source_word_count="0",
+        lint_score="101",
+        scorecard_total="-1",
+    )
+
+    errors = validate_learning_note_text(text)
+
+    assert "source_word_count must be greater than 0" in errors
+    assert "lint_score must be between 0 and 100" in errors
+    assert "scorecard_total must be between 0 and 100" in errors
+
+
+def test_ready_for_human_review_requires_approved_true_and_safe_rights():
+    text = _valid_learning_note(
+        rights="short-excerpt",
+        promotion_status='"ready-for-human-review"',
+        approved="false",
+    )
+
+    errors = validate_learning_note_text(text)
+
+    assert "ready-for-human-review requires approved: true" in errors
+    assert "ready-for-human-review requires rights in public-domain, open-license, or user-provided" in errors
+
+
+def test_load_learning_note_reports_malformed_numeric_frontmatter_cleanly(tmp_path):
+    from prosekernel.learning import load_learning_note
+
+    note_path = tmp_path / "bad-note.md"
+    note_path.write_text(_valid_learning_note(lint_score="not-a-number"), encoding="utf-8")
+
+    try:
+        load_learning_note(note_path)
+    except ValueError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("load_learning_note should reject malformed numeric frontmatter")
+
+    assert "invalid learning note" in message
+    assert "lint_score must be an integer" in message
+    assert "invalid literal for int" not in message

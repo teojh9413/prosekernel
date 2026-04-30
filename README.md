@@ -69,6 +69,18 @@ This is intentionally high-signal. Quality beats volume.
 
 Corpus depth rule: one example gives a direction; three to five examples create a pattern; ten examples create taste.
 
+## Install / local usage
+
+Install ProseKernel from the repo root with:
+
+```bash
+python -m pip install -e .
+```
+
+Most commands can be run from the repo root directly. If you run the installed CLI from another directory, pass `--root /path/to/prosekernel` or set `PROSEKERNEL_ROOT=/path/to/prosekernel` so ProseKernel can find `library/`, `patterns/`, and `evals/`.
+
+See [`docs/install.md`](docs/install.md) for full local usage and root-resolution details.
+
 ## Quick CLI
 
 The repo also includes CLI tools for common AI-slop markers, deterministic/hybrid retrieval, critique/rewrite reports, drafting demos, and Phase 7A scorecards/evals:

@@ -105,6 +105,34 @@ def _validate_single_line(name: str, value: str, errors: list[str], max_len: int
         errors.append(f"{name} is too long")
 
 
+def _validate_integer_field(
+    frontmatter: dict[str, str],
+    name: str,
+    errors: list[str],
+    *,
+    minimum: int | None = None,
+    maximum: int | None = None,
+    greater_than_zero: bool = False,
+) -> None:
+    raw = frontmatter.get(name)
+    if raw is None or not str(raw).strip():
+        errors.append(f"missing frontmatter: {name}")
+        return
+    try:
+        value = int(str(raw).strip().strip('"\''))
+    except ValueError:
+        errors.append(f"{name} must be an integer")
+        return
+    if greater_than_zero and value <= 0:
+        errors.append(f"{name} must be greater than 0")
+    if minimum is not None and maximum is not None and not minimum <= value <= maximum:
+        errors.append(f"{name} must be between {minimum} and {maximum}")
+    elif minimum is not None and value < minimum:
+        errors.append(f"{name} must be at least {minimum}")
+    elif maximum is not None and value > maximum:
+        errors.append(f"{name} must be at most {maximum}")
+
+
 def _word_count(text: str) -> int:
     return len(re.findall(r"\b[\w'-]+\b", text))
 
@@ -296,16 +324,43 @@ def validate_learning_note_text(text: str) -> list[str]:
     if stored is None or stored.lower() != "false":
         errors.append("missing source_text_stored: false")
 
-    for required in ("source_title", "source_author", "source_url", "rights", "promotion_status", "source_text_sha256"):
+    required_fields = (
+        "source_title",
+        "source_author",
+        "source_url",
+        "rights",
+        "category",
+        "tags",
+        "pattern_ids",
+        "promotion_status",
+        "source_text_sha256",
+    )
+    for required in required_fields:
         if required not in frontmatter:
             errors.append(f"missing frontmatter: {required}")
 
     rights = frontmatter.get("rights", "").strip('"\'')
+    category = frontmatter.get("category", "").strip('"\'')
+    pattern_ids = _yaml_array(frontmatter.get("pattern_ids", ""))
     promotion_status = frontmatter.get("promotion_status", "").strip('"\'')
     approved = frontmatter.get("approved", "false").strip('"\'').lower() == "true"
+
+    if rights and rights not in RIGHTS:
+        errors.append(f"unknown rights value: {rights}")
+    if category and category not in CATEGORIES:
+        errors.append(f"unknown category: {category}")
+    unknown_patterns = [pattern_id for pattern_id in pattern_ids if pattern_id not in KNOWN_PATTERN_IDS]
+    if unknown_patterns:
+        errors.append("unknown pattern_ids: " + ", ".join(unknown_patterns))
+
+    _validate_integer_field(frontmatter, "source_word_count", errors, greater_than_zero=True)
+    _validate_integer_field(frontmatter, "lint_score", errors, minimum=0, maximum=100)
+    _validate_integer_field(frontmatter, "scorecard_total", errors, minimum=0, maximum=100)
+
     if promotion_status == "ready-for-human-review":
         if rights not in PROMOTION_SAFE_RIGHTS:
             errors.append("ready-for-human-review requires safe rights")
+            errors.append("ready-for-human-review requires rights in public-domain, open-license, or user-provided")
         if not approved:
             errors.append("ready-for-human-review requires approved: true")
 
@@ -389,7 +444,7 @@ def default_pattern_proposal_path(root: Path, note: LearningNote, pattern_id: st
     return root / "proposals" / "patterns" / f"{pattern_id.lower()}-{slugify(note.source_title)}.md"
 
 
-def render_example_proposal(note: LearningNote, *, output_path: Path | None = None, format_name: str = "learned-example") -> str:
+def render_example_proposal(note: LearningNote, *, format_name: str = "learned-example") -> str:
     errors = validate_learning_note_for_proposal(note)
     if errors:
         raise ValueError("; ".join(errors))
@@ -467,11 +522,16 @@ def render_pattern_proposal(note: LearningNote, *, pattern_id: str) -> str:
         raise ValueError("; ".join(errors))
     if not re.fullmatch(r"PATTERN_[A-Z]+_[0-9]{3}", pattern_id):
         raise ValueError("pattern_id must look like PATTERN_DOMAIN_001")
+    if pattern_id in KNOWN_PATTERN_IDS:
+        raise ValueError(f"pattern ID already exists: {pattern_id}; existing pattern IDs should not be proposed as new")
     lessons = note.reusable_lessons or ["Review the learning note and write an original abstraction before import."]
     lines = [
         f"# {pattern_id} — {note.source_title}",
         "",
         "> Proposal status: review-required. Derived from approved learning note; do not move into `patterns/` until a human reviews wording, rights, and overlap with existing patterns.",
+        "",
+        "proposal_status: review-required",
+        "source_text_stored: false",
         "",
         "## Provenance",
         f"- Derived from approved learning note: `{note.path}`",

@@ -164,3 +164,55 @@ def test_proposal_bridge_refuses_to_overwrite_without_force(tmp_path):
 
     assert exit_code == 1
     assert output_path.read_text(encoding="utf-8") == "existing proposal"
+
+
+def test_render_example_proposal_signature_has_no_unused_output_path_parameter():
+    import inspect
+    from prosekernel.learning import render_example_proposal
+
+    assert "output_path" not in inspect.signature(render_example_proposal).parameters
+
+
+def test_propose_pattern_rejects_existing_known_pattern_id(tmp_path, capsys):
+    lesson_path = tmp_path / "lesson.md"
+    output_path = tmp_path / "pattern-proposal.md"
+    lesson_path.write_text(APPROVED_LESSON, encoding="utf-8")
+
+    exit_code = main([
+        "propose-pattern",
+        str(lesson_path),
+        "--root",
+        str(ROOT),
+        "--pattern-id",
+        "PATTERN_UX_001",
+        "--output",
+        str(output_path),
+    ])
+
+    captured = capsys.readouterr()
+    assert exit_code == 2
+    assert not output_path.exists()
+    assert "pattern ID already exists" in captured.err
+    assert "should not be proposed as new" in captured.err
+
+
+def test_propose_pattern_keeps_pattern_id_format_validation(tmp_path, capsys):
+    lesson_path = tmp_path / "lesson.md"
+    output_path = tmp_path / "pattern-proposal.md"
+    lesson_path.write_text(APPROVED_LESSON, encoding="utf-8")
+
+    exit_code = main([
+        "propose-pattern",
+        str(lesson_path),
+        "--root",
+        str(ROOT),
+        "--pattern-id",
+        "not-a-pattern-id",
+        "--output",
+        str(output_path),
+    ])
+
+    captured = capsys.readouterr()
+    assert exit_code == 2
+    assert not output_path.exists()
+    assert "pattern_id must look like PATTERN_DOMAIN_001" in captured.err
