@@ -95,6 +95,8 @@ prosekernel score draft.md --task "write a launch email for ProseKernel"
 prosekernel eval
 ```
 
+Root-aware commands resolve the ProseKernel repo/data root in this order: explicit `--root`, `PROSEKERNEL_ROOT`, then an upward search from the current directory for `pyproject.toml`, `library/`, `patterns/`, and `src/prosekernel`. If installed usage cannot find those assets, ProseKernel fails with a clear setup message instead of returning empty retrieval results.
+
 ## Core standard
 
 Good ProseKernel writing must be:

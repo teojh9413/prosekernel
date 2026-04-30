@@ -29,6 +29,7 @@ from .learning import (
     render_pattern_proposal,
     validate_learning_directory,
 )
+from .paths import RootResolutionError, resolve_root
 from .patterns import infer_pattern_ids
 from .providers import ProviderCallError, ProviderError, provider_adapter_from_env
 from .retrieve import rank_examples, select_examples
@@ -43,7 +44,7 @@ def main(argv: list[str] | None = None) -> int:
     lint_p.add_argument("path", type=Path)
 
     new_p = sub.add_parser("new-example", help="Create a new annotated example skeleton")
-    new_p.add_argument("--root", type=Path, default=Path.cwd())
+    new_p.add_argument("--root", type=Path)
     new_p.add_argument("--title", required=True)
     new_p.add_argument("--author", required=True)
     new_p.add_argument("--source-url", required=True)
@@ -59,11 +60,11 @@ def main(argv: list[str] | None = None) -> int:
     new_p.add_argument("--force", action="store_true")
 
     val_p = sub.add_parser("validate-library", help="Validate library example structure")
-    val_p.add_argument("--root", type=Path, default=Path.cwd())
+    val_p.add_argument("--root", type=Path)
 
     search_p = sub.add_parser("search-examples", aliases=["examples"], help="Select ProseKernel examples for a writing task")
     search_p.add_argument("task")
-    search_p.add_argument("--root", type=Path, default=Path.cwd())
+    search_p.add_argument("--root", type=Path)
     search_p.add_argument("--limit", type=int, default=5)
     search_p.add_argument("--category")
     search_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
@@ -71,7 +72,7 @@ def main(argv: list[str] | None = None) -> int:
 
     brief_p = sub.add_parser("brief", help="Build a provider-agnostic dry-run writing brief")
     brief_p.add_argument("task")
-    brief_p.add_argument("--root", type=Path, default=Path.cwd())
+    brief_p.add_argument("--root", type=Path)
     brief_p.add_argument("--limit", type=int, default=5)
     brief_p.add_argument("--category")
     brief_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
@@ -79,7 +80,7 @@ def main(argv: list[str] | None = None) -> int:
 
     write_p = sub.add_parser("write", help="Draft with an explicit LLM provider and ProseKernel quality report")
     write_p.add_argument("task")
-    write_p.add_argument("--root", type=Path, default=Path.cwd())
+    write_p.add_argument("--root", type=Path)
     write_p.add_argument("--limit", type=int, default=5)
     write_p.add_argument("--category")
     write_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
@@ -91,7 +92,7 @@ def main(argv: list[str] | None = None) -> int:
 
     critique_p = sub.add_parser("critique", help="Critique a draft with deterministic lint, scorecard, retrieval, and revision guidance")
     critique_p.add_argument("path", type=Path)
-    critique_p.add_argument("--root", type=Path, default=Path.cwd())
+    critique_p.add_argument("--root", type=Path)
     critique_p.add_argument("--task", default="", help="Optional writing task for reader-fit and retrieval context")
     critique_p.add_argument("--limit", type=int, default=5)
     critique_p.add_argument("--category")
@@ -100,7 +101,7 @@ def main(argv: list[str] | None = None) -> int:
 
     rewrite_p = sub.add_parser("rewrite", help="Rewrite a draft deterministically using ProseKernel critique guidance")
     rewrite_p.add_argument("path", type=Path)
-    rewrite_p.add_argument("--root", type=Path, default=Path.cwd())
+    rewrite_p.add_argument("--root", type=Path)
     rewrite_p.add_argument("--task", default="", help="Optional writing task for reader-fit and retrieval context")
     rewrite_p.add_argument("--limit", type=int, default=5)
     rewrite_p.add_argument("--category")
@@ -110,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
 
     learn_p = sub.add_parser("learn", help="Create a public-safe metadata-only learning note from a draft")
     learn_p.add_argument("path", type=Path)
-    learn_p.add_argument("--root", type=Path, default=Path.cwd())
+    learn_p.add_argument("--root", type=Path)
     learn_p.add_argument("--task", default="", help="Writing task or reason this source is being studied")
     learn_p.add_argument("--source-title", required=True)
     learn_p.add_argument("--source-author", required=True)
@@ -125,25 +126,25 @@ def main(argv: list[str] | None = None) -> int:
     learn_p.add_argument("--approved", action="store_true", help="Human approval flag required for promotion")
 
     learn_val_p = sub.add_parser("validate-learning", help="Validate public-safe learning notes")
-    learn_val_p.add_argument("--root", type=Path, default=Path.cwd())
+    learn_val_p.add_argument("--root", type=Path)
 
     propose_example_p = sub.add_parser("propose-example", help="Create a review-required library example proposal from an approved learning note")
     propose_example_p.add_argument("path", type=Path)
-    propose_example_p.add_argument("--root", type=Path, default=Path.cwd())
+    propose_example_p.add_argument("--root", type=Path)
     propose_example_p.add_argument("--format", default="learned-example")
     propose_example_p.add_argument("--output", type=Path, help="Optional proposal path; defaults to proposals/examples/<category>/<source-title>.md")
     propose_example_p.add_argument("--force", action="store_true", help="Overwrite an existing proposal")
 
     propose_pattern_p = sub.add_parser("propose-pattern", help="Create a review-required strict-pattern proposal from an approved learning note")
     propose_pattern_p.add_argument("path", type=Path)
-    propose_pattern_p.add_argument("--root", type=Path, default=Path.cwd())
+    propose_pattern_p.add_argument("--root", type=Path)
     propose_pattern_p.add_argument("--pattern-id", required=True, help="New proposed pattern ID, e.g. PATTERN_UX_002")
     propose_pattern_p.add_argument("--output", type=Path, help="Optional proposal path; defaults to proposals/patterns/<pattern-id>-<source-title>.md")
     propose_pattern_p.add_argument("--force", action="store_true", help="Overwrite an existing proposal")
 
     demo_p = sub.add_parser("write-demo", aliases=["demo"], help="Run deterministic retrieval + draft + lint + rewrite demo")
     demo_p.add_argument("task")
-    demo_p.add_argument("--root", type=Path, default=Path.cwd())
+    demo_p.add_argument("--root", type=Path)
     demo_p.add_argument("--limit", type=int, default=5)
     demo_p.add_argument("--category")
     demo_p.add_argument("--mode", choices=("lexical", "semantic", "hybrid"), default="lexical", help="Retrieval scorer to use; default preserves deterministic lexical/category behavior")
@@ -155,10 +156,34 @@ def main(argv: list[str] | None = None) -> int:
     score_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     eval_p = sub.add_parser("eval", help="Run built-in weak/strong fixture evals")
-    eval_p.add_argument("--root", type=Path, default=Path.cwd())
+    eval_p.add_argument("--root", type=Path)
     eval_p.add_argument("--output", type=Path, help="Optional markdown report path")
 
     args = parser.parse_args(argv)
+
+    commands_requiring_root = {
+        "new-example",
+        "validate-library",
+        "search-examples",
+        "examples",
+        "brief",
+        "write",
+        "critique",
+        "rewrite",
+        "learn",
+        "validate-learning",
+        "propose-example",
+        "propose-pattern",
+        "write-demo",
+        "demo",
+        "eval",
+    }
+    if args.command in commands_requiring_root:
+        try:
+            args.root = resolve_root(args.root)
+        except RootResolutionError as exc:
+            print(str(exc), file=sys.stderr)
+            return 2
 
     if args.command == "lint":
         report = lint_file(args.path)
