@@ -2,18 +2,51 @@
 
 Taste infrastructure for AI writing agents.
 
-ProseKernel is an open-source writing operating system for AI agents.
+ProseKernel is an open-source, repo-local CLI and knowledge layer that helps agents write with taste: retrieve relevant examples, apply craft patterns, catch generic AI slop, score drafts, produce critique/rewrite reports, and learn safely without storing private source prose.
 
-It helps agents retrieve strong writing examples, extract reusable craft patterns, build writing briefs, draft with structure, detect generic AI slop, rewrite with specificity and proof, and learn reusable lessons over time.
+## What ProseKernel does
 
-The system has four layers:
+- retrieves rights-safe writing examples
+- extracts reusable craft patterns
+- builds agent-ready writing briefs
+- detects generic AI slop
+- scores drafts with a deterministic writing scorecard
+- produces critique/rewrite reports
+- learns safely through metadata-only notes and human-reviewed proposals
 
-1. **Library** — annotated examples of excellent writing across formats.
-2. **Patterns** — reusable craft moves extracted from the examples.
-3. **Doctrine** — rules for clear, specific, persuasive, human writing.
-4. **Evals** — anti-slop checks that catch fake significance, generic claims, weak proof, and AI cadence.
+## Who it is for
 
-ProseKernel preserves source metadata, summarizes what matters, extracts craft concepts, connects related ideas, and turns writing knowledge into reusable operating rules for agents.
+- AI coding agents
+- writing agents
+- founders/operators using agents for serious writing
+- maintainers building agent workflows
+- anyone who wants a local anti-slop writing quality layer
+
+## 60-second demo
+
+Run from the repo root:
+
+```bash
+python -m pip install -e .
+prosekernel brief "write a launch email for an AI writing tool" --output /tmp/prosekernel-brief.md
+prosekernel search-examples "write a launch email for an AI writing tool" --limit 3
+prosekernel lint examples/ai-slop-sample.md
+prosekernel eval
+```
+
+You can also run the public demo script:
+
+```bash
+bash scripts/public_demo.sh
+```
+
+Commands can run from the repo root, with `--root /path/to/prosekernel`, or with `PROSEKERNEL_ROOT=/path/to/prosekernel`. See [`docs/install.md`](docs/install.md) for local install and root-resolution details.
+
+## Sample reports
+
+- [See sample brief](examples/reports/launch-email-brief.md)
+- [See sample critique](examples/reports/slop-critique-report.md)
+- [See sample rewrite](examples/reports/rewrite-report.md)
 
 ## Why this exists
 
@@ -36,38 +69,10 @@ Before writing anything important:
 2. Open `LIBRARY.md` and find 3-5 relevant examples.
 3. Read the example annotations, not just the excerpts.
 4. Extract structure and craft moves. Do **not** copy phrases.
-5. Draft.
-6. Run the anti-slop checklist in `docs/anti-slop.md`.
-7. Score the draft with `evals/writing-scorecard.md`.
-
-## Current status
-
-Phase 12 is the official v1 endgame: ProseKernel now covers the full writing operating-system loop for agents — task understanding, retrieval, patterns, briefs, critique, rewrite, explanation, public-safe learning, and a human-review/import bridge. Later work is organized as Post-v1 Tracks, not new numbered phases.
-
-Phase 12 human-review/import bridge is implemented: approved, safe-rights learning notes can generate review-required example and pattern proposals with `propose-example` and `propose-pattern`; nothing is imported automatically into `library/` or `patterns/`.
-
-Phase 11 public-safe learning loop is implemented: `learn` creates metadata-only learning notes from drafts without storing source prose, `validate-learning` checks the learning directory, and promotion requests are blocked unless rights and explicit approval are safe.
-
-Phase 10 productized CLI/usability is implemented: `critique` and `rewrite` produce deterministic Markdown reports for existing drafts, `rewrite --rewrite-output` can also save the rewritten draft as a standalone file, and shorter aliases (`examples`, `demo`, `score`) preserve existing command contracts while making common flows easier to run.
-
-Phase 9 agent workflow integration is implemented: repo-local `SKILL.md`, reusable prompt contracts, and command-grounded agent docs package the workflow for Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents.
-
-Phase 8 retrieval is implemented: `search-examples`, `brief`, `write`, and `write-demo` default to the existing deterministic lexical/category scorer, and can opt into `--mode semantic` or `--mode hybrid`. Hybrid retrieval remains offline and dependency-free, using curated concept aliases, category concepts, simple stemming, and cached semantic token expansion. `search-examples --explain` prints lexical/semantic/hybrid score components.
-
-Seed corpus includes examples/resources across:
-
-- viral/social writing
-- persuasive copywriting
-- strategic/intelligent writing
-- essay/literary craft
-- technical/explanatory writing
-- brand/positioning writing
-
-Seed examples now exist for email/newsletters, speeches/oratory, journalism/reportage, UX/product microcopy, crisis communications, and internal ops docs.
-
-This is intentionally high-signal. Quality beats volume.
-
-Corpus depth rule: one example gives a direction; three to five examples create a pattern; ten examples create taste.
+5. Build a brief with `prosekernel brief`.
+6. Draft.
+7. Run `prosekernel lint` and `prosekernel scorecard`.
+8. Use `prosekernel critique` / `prosekernel rewrite` for deterministic revision guidance.
 
 ## Install / local usage
 
@@ -82,8 +87,6 @@ Most commands can be run from the repo root directly. If you run the installed C
 See [`docs/install.md`](docs/install.md) for full local usage and root-resolution details.
 
 ## Quick CLI
-
-The repo also includes CLI tools for common AI-slop markers, deterministic/hybrid retrieval, critique/rewrite reports, drafting demos, and Phase 7A scorecards/evals:
 
 ```bash
 python -m pip install -e .
@@ -119,6 +122,17 @@ Good ProseKernel writing must be:
 - **persuasive** — structure fits reader awareness and desired action
 - **honest** — no fake certainty, fake citations, or inflated importance
 
+## Current status
+
+Phase 12 is the official v1 endgame: ProseKernel now covers the full writing operating-system loop for agents — task understanding, retrieval, patterns, briefs, critique, rewrite, explanation, public-safe learning, and a human-review/import bridge. Later work is organized as Post-v1 Tracks, not new numbered phases.
+
+Track B release hardening is mostly implemented: root resolution, CI, validation hardening, old-brand scan, install docs, public-release checklist, and the v1 smoke-loop test are complete.
+
+Track C public launch prep is in progress: README clarity, sample reports, a public demo script, changelog, release-process docs, and GitHub release settings are being prepared for public v1.
+
+Seed corpus includes 100 annotated examples across 12 populated categories and 12 strict pattern families. This is intentionally high-signal. Quality beats volume.
+
+Corpus depth rule: one example gives a direction; three to five examples create a pattern; ten examples create taste.
 
 ## Public source policy
 

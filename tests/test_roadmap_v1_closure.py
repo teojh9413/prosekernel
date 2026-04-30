@@ -22,8 +22,8 @@ def test_post_v1_tracks_have_statuses_and_priorities():
 
     for track, status in [
         ("Track A — Structured Outputs / Agent API", "Planned"),
-        ("Track B — CI, Release, and Package Hardening", "Planned"),
-        ("Track C — Public Distribution", "Planned"),
+        ("Track B — CI, Release, and Package Hardening", "Mostly implemented / release hardening in progress"),
+        ("Track C — Public Distribution", "In progress"),
         ("Track D — Evaluation Maturity", "Later"),
         ("Track E — Library and Pattern Scale", "Later"),
         ("Track F — Provider and Local Model Support", "Optional"),

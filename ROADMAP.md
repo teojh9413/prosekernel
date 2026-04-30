@@ -32,6 +32,7 @@ Current pattern layer: 12 strict pattern families.
 Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
 Current adapter layer: dry-run `brief` mode plus explicit provider-backed `write` mode. No default paid provider is selected; writes require explicit `--provider` and `--model`.
 Current retrieval layer: default lexical/category scoring plus optional offline semantic and hybrid scoring.
+Current release-hardening layer: root resolution, CI, validation hardening, old-brand scan, install docs, and v1 smoke-loop tests are complete.
 
 ## Phase 1 — Foundation and initial corpus
 
@@ -347,9 +348,13 @@ Further work is organized into tracks, not numbered phases. These tracks are for
 
 Recommended practical priority:
 
-1. Track A — Structured Outputs / Agent API
-2. Track B — CI, Release, and Package Hardening
-3. Track C — Public Distribution
+1. Track A — Structured Outputs / Agent API — Planned
+2. Track B — CI, Release, and Package Hardening — Mostly implemented / release hardening in progress
+3. Track C — Public Distribution — In progress
+4. Track D — Evaluation Maturity — Later
+5. Track E — Library and Pattern Scale — Later
+6. Track F — Provider and Local Model Support — Optional
+7. Track G — Product Surfaces — Experimental
 
 Do not jump immediately into web UI, MCP server, editor plugins, local models, huge benchmark systems, automatic corpus growth, or a 200+ example corpus. The project should become stable and shippable before becoming bigger.
 
@@ -400,20 +405,29 @@ Why this matters:
 
 ### Track B — CI, Release, and Package Hardening
 
-Status: Planned
+Status: Mostly implemented / release hardening in progress
 
 Goal: make the repo stable, testable, and ready for public release.
 
-Planned work:
+Planned / completed work:
+
+Completed:
 
 - GitHub Actions
 - Run tests on pull requests
 - Validate library files
-- Validate pattern files
 - Validate learning notes
 - Run old-brand scan
+- Clean install docs
+- Public-release checklist
+- v1 smoke-loop tests
+- Validation hardening for learning notes and proposal generation
+- Root resolution for installed and repo-local CLI usage
+
+Remaining or later:
+
+- Validate pattern files
 - Run schema checks
-- Add changelog
 - Add versioning
 - Prepare release artifacts
 - Prepare PyPI publishing
@@ -426,7 +440,7 @@ Why this matters:
 
 ### Track C — Public Distribution
 
-Status: Planned
+Status: In progress
 
 Goal: make ProseKernel easy for other people to install, understand, and try.
 
