@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — Editorial Architecture
+
+- Added `prosekernel shape` for deterministic editorial architecture diagnostics
+- Added situated structure archetypes and recommendation logic
+- Added shape scorecard, Markdown shape reports, and rewrite instructions
+- Added detection for generic section ladders, over-balanced rhythm, one-sentence paragraph overuse, em dash overuse, repeated contrast formulas, generic signposting, weak endings, and lack of situated reader context
+- Added editorial architecture docs, sample fixtures, sample reports, and regression tests
+
 ## 0.1.0 — Public v1
 
 - Completed Phase 12 Writing OS loop
