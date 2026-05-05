@@ -4,7 +4,7 @@ Taste infrastructure for AI writing agents.
 
 ProseKernel is a local writing-quality layer for AI agents.
 
-It helps an agent study rights-safe examples, apply reusable writing patterns, catch generic AI slop, score drafts, and produce critique/rewrite reports before publishing.
+It helps an agent study rights-safe examples, apply reusable writing patterns, catch generic AI slop, diagnose default AI document structure, score drafts, and produce critique/rewrite reports before publishing.
 
 ## What ProseKernel does
 
@@ -12,8 +12,9 @@ It helps an agent study rights-safe examples, apply reusable writing patterns, c
 - Extracts reusable craft patterns.
 - Builds agent-ready writing briefs.
 - Detects generic AI slop.
-- Scores drafts with a deterministic writing scorecard.
-- Produces critique and rewrite reports.
+- Diagnoses AI-looking document structure with editorial architecture checks.
+- Scores drafts with deterministic scorecards.
+- Produces critique, rewrite, and shape reports.
 - Learns safely through metadata-only notes and human-reviewed proposals.
 
 ## Who it is for
@@ -32,6 +33,7 @@ Run from the repo root:
 python -m pip install -e .
 prosekernel brief "write a launch email for an AI writing tool" --output /tmp/prosekernel-brief.md
 prosekernel search-examples "write a launch email for an AI writing tool" --limit 3
+prosekernel shape examples/ai-structure-sample.md --task "proposal to payments company" --reader "company boss" --intent "create curiosity for a meeting"
 prosekernel lint examples/ai-slop-sample.md || true
 prosekernel eval
 ```
@@ -62,32 +64,45 @@ It is bad because it sounds finished before it has judgment: generic claims, wea
 ProseKernel gives agents a writing loop:
 
 ```text
-retrieve examples → apply patterns → draft → lint → score → critique → rewrite → learn safely
+retrieve examples → apply patterns → draft → shape → lint → score → critique → rewrite → learn safely
 ```
 
 ## Editorial architecture
 
-Good AI writing is not only about better sentences. A draft can be polished and still look AI generated if it follows a default article or proposal skeleton.
+Good AI-assisted writing is not only about better sentences.
+A draft can be polished and still look AI generated if it follows a default article or proposal skeleton.
 
-ProseKernel includes an editorial architecture layer to diagnose document shape: generic section ladders, over-balanced rhythm, excessive one-sentence paragraphs, repeated contrast formulas, em dash overuse, weak endings, and structures that do not fit the reader or intent.
+ProseKernel includes an editorial architecture layer to diagnose document shape before sentence polish. It checks for generic section ladders, over-balanced rhythm, excessive one-sentence paragraphs, repeated contrast formulas, em dash overuse, weak endings, fake completeness, topic-container headings, and structures that do not fit the reader or intent.
 
 ```bash
-prosekernel shape draft.md --task "proposal to payments company" --reader "company boss" --intent "create curiosity for a meeting"
+prosekernel shape draft.md \
+  --task "proposal to payments company" \
+  --reader "company boss" \
+  --intent "create curiosity for a meeting" \
+  --output shape-report.md
 ```
+
+The shape command is diagnostic, not a hard quality gate. It does not claim to make writing undetectable. It is about better editorial judgment: choosing the right document shape for the reader, intent, and situation.
+
+See [`docs/editorial-architecture.md`](docs/editorial-architecture.md) for the full concept and archetypes.
+
+Important positioning:
+
+Do **not** say ProseKernel helps users evade AI detection.
+Do **not** market this as “make AI writing undetectable.”
+Frame it as better editorial judgment and better structure.
 
 ## How agents should use this repo
 
 Before writing anything important:
 
-1. Read `docs/doctrine.md`.
-2. Open `LIBRARY.md` and find 3-5 relevant examples.
-3. Read the example annotations, not just the excerpts.
-4. Extract structure and craft moves. Do **not** copy phrases.
-5. Build a brief with `prosekernel brief`.
-6. Draft.
-7. Run `prosekernel shape` when document architecture matters: proposals, memos, essays, posts, reports, launch notes, or any draft that may inherit a generic AI skeleton.
-8. Run `prosekernel lint` and `prosekernel scorecard`.
-9. Use `prosekernel critique` / `prosekernel rewrite` for deterministic revision guidance.
+1. Run `brief` to retrieve examples, patterns, and writing guidance.
+2. Draft with the retrieved examples and patterns in context.
+3. Run `shape` to check whether the document architecture fits the reader and intent.
+4. Run `lint` and `scorecard` to catch generic AI slop and weak proof.
+5. Run `critique` or `rewrite` to generate a report and revised draft.
+6. Use `learn` only for metadata-only notes. Do not store private source prose.
+7. Use `propose-example` or `propose-pattern` only for human-reviewed imports.
 
 ## Install / local usage
 
@@ -113,7 +128,7 @@ prosekernel scorecard draft.md --task "write a launch email"
 prosekernel eval
 ```
 
-For full workflows, provider-backed drafting, learning notes, and human-review proposals, see [`docs/install.md`](docs/install.md), [`docs/retrieval-writing-demo.md`](docs/retrieval-writing-demo.md), [`docs/phase-10-productized-cli.md`](docs/phase-10-productized-cli.md), [`docs/phase-11-public-safe-learning-loop.md`](docs/phase-11-public-safe-learning-loop.md), and [`docs/phase-12-human-review-import-bridge.md`](docs/phase-12-human-review-import-bridge.md).
+For full workflows, provider-backed drafting, editorial architecture, learning notes, and human-review proposals, see [`docs/install.md`](docs/install.md), [`docs/retrieval-writing-demo.md`](docs/retrieval-writing-demo.md), [`docs/editorial-architecture.md`](docs/editorial-architecture.md), [`docs/phase-10-productized-cli.md`](docs/phase-10-productized-cli.md), [`docs/phase-11-public-safe-learning-loop.md`](docs/phase-11-public-safe-learning-loop.md), and [`docs/phase-12-human-review-import-bridge.md`](docs/phase-12-human-review-import-bridge.md).
 
 Root-aware commands resolve the ProseKernel repo/data root in this order: explicit `--root`, `PROSEKERNEL_ROOT`, then an upward search from the current directory for `pyproject.toml`, `library/`, `patterns/`, and `src/prosekernel`. If installed usage cannot find those assets, ProseKernel fails with a clear setup message instead of returning empty retrieval results.
 
@@ -131,6 +146,10 @@ Good ProseKernel writing must be:
 
 Phase 12 is the official v1 endgame: ProseKernel now covers the full writing operating-system loop for agents — task understanding, retrieval, patterns, briefs, critique, rewrite, explanation, public-safe learning, and a human-review/import bridge. Later work is organized as Post-v1 Tracks, not new numbered phases.
 
+Implemented layers include retrieval, pattern-backed briefs, linting, deterministic scorecards, critique/rewrite reports, public-safe learning, human-reviewed proposal generation, and editorial architecture shape diagnostics.
+
+Track A structured outputs / agent API is planned. Do not treat structured JSON outputs as implemented.
+
 Track B release hardening is mostly implemented: root resolution, CI, validation hardening, old-brand scan, install docs, public-release checklist, and the v1 smoke-loop test are complete.
 
 Track C public launch prep is implemented: README clarity, sample reports, public demo script, changelog, release-process docs, and GitHub release settings are ready for public v1.
@@ -140,6 +159,16 @@ Track H editorial architecture is implemented: `prosekernel shape` diagnoses doc
 Seed corpus includes 100 annotated examples across 12 populated categories and 12 strict pattern families. This is intentionally high-signal. Quality beats volume.
 
 Corpus depth rule: one example gives a direction; three to five examples create a pattern; ten examples create taste.
+
+## Non-goals
+
+ProseKernel is not:
+
+- an AI-detection evasion tool;
+- a way to claim AI-assisted writing was not AI-assisted;
+- a copyrighted text mirror;
+- a private voice clone;
+- a web UI, MCP server, editor plugin, or local model runtime.
 
 ## Public source policy
 
@@ -167,4 +196,8 @@ Use `docs/source-ingestion.md` and `prosekernel new-example` to add new examples
 
 ## Retrieval + writing demo
 
-Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → anti-slop lint → scorecard → rewrite/report. Use `docs/phase-12-human-review-import-bridge.md` for generating review-required example/pattern proposals from approved learning notes. Use `docs/phase-11-public-safe-learning-loop.md` for metadata-only learning notes and safe promotion gates. Use `docs/phase-10-productized-cli.md` for deterministic critique/rewrite reports, standalone rewrite outputs, exit-code semantics, and short CLI aliases. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
+Use `docs/retrieval-writing-demo.md` for the current workflow: task → category recommendation → example retrieval → craft move extraction → draft scaffold → shape diagnostics → anti-slop lint → scorecard → rewrite/report. Use `docs/editorial-architecture.md` for document shape diagnostics and situated structure archetypes. Use `docs/phase-12-human-review-import-bridge.md` for generating review-required example/pattern proposals from approved learning notes. Use `docs/phase-11-public-safe-learning-loop.md` for metadata-only learning notes and safe promotion gates. Use `docs/phase-10-productized-cli.md` for deterministic critique/rewrite reports, standalone rewrite outputs, exit-code semantics, and short CLI aliases. Use `docs/phase-8-hybrid-retrieval.md` for optional offline semantic/hybrid retrieval modes. Use `docs/phase-9-agent-workflow.md` and `docs/agent-workflow.md` for the full agent loop: classify → retrieve → patterns → brief → draft → shape → lint/score → revise → explain. Use `docs/phase-7a-evals.md` for the fixture suite and scorecard CLI. Use `docs/phase-6-brief-mode.md` for the provider-agnostic dry-run brief mode and `docs/phase-6b-provider-write.md` for explicit provider write mode.
+
+## Core claim
+
+> AI agents need a local taste and structure layer before their writing should be trusted.

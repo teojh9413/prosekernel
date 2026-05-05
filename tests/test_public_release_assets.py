@@ -27,7 +27,8 @@ def test_readme_keeps_demo_first_public_polish():
 
     assert "ProseKernel is a local writing-quality layer for AI agents." in readme
     assert "sounds finished before it has judgment" in readme
-    assert "retrieve examples → apply patterns → draft → lint → score → critique → rewrite → learn safely" in readme
+    assert "retrieve examples → apply patterns → draft → shape → lint → score → critique → rewrite → learn safely" in readme
+    assert 'prosekernel shape examples/ai-structure-sample.md --task "proposal to payments company" --reader "company boss" --intent "create curiosity for a meeting"' in readme
     assert 'prosekernel lint examples/ai-slop-sample.md || true' in readme
     assert "The lint command intentionally flags the sample draft; that is the point of the demo." in readme
     assert "## Common commands" in readme
