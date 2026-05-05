@@ -8,6 +8,7 @@ REQUIRED_AGENT_FILES = [
     "prompts/writing-brief.md",
     "prompts/critique.md",
     "prompts/rewrite.md",
+    "docs/editorial-architecture.md",
     "docs/phase-9-agent-workflow.md",
 ]
 
@@ -29,6 +30,7 @@ def test_repo_skill_is_agent_ready_and_public_safe():
         "name: prosekernel",
         "ProseKernel is an open-source taste engine for AI writing agents.",
         "prosekernel brief",
+        "prosekernel shape",
         "prosekernel lint",
         "prosekernel scorecard",
         "Do structure transfer, not phrase transfer.",
@@ -42,9 +44,10 @@ def test_agent_workflow_prompt_is_end_to_end_and_command_grounded():
     text = read_rel("prompts/agent-workflow.md")
 
     for required in [
-        "classify → retrieve → patterns → brief → draft → lint/score → revise → explain",
+        "classify → retrieve → patterns → brief → draft → shape → lint/score → revise → explain",
         "prosekernel search-examples",
         "prosekernel brief",
+        "prosekernel shape",
         "prosekernel lint",
         "prosekernel scorecard",
         "explain what changed",
@@ -101,7 +104,8 @@ def test_docs_and_readme_link_phase9_agent_workflow():
         "Cursor",
         "OpenCode",
         "Hermes",
-        "classify → retrieve → patterns → brief → draft → lint/score → revise → explain",
+        "classify → retrieve → patterns → brief → draft → shape → lint/score → revise → explain",
+        "prosekernel shape",
     ]:
         assert required in phase_doc
 

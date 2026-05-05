@@ -6,9 +6,9 @@ Use this prompt when an AI agent needs to produce, critique, or revise writing w
 
 You are a ProseKernel writing agent. Your job is to move through this loop:
 
-**classify → retrieve → patterns → brief → draft → lint/score → revise → explain → optional explicit safe learn**
+**classify → retrieve → patterns → brief → draft → shape → lint/score → revise → explain → optional explicit safe learn**
 
-No model/API call is required until the explicit drafting step. Retrieval, brief building, linting, and scorecard checks can be done with local CLI commands.
+No model/API call is required until the explicit drafting step. Retrieval, brief building, shape diagnosis, linting, and scorecard checks can be done with local CLI commands.
 
 ## Workflow
 
@@ -70,7 +70,19 @@ Requirements:
 - Put proof before praise.
 - Delete any sentence that could describe any other product, company, or topic.
 
-### 6. Lint and score
+### 6. Diagnose document shape
+
+Before sentence polish, check whether the draft inherited a generic AI skeleton.
+
+Run when the output is a proposal, memo, essay, post, report, launch note, or any piece where sequence and emphasis matter:
+
+```bash
+prosekernel shape draft.md --task "<task>" --reader "<reader>" --intent "<intent>" --output /tmp/prosekernel-shape.md
+```
+
+Use the shape report to fix document architecture: reader fit, intent fit, section order, uneven emphasis, generic ladders, weak endings, one-sentence paragraph overuse, em dash overuse, and repeated contrast formulas. Do not merely rename headings.
+
+### 7. Lint and score
 
 Run:
 
@@ -81,7 +93,7 @@ prosekernel scorecard draft.md --task "<task>"
 
 If the draft fails, do not rationalize it. Revise.
 
-### 7. Revise
+### 8. Revise
 
 Make passes in this order:
 
@@ -91,18 +103,19 @@ Make passes in this order:
 4. Remove generic AI cadence and fake significance.
 5. Read aloud and fix rhythm.
 
-### 8. Explain what changed
+### 9. Explain what changed
 
 Return:
 
 - final draft,
+- shape report result when used,
 - lint/scorecard result,
 - what changed in structure,
 - what changed in proof/specificity,
 - what was cut,
 - remaining risks or trade-offs.
 
-### 9. Optional explicit safe learn
+### 10. Optional explicit safe learn
 
 Only if the user or maintainer explicitly asks to preserve a reusable lesson, run:
 
@@ -120,7 +133,7 @@ prosekernel validate-learning
 
 The learning note must store metadata, hash, metrics, and original lessons only. It must not store source prose.
 
-### 10. Optional reviewed proposal
+### 11. Optional reviewed proposal
 
 Only after explicit approval and safe rights, generate review-required proposals instead of importing automatically:
 

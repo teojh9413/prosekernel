@@ -2,9 +2,9 @@
 
 Use this whenever an AI agent writes with ProseKernel.
 
-The Phase 9 loop is:
+The current agent loop is:
 
-**classify → retrieve → patterns → brief → draft → lint/score → revise → explain**
+**classify → retrieve → patterns → brief → draft → shape → lint/score → revise → explain**
 
 For copy-paste prompt contracts, see:
 
@@ -13,7 +13,7 @@ For copy-paste prompt contracts, see:
 - `prompts/critique.md`
 - `prompts/rewrite.md`
 
-For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`. For explicit metadata-only learning notes, see `docs/phase-11-public-safe-learning-loop.md`. For review-required proposals from approved learning notes, see `docs/phase-12-human-review-import-bridge.md`.
+For integration notes across Codex, Claude Code, Cursor, OpenCode, Hermes, and other agents, see `docs/phase-9-agent-workflow.md`. For editorial architecture and document shape diagnostics, see `docs/editorial-architecture.md`. For productized critique/rewrite reports and short CLI aliases, see `docs/phase-10-productized-cli.md`. For explicit metadata-only learning notes, see `docs/phase-11-public-safe-learning-loop.md`. For review-required proposals from approved learning notes, see `docs/phase-12-human-review-import-bridge.md`.
 
 ## Step 1: Classify the job
 
@@ -77,7 +77,17 @@ Rules:
 - Delete any sentence that could describe another product, company, or topic.
 - Do not copy source phrases.
 
-## Step 6: Evaluate
+## Step 6: Diagnose shape
+
+Run shape diagnostics before sentence polish when document architecture matters: proposals, memos, essays, posts, reports, launch notes, or any draft that may inherit a default AI skeleton.
+
+```bash
+prosekernel shape draft.md --task "<task>" --reader "<reader>" --intent "<intent>" --output shape-report.md
+```
+
+Use the report to fix reader fit, intent fit, generic section ladders, over-balanced rhythm, weak endings, and other structure-level problems. Do not merely rename headings.
+
+## Step 7: Evaluate
 
 Run:
 
@@ -93,7 +103,7 @@ Also use:
 - `evals/writing-scorecard.md`
 - relevant `patterns/*.md`
 
-## Step 7: Revise
+## Step 8: Revise
 
 Perform manually or use the deterministic rewrite report as a working draft:
 
@@ -109,19 +119,20 @@ Revision passes:
 5. voice/rhythm pass,
 6. read-aloud pass.
 
-## Step 8: Explain what changed
+## Step 9: Explain what changed
 
 Return the final draft plus:
 
 - retrieval/examples used,
 - patterns applied,
+- shape report result when used,
 - structure changes,
 - proof/specificity changes,
 - cuts made,
 - lint/scorecard result,
 - remaining risks or manual follow-ups.
 
-## Step 9: Learn only when explicit and public-safe
+## Step 10: Learn only when explicit and public-safe
 
 Do not auto-save private user writing or model outputs as reusable lessons. If the user or maintainer explicitly wants to preserve a reusable lesson, create a metadata-only note:
 
@@ -140,7 +151,7 @@ prosekernel validate-learning
 
 The learning note must not store source prose.
 
-## Step 10: Propose import only after approval
+## Step 11: Propose import only after approval
 
 If a learning note is explicitly approved and rights are safe (`public-domain`, `open-license`, or `user-provided`), generate a review-required proposal instead of importing automatically:
 

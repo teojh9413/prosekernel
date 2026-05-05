@@ -32,12 +32,13 @@ Follow this loop for serious writing:
 2. Retrieve examples with `prosekernel search-examples "<task>" --mode hybrid --explain`.
 3. Build an agent-ready packet with `prosekernel brief "<task>" --mode hybrid --output /tmp/prosekernel-brief.md`.
 4. Draft from the brief using structure transfer, not phrase transfer.
-5. Run `prosekernel lint draft.md`.
-6. Run `prosekernel scorecard draft.md --task "<task>"`.
-7. Revise until the draft has specific proof, reader fit, and non-genericness.
-8. Explain what changed: structure, proof, cuts, specificity, voice, and remaining trade-offs.
-9. If learning is explicitly requested, run `prosekernel learn` and then `prosekernel validate-learning`; never store source prose in the learning note. Promotion-ready lessons require `--promote --approved` and safe rights.
-10. If a promotion-ready lesson should become corpus work, run `prosekernel propose-example` or `prosekernel propose-pattern`; keep generated files under `proposals/` until human review.
+5. Run `prosekernel shape draft.md --task "<task>" --reader "<reader>" --intent "<intent>"` for proposals, memos, essays, posts, reports, launch notes, or any draft where the document skeleton matters.
+6. Run `prosekernel lint draft.md`.
+7. Run `prosekernel scorecard draft.md --task "<task>"`.
+8. Revise until the draft has specific proof, reader fit, strong document shape, and non-genericness.
+9. Explain what changed: structure, proof, cuts, specificity, voice, and remaining trade-offs.
+10. If learning is explicitly requested, run `prosekernel learn` and then `prosekernel validate-learning`; never store source prose in the learning note. Promotion-ready lessons require `--promote --approved` and safe rights.
+11. If a promotion-ready lesson should become corpus work, run `prosekernel propose-example` or `prosekernel propose-pattern`; keep generated files under `proposals/` until human review.
 
 ## Useful commands
 
@@ -47,6 +48,7 @@ prosekernel --help
 prosekernel search-examples "write a launch email for ProseKernel" --mode hybrid --explain
 prosekernel brief "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-brief.md
 prosekernel write-demo "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-demo.md
+prosekernel shape draft.md --task "write a launch email for ProseKernel" --reader "prospective user" --intent "create interest and trial" --output /tmp/prosekernel-shape.md
 prosekernel critique draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-critique.md
 prosekernel rewrite draft.md --task "write a launch email for ProseKernel" --mode hybrid --output /tmp/prosekernel-rewrite.md --rewrite-output /tmp/prosekernel-rewritten.md
 prosekernel learn draft.md --task "write a launch email for ProseKernel" --source-title "Launch draft" --source-author "User" --source-url "https://example.com/launch-draft" --rights user-provided --category email-newsletters --tags "launch, email" --promote --approved --output /tmp/prosekernel-lesson.md
@@ -65,6 +67,7 @@ prosekernel eval
 - `prompts/writing-brief.md` — reusable brief contract.
 - `prompts/critique.md` — critique contract for generic AI slop, proof, specificity, reader fit, and non-genericness.
 - `prompts/rewrite.md` — rewrite contract with final quality gate.
+- `docs/editorial-architecture.md` — shape diagnostics, situated structure archetypes, and `prosekernel shape` usage.
 - `docs/phase-9-agent-workflow.md` — integration notes for Codex, Claude Code, Cursor, OpenCode, Hermes, and other coding/writing agents.
 
 ## Quality bar
@@ -73,6 +76,7 @@ A ProseKernel draft is not ready until it passes:
 
 - source-safe structure transfer,
 - concrete proof before praise,
+- document shape that fits reader, intent, situation, and decision,
 - no banned slop phrases,
 - visible reader fit,
 - scorecard review,

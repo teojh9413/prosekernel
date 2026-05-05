@@ -85,8 +85,9 @@ Before writing anything important:
 4. Extract structure and craft moves. Do **not** copy phrases.
 5. Build a brief with `prosekernel brief`.
 6. Draft.
-7. Run `prosekernel lint` and `prosekernel scorecard`.
-8. Use `prosekernel critique` / `prosekernel rewrite` for deterministic revision guidance.
+7. Run `prosekernel shape` when document architecture matters: proposals, memos, essays, posts, reports, launch notes, or any draft that may inherit a generic AI skeleton.
+8. Run `prosekernel lint` and `prosekernel scorecard`.
+9. Use `prosekernel critique` / `prosekernel rewrite` for deterministic revision guidance.
 
 ## Install / local usage
 
