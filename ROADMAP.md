@@ -33,6 +33,7 @@ Current eval layer: 6 benchmark tasks plus 12 weak/strong fixture drafts.
 Current adapter layer: dry-run `brief` mode plus explicit provider-backed `write` mode. No default paid provider is selected; writes require explicit `--provider` and `--model`.
 Current retrieval layer: default lexical/category scoring plus optional offline semantic and hybrid scoring.
 Current release-hardening layer: root resolution, CI, validation hardening, old-brand scan, install docs, and v1 smoke-loop tests are complete.
+Current editorial architecture layer: `prosekernel shape` diagnoses AI-looking document structure with deterministic rules, situated structure archetypes, shape scorecards, Markdown reports, and rewrite instructions.
 
 ## Phase 1 — Foundation and initial corpus
 
@@ -348,13 +349,14 @@ Further work is organized into tracks, not numbered phases. These tracks are for
 
 Recommended practical priority:
 
-1. Track A — Structured Outputs / Agent API — Planned
-2. Track B — CI, Release, and Package Hardening — Mostly implemented / release hardening in progress
-3. Track C — Public Distribution — In progress
-4. Track D — Evaluation Maturity — Later
-5. Track E — Library and Pattern Scale — Later
-6. Track F — Provider and Local Model Support — Optional
-7. Track G — Product Surfaces — Experimental
+1. Track H — Editorial Architecture — Implemented first because the immediate user pain was AI-looking document structure
+2. Track A — Structured Outputs / Agent API — Planned
+3. Track B — CI, Release, and Package Hardening — Mostly implemented / release hardening in progress
+4. Track C — Public Distribution — In progress
+5. Track D — Evaluation Maturity — Later
+6. Track E — Library and Pattern Scale — Later
+7. Track F — Provider and Local Model Support — Optional
+8. Track G — Product Surfaces — Experimental
 
 Do not jump immediately into web UI, MCP server, editor plugins, local models, huge benchmark systems, automatic corpus growth, or a 200+ example corpus. The project should become stable and shippable before becoming bigger.
 
@@ -555,3 +557,32 @@ Why this matters:
 
 - These surfaces may become useful later.
 - They should not distract from making the core CLI and agent workflow excellent.
+
+### Track H — Editorial Architecture
+
+Status: implemented.
+
+Goal: detect and repair AI-looking document structure, not just weak sentences.
+
+Track H was prioritized before Track A because the immediate user pain was AI-looking document structure: drafts that had polished sentences but inherited the default article or proposal skeleton.
+
+Implemented:
+
+1. `prosekernel shape` diagnostic command.
+2. Deterministic structure lint for generic article/proposal ladders.
+3. Situated structure archetypes selected from task, reader, intent, and channel.
+4. One-sentence paragraph overuse detection.
+5. Em dash and repeated contrast formula detection.
+6. Generic signposting, weak ending, fake completeness, and topic-container heading detection.
+7. Shape scorecards with reader fit, intent fit, structure originality, judgment, rhythm, heading quality, ending strength, and reversed AI template risk.
+8. Markdown shape reports with rewrite instructions for agents.
+
+Non-goals:
+
+- No new numbered phase.
+- No web UI.
+- No MCP server.
+- No editor plugin.
+- No local model support.
+- No full JSON output in the first version.
+- No framing as making AI writing undetectable.

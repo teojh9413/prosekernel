@@ -51,6 +51,7 @@ Commands can run from the repo root, with `--root /path/to/prosekernel`, or with
 - [See sample brief](examples/reports/launch-email-brief.md)
 - [See sample critique](examples/reports/slop-critique-report.md)
 - [See sample rewrite](examples/reports/rewrite-report.md)
+- [See sample shape report](examples/reports/shape-report.md)
 
 ## Why this exists
 
@@ -62,6 +63,16 @@ ProseKernel gives agents a writing loop:
 
 ```text
 retrieve examples → apply patterns → draft → lint → score → critique → rewrite → learn safely
+```
+
+## Editorial architecture
+
+Good AI writing is not only about better sentences. A draft can be polished and still look AI generated if it follows a default article or proposal skeleton.
+
+ProseKernel includes an editorial architecture layer to diagnose document shape: generic section ladders, over-balanced rhythm, excessive one-sentence paragraphs, repeated contrast formulas, em dash overuse, weak endings, and structures that do not fit the reader or intent.
+
+```bash
+prosekernel shape draft.md --task "proposal to payments company" --reader "company boss" --intent "create curiosity for a meeting"
 ```
 
 ## How agents should use this repo
@@ -94,6 +105,7 @@ See [`docs/install.md`](docs/install.md) for full local usage and root-resolutio
 ```bash
 prosekernel brief "write a launch email for an AI writing tool"
 prosekernel search-examples "write a security incident update" --mode hybrid --explain
+prosekernel shape draft.md --task "proposal to payments company" --reader "company boss" --intent "create curiosity for a meeting"
 prosekernel critique draft.md --task "write a launch email"
 prosekernel rewrite draft.md --task "write a launch email" --rewrite-output rewritten.md
 prosekernel scorecard draft.md --task "write a launch email"
@@ -121,6 +133,8 @@ Phase 12 is the official v1 endgame: ProseKernel now covers the full writing ope
 Track B release hardening is mostly implemented: root resolution, CI, validation hardening, old-brand scan, install docs, public-release checklist, and the v1 smoke-loop test are complete.
 
 Track C public launch prep is implemented: README clarity, sample reports, public demo script, changelog, release-process docs, and GitHub release settings are ready for public v1.
+
+Track H editorial architecture is implemented: `prosekernel shape` diagnoses document shape before sentence polish, recommends situated structure archetypes, and writes deterministic Markdown shape reports.
 
 Seed corpus includes 100 annotated examples across 12 populated categories and 12 strict pattern families. This is intentionally high-signal. Quality beats volume.
 

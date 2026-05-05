@@ -33,6 +33,7 @@ from .paths import RootResolutionError, resolve_root
 from .patterns import infer_pattern_ids
 from .providers import ProviderCallError, ProviderError, provider_adapter_from_env
 from .retrieve import rank_examples, select_examples
+from .shape import render_shape_report, run_shape
 from .taxonomy import recommend_categories
 
 
@@ -109,6 +110,15 @@ def main(argv: list[str] | None = None) -> int:
     rewrite_p.add_argument("--output", type=Path, help="Optional markdown report path")
     rewrite_p.add_argument("--rewrite-output", type=Path, help="Optional path for the standalone rewritten draft only")
 
+    shape_p = sub.add_parser("shape", help="Diagnose document architecture before sentence polish")
+    shape_p.add_argument("path", type=Path)
+    shape_p.add_argument("--root", type=Path)
+    shape_p.add_argument("--task", required=True, help="Writing task or situation the draft is meant to serve")
+    shape_p.add_argument("--reader", default="", help="Intended reader; recommended for situated diagnosis")
+    shape_p.add_argument("--intent", default="", help="Desired reaction, decision, or next action; recommended")
+    shape_p.add_argument("--channel", default="", help="Optional channel or format context")
+    shape_p.add_argument("--output", type=Path, help="Optional markdown report path")
+
     learn_p = sub.add_parser("learn", help="Create a public-safe metadata-only learning note from a draft")
     learn_p.add_argument("path", type=Path)
     learn_p.add_argument("--root", type=Path)
@@ -170,6 +180,7 @@ def main(argv: list[str] | None = None) -> int:
         "write",
         "critique",
         "rewrite",
+        "shape",
         "learn",
         "validate-learning",
         "propose-example",
@@ -349,6 +360,31 @@ def main(argv: list[str] | None = None) -> int:
             args.rewrite_output.write_text(result.rewritten_text.strip() + "\n", encoding="utf-8")
             print(args.rewrite_output)
         return 0 if result.final_scorecard.total >= result.initial_scorecard.total else 1
+
+    if args.command == "shape":
+        draft_path = args.path
+        if not draft_path.exists() and not draft_path.is_absolute():
+            rooted_path = args.root / draft_path
+            if rooted_path.exists():
+                draft_path = rooted_path
+        if not draft_path.exists():
+            print(f"Draft not found: {args.path}", file=sys.stderr)
+            return 2
+        result = run_shape(
+            draft_path,
+            task=args.task,
+            reader=args.reader,
+            intent=args.intent,
+            channel=args.channel,
+        )
+        report = render_shape_report(result)
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(report, encoding="utf-8")
+            print(args.output)
+        else:
+            print(report)
+        return 0
 
     if args.command == "learn":
         tags = [tag.strip() for tag in args.tags.split(",") if tag.strip()]
